@@ -1,0 +1,2285 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Ace.Feeder.Common</name>
+    </assembly>
+    <members>
+        <member name="T:Ace.Feeder.Client.FeederStatusControl">
+            <summary>
+            FeederStatusControl class. Generic class derived from UserControl but having a Feeder link
+            </summary>
+            <summary>
+            FeederStatusControl class. Generic class derived from UserControl but having a Feeder link
+            </summary>
+        </member>
+        <member name="M:Ace.Feeder.Client.FeederStatusControl.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Ace.Feeder.Client.FeederStatusControl"/> class.
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Client.FeederStatusControl.myFeeder">
+            <summary>
+            The feeder linked to the control
+            </summary>
+        </member>
+        <member name="P:Ace.Feeder.Client.FeederStatusControl.Feeder">
+            <summary>
+            Gets or sets the feeder being controlled.
+            </summary>
+            <value>The Feeder.</value>
+        </member>
+        <member name="F:Ace.Feeder.Client.FeederStatusControl.components">
+            <summary> 
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:Ace.Feeder.Client.FeederStatusControl.Dispose(System.Boolean)">
+            <summary> 
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:Ace.Feeder.Client.FeederStatusControl.InitializeComponent">
+            <summary> 
+            Required method for Designer support - do not modify 
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:Ace.Feeder.Client.WizardFramework.Sequencer.IFlexibowlFeederCreationSequencer">
+            <summary>
+            Wizard sequence for creating a Flexibowl Feeder in the workspace
+            </summary>
+        </member>
+        <member name="P:Ace.Feeder.Client.WizardFramework.Sequencer.IFlexibowlFeederCreationSequencer.RequireConfigMotionSequences">
+            <summary>
+            Get the motion sequnece configuration required or not flag
+            </summary>
+        </member>
+        <member name="T:Ace.Feeder.Client.WizardFramework.Sequencer.IAnyFeederCreationSequencer">
+            <summary>
+            Wizard sequence for creating a AnyFeeder in the workspace
+            </summary>
+        </member>
+        <member name="P:Ace.Feeder.Client.WizardFramework.Sequencer.IAnyFeederCreationSequencer.RunFromApplicationSampleWizard">
+            <summary>
+            Get the motion sequence configuration required or not flag
+            </summary>
+        </member>
+        <member name="T:Ace.Feeder.EnumText">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Ace.Feeder.EnumText.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Ace.Feeder.EnumText.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Ace.Feeder.EnumText.AnyFeederSequenceOperation_Dispense">
+            <summary>
+              Looks up a localized string similar to Dispense.
+            </summary>
+        </member>
+        <member name="P:Ace.Feeder.EnumText.AnyFeederSequenceOperation_FeedBackwards">
+            <summary>
+              Looks up a localized string similar to Feed Backwards.
+            </summary>
+        </member>
+        <member name="P:Ace.Feeder.EnumText.AnyFeederSequenceOperation_FeedForward">
+            <summary>
+              Looks up a localized string similar to Feed Forward.
+            </summary>
+        </member>
+        <member name="P:Ace.Feeder.EnumText.AnyFeederSequenceOperation_Flip">
+            <summary>
+              Looks up a localized string similar to Flip.
+            </summary>
+        </member>
+        <member name="P:Ace.Feeder.EnumText.AnyFeederSequenceOperation_FlipForward">
+            <summary>
+              Looks up a localized string similar to Flip Forward.
+            </summary>
+        </member>
+        <member name="P:Ace.Feeder.EnumText.AnyFeederSequenceOperation_Purge">
+            <summary>
+              Looks up a localized string similar to Purge.
+            </summary>
+        </member>
+        <member name="P:Ace.Feeder.EnumText.AnyFeederSequenceOperation_Wait">
+            <summary>
+              Looks up a localized string similar to Wait.
+            </summary>
+        </member>
+        <member name="T:Ace.Feeder.Server.AnyFeeder.AnyFeederState">
+            <summary>
+            The possible states of an  Anyfeeder
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederState.Idle">
+            <summary>
+            The feeder is in idle state
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederState.Busy">
+            <summary>
+            The feeder is busy
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederState.Error">
+            <summary>
+            The feeder is cycling
+            </summary>
+        </member>
+        <member name="T:Ace.Feeder.Server.AnyFeeder.AnyFeederCommands">
+            <summary>
+            Contains the different commands available. The values are important in this enum as they correspond to AnyFeeder internal Command numbers. 
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederCommands.None">
+            <summary>
+            no command
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederCommands.FeedForward">
+            <summary>
+            Command performing a Feed Forward
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederCommands.FeedBackward">
+            <summary>
+            Command performing a Feed Backward
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederCommands.FeedFlipForward">
+            <summary>
+            Command performing a Feed/Flip Forward
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederCommands.FeedFlipBackward">
+            <summary>
+            Command performing a Feed/Flip Backward
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederCommands.Flip">
+            <summary>
+            Command performing a neutral flip
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederCommands.Dispense">
+            <summary>
+            Command performing a dispense
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederCommands.Purge">
+            <summary>
+            Command performing a Purge
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederCommands.HeavyDispense">
+            <summary>
+            Command performing a Heavy Dispense
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederCommands.ReadFirmwareVersion">
+            <summary>
+            Command to read the firmware version
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederCommands.Stop">
+            <summary>
+            Command stopping the current operation
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederCommands.Init">
+            <summary>
+            Command initializing the AnyFeeder
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederCommands.SetOutput">
+            <summary>
+            Command writing an internal output signal
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederCommands.ErrorReset">
+            <summary>
+            Command reseting an error
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederCommands.FirmwareRestart">
+            <summary>
+            Command restarting the AnyFeeder firmware
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederCommands.SwitchBackLightON">
+            <summary>
+            Command switching the Backlight ON or OFF
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederCommands.SwitchBackLightOFF">
+            <summary>
+            Command switching the Backlight ON or OFF
+            </summary>
+        </member>
+        <member name="T:Ace.Feeder.Server.AnyFeeder.AnyFeederParameters">
+            <summary>
+            Contains the different parameters available. The values are important in this enum as they correspond to AnyFeeder internal Parameter numbers. 
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederParameters.FeedForwardIterations">
+            <summary>
+            Sets the number of iterations to perform for a Feed Forward
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederParameters.FeedBackwardIterations">
+            <summary>
+            Sets the number of iterations to perform for a Feed Backward
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederParameters.FeedFlipForwardIterations">
+            <summary>
+            Sets the number of iterations to perform for a Feed/Flip Forward
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederParameters.FeedFlipBackwardIterations">
+            <summary>
+            Sets the number of iterations to perform for a Feed/Flip Backward
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederParameters.FlipIterations">
+            <summary>
+            Sets the number of iterations to perform for a Flip
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederParameters.DispenseIterations">
+            <summary>
+            Sets the number of iterations to perform for a Dispense
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederParameters.PurgeIterations">
+            <summary>
+            Sets the number of iterations to perform for a Purge
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederParameters.HeavyDispenseIterations">
+            <summary>
+            Sets the number of iterations to perform for a Heavy dispense
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederParameters.ReadFirmwareVersion">
+            <summary>
+            Reads/Displays the AnyFeeder firmware version
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederParameters.FeedForwardSpeed">
+            <summary>
+            Sets the speed for a Feed Forward
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederParameters.FeedBackwardSpeed">
+            <summary>
+            Sets the speed for a Feed Backward
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederParameters.FeedFlipForwardSpeed">
+            <summary>
+            Sets the speed for a Feed/Flip Forward
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederParameters.FeedFlipBackwardSpeed">
+            <summary>
+            Sets the speed for a Feed/Flip Backward
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederParameters.FlipSpeed">
+            <summary>
+            Sets the speed for a Flip
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederParameters.DispenseSpeed">
+            <summary>
+            Sets the speed for a Dispense
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederParameters.PurgeSpeed">
+            <summary>
+            Sets the speed for a Purge
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederParameters.HeavyDispenseSpeed">
+            <summary>
+            Sets the speed for a Heavy dispense
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederParameters.OutputNum">
+            <summary>
+            Sets the output number in order to write it
+            </summary>
+        </member>
+        <member name="T:Ace.Feeder.Server.AnyFeeder.AnyFeederErrors">
+            <summary>
+            Identifies the possible default programs that can be extracted from the AnyFeeder
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederErrors.ErrorCodeOK">
+            <summary>
+            Error code indicating everything is fine
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederErrors.ErrorCodeMotor1Ready">
+            <summary>
+            Error code indicating Motor1 finished its movement. This value corresponds to an internal AnyFeeder Error code value.
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederErrors.ErrorCodeMotor1Busy">
+            <summary>
+            Error code indicating Motor1 is currently performing an operation
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederErrors.ErrorCodeMotor1InvalidCommand">
+            <summary>
+            Error code indicating Motor1 received an invalid command
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederErrors.ErrorCodeMotor1ServoError">
+            <summary>
+            Error code indicating Motor1 servo is in error
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederErrors.ErrorCodeMotor1NotInitialized">
+            <summary>
+            Error code indicating Motor1 is not initialized
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederErrors.ErrorCodeMotor1Error">
+            <summary>
+            Error code indicating Motor1 is in error
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederErrors.ErrorCodeMotor2Ready">
+            <summary>
+            Error code indicating Motor2 finished its movement. This value corresponds to an internal AnyFeeder Error code value.
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederErrors.ErrorCodeMotor2Busy">
+            <summary>
+            Error code indicating Motor2 is currently performing an operation
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederErrors.ErrorCodeMotor2InvalidCommand">
+            <summary>
+            Error code indicating Motor2 received an invalid command
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederErrors.ErrorCodeMotor2ServoError">
+            <summary>
+            Error code indicating Motor2 servo is in error
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederErrors.ErrorCodeMotor2NotInitialized">
+            <summary>
+            Error code indicating Motor2 is not initialized
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederErrors.ErrorCodeMotor2Error">
+            <summary>
+            Error code indicating Motor2 is in error
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederErrors.ErrorCodeTimeoutSynchro">
+            <summary>
+            Motor 2 did not receive the sync-signal from Motor1 to start action.
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederErrors.ErrorCodeTimeout">
+            <summary>
+            Error code indicating the AnyFeeder was too long to complete its movement.
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederErrors.ErrorCodeComPort">
+            <summary>
+            Error code indicating the current COM port is not valid.
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederErrors.ErrorCodeWriteCOM">
+            <summary>
+            Error code indicating an error happened while writing on COM port.
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederErrors.ErrorCodeReadCOM">
+            <summary>
+            Error code indicating an error happened while reading on COM port.
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederErrors.ErrorCodeInvalidComPort">
+            <summary>
+            Error code indicating Com Port is not valid.
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederErrors.ErrorCodeComClosed">
+            <summary>
+            Error code indicating COM port is closed.
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederErrors.ErrorCodeReplyFormat">
+            <summary>
+            Error code indicating reply from Feeder is not well formatted
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederErrors.ErrorCodeInvalidCommand">
+            <summary>
+            Error code indicating a command is not valid
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederErrors.ErrorCodeNoConnection">
+            <summary>
+             Error code indicating there is no connection with the AnyFeeder device
+            </summary>
+        </member>
+        <member name="T:Ace.Feeder.Server.AnyFeeder.AnyFeederModel">
+            <summary>
+            The types of AnyFeeder models
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederModel.SX240">
+            <summary>
+            The sX-240
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederModel.SXM100">
+            <summary>
+            The sx-M100
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederModel.SX340">
+            <summary>
+            The sx-340
+            </summary>
+        </member>
+        <member name="T:Ace.Feeder.Server.AnyFeeder.AnyFeederFeedSteps">
+            <summary>
+            Contains the different commands available. The values correspond to the AnyFeederCommands values.
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederFeedSteps.Ignore">
+            <summary>
+            Value indicating a feed step has to be ignored
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederFeedSteps.FeedForward">
+            <summary>
+            Value indicating a feed step has to perform a Feed Forward action
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederFeedSteps.FeedBackward">
+            <summary>
+            Value indicating a feed step has to perform a Feed backward action
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederFeedSteps.FeedFlipForward">
+            <summary>
+            Value indicating a feed step has to perform a Feed/FlipForward action
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederFeedSteps.FeedFlipBackward">
+            <summary>
+            Value indicating a feed step has to perform a Feed/flip Backward action
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederFeedSteps.Flip">
+            <summary>
+            Value indicating a feed step has to perform a Flip action
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederFeedSteps.Dispense">
+            <summary>
+            Value indicating a feed step has to perform a Dispense action
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederFeedSteps.HeavyDispense">
+            <summary>
+            Value indicating a feed step has to perform a Heavy Dispense action
+            </summary>
+        </member>
+        <member name="T:Ace.Feeder.Server.AnyFeeder.AnyFeederFeedModes">
+            <summary>
+            Contains the different commands available.
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederFeedModes.DispenseFeedForward">
+            <summary>
+            Value indicating a feed has to make the parts fall and then feed forward
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederFeedModes.HeavyDispenseFeedForward">
+            <summary>
+            Value indicating a feed has to vigorously make the parts fall and then feed forward
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederFeedModes.FeedForwardDispense">
+            <summary>
+            Value indicating a feed has to feed forward and then make the parts fall
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederFeedModes.FeedForwardHeavyDispense">
+            <summary>
+            Value indicating a feed has to feed forward and then vigorously make the parts fall
+            </summary>
+        </member>
+        <member name="T:Ace.Feeder.Server.AnyFeeder.AnyFeederSequenceOperation">
+            <summary>
+            The list of available AnyFeeder Sequence Operation Commands
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederSequenceOperation.Dispense">
+            <summary>
+            Perform a dispense operation
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederSequenceOperation.FeedForward">
+            <summary>
+            Perform a feed forward operation
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederSequenceOperation.FeedBackwards">
+            <summary>
+            Perform a feed backwards operation
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederSequenceOperation.Flip">
+            <summary>
+            Perform a flip operation
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederSequenceOperation.FlipForward">
+            <summary>
+            Perform a flip forward operation
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederSequenceOperation.FlipBackwards">
+            <summary>
+            Perform a flip baclwards operation
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederSequenceOperation.Purge">
+            <summary>
+            Perform a purge operation
+            </summary>		
+        </member>
+        <member name="F:Ace.Feeder.Server.AnyFeeder.AnyFeederSequenceOperation.Wait">
+            <summary>
+            Perform a wait operation
+            </summary>		
+        </member>
+        <member name="T:Ace.Feeder.Server.AnyFeeder.IAnyFeederSequence">
+            <summary>
+            Represents a sequence of AnyFeeder operations
+            </summary>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IAnyFeederSequence&quot;]/ClassHeader/*" />
+        </member>
+        <member name="P:Ace.Feeder.Server.AnyFeeder.IAnyFeederSequence.CommandIndex">
+            <summary>
+            Gets or sets the index used to trigger the command from V+.
+            </summary>
+            <value>
+            The index of the command.
+            </value>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IAnyFeederSequence&quot;]/Member[@name=&quot;CommandIndex&quot;]/*" />
+        </member>
+        <member name="E:Ace.Feeder.Server.AnyFeeder.IAnyFeederSequence.PropertyModified">
+            <summary>
+            An event raised when a property is modified. Note that not all properties will throw this event.
+            </summary>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IAnyFeederSequence&quot;]/Member[@name=&quot;PropertyModified&quot;]/*" />
+        </member>
+        <member name="P:Ace.Feeder.Server.AnyFeeder.IAnyFeederSequence.Operations">
+            <summary>
+            Gets the operations associated with the sequence
+            </summary>
+            <value>
+            The operations.
+            </value>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IAnyFeederSequence&quot;]/Member[@name=&quot;Operations&quot;]/*" />
+        </member>
+        <member name="M:Ace.Feeder.Server.AnyFeeder.IAnyFeederSequence.Execute(Ace.Feeder.Server.AnyFeeder.IAnyFeeder,System.Boolean)">
+            <summary>
+            Executes the sequence.
+            </summary>
+            <param name="anyFeeder">The AnyFeeder used in the execution sequence.</param>
+            <param name="waitComplete">if set to <c>true</c> wait until execution has completed.</param>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IAnyFeederSequence&quot;]/Member[@name=&quot;Execute&quot;]/*" />
+        </member>
+        <member name="M:Ace.Feeder.Server.AnyFeeder.IAnyFeederSequence.Add(System.Collections.Generic.List{Ace.Feeder.Server.AnyFeeder.IAnyFeederOperation})">
+            <summary>
+            Adds the specified list operations.
+            </summary>
+            <param name="operations">The list operation.</param>
+        </member>
+        <member name="M:Ace.Feeder.Server.AnyFeeder.IAnyFeederSequence.Add(Ace.Feeder.Server.AnyFeeder.IAnyFeederOperation)">
+            <summary>
+            Adds the specified operation.
+            </summary>
+            <param name="operation">The operation.</param>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IAnyFeederSequence&quot;]/Member[@name=&quot;Add&quot;]/*" />
+        </member>
+        <member name="M:Ace.Feeder.Server.AnyFeeder.IAnyFeederSequence.Insert(System.Int32,Ace.Feeder.Server.AnyFeeder.IAnyFeederOperation)">
+            <summary>
+            Inserts the specified operation.
+            </summary>
+            <param name="index">The index.</param>
+            <param name="operation">The operation.</param>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IAnyFeederSequence&quot;]/Member[@name=&quot;Insert&quot;]/*" />
+        </member>
+        <member name="M:Ace.Feeder.Server.AnyFeeder.IAnyFeederSequence.Remove(Ace.Feeder.Server.AnyFeeder.IAnyFeederOperation)">
+            <summary>
+            Removes the specified operation.
+            </summary>
+            <param name="operation">The operation.</param>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IAnyFeederSequence&quot;]/Member[@name=&quot;Remove&quot;]/*" />
+        </member>
+        <member name="M:Ace.Feeder.Server.AnyFeeder.IAnyFeederSequence.RemoveAt(System.Int32)">
+            <summary>
+            Removes the operation at the specified index
+            </summary>
+            <param name="index">The index.</param>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IAnyFeederSequence&quot;]/Member[@name=&quot;RemoveAt&quot;]/*" />
+        </member>
+        <member name="M:Ace.Feeder.Server.AnyFeeder.IAnyFeederSequence.IndexOf(Ace.Feeder.Server.AnyFeeder.IAnyFeederOperation)">
+            <summary>
+            Returns the index of the specified operation.
+            </summary>
+            <param name="operation">The operation.</param>
+            <returns>The index of the operation</returns>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IAnyFeederSequence&quot;]/Member[@name=&quot;IndexOf&quot;]/*" />
+        </member>
+        <member name="T:Ace.Feeder.Server.AnyFeeder.IAnyFeederOperation">
+            <summary>
+            Represents an AnyFeeder operation that can be initiated from an AnyFeeder Sequence.
+            </summary>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IAnyFeederOperation&quot;]/ClassHeader/*" />
+        </member>
+        <member name="P:Ace.Feeder.Server.AnyFeeder.IAnyFeederOperation.Operation">
+            <summary>
+            Gets or sets the operation.
+            </summary>
+            <value>
+            The operation.
+            </value>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IAnyFeederOperation&quot;]/Member[@name=&quot;Operation&quot;]/*" />
+        </member>
+        <member name="P:Ace.Feeder.Server.AnyFeeder.IAnyFeederOperation.Iterations">
+            <summary>
+            Gets or sets the number of iterations.
+            </summary>
+            <value>
+            The iterations.
+            </value>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IAnyFeederOperation&quot;]/Member[@name=&quot;Iterations&quot;]/*" />
+        </member>
+        <member name="P:Ace.Feeder.Server.AnyFeeder.IAnyFeederOperation.Speed">
+            <summary>
+            Gets or sets the speed.
+            </summary>
+            <value>
+            The speed.
+            </value>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IAnyFeederOperation&quot;]/Member[@name=&quot;Speed&quot;]/*" />
+        </member>
+        <member name="E:Ace.Feeder.Server.AnyFeeder.IAnyFeederOperation.PropertyModified">
+            <summary>
+            An event raised when a property is modified. Note that not all properties will throw this event.
+            </summary>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IAnyFeederOperation&quot;]/Member[@name=&quot;PropertyModified&quot;]/*" />
+        </member>
+        <member name="M:Ace.Feeder.Server.AnyFeeder.IAnyFeederOperation.Execute(Ace.Feeder.Server.AnyFeeder.IAnyFeeder,System.Boolean)">
+            <summary>
+            Executes the operation on the specified AnyFeeder.
+            </summary>
+            <param name="anyFeeder">The AnyFeeder.</param>
+            <param name="waitComplete">if set to <c>true</c> wait until execution has completed.</param>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IAnyFeederOperation&quot;]/Member[@name=&quot;Execute&quot;]/*" />
+        </member>
+        <member name="T:Ace.Feeder.Server.AnyFeeder.IAnyFeeder">
+            <summary>
+            Represents a physical instance of an AnyFeeder.
+            </summary>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.cs" region="Header" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.vb" region="Header" />
+		</example>
+        </member>
+        <member name="P:Ace.Feeder.Server.AnyFeeder.IAnyFeeder.IsInError">
+            <summary>
+            Gets an information to know if a feeding device is in an error state.
+            </summary>
+            <value>The Error state.</value>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IAnyFeeder&quot;]/Member[@name=&quot;IsInError&quot;]/*" />
+        </member>
+        <member name="P:Ace.Feeder.Server.AnyFeeder.IAnyFeeder.ErrorCode">
+            <summary>
+            Gets the error code as an integer.
+            </summary>
+            <value>The error code.</value>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IAnyFeeder&quot;]/Member[@name=&quot;ErrorCode&quot;]/*" />
+        </member>
+        <member name="P:Ace.Feeder.Server.AnyFeeder.IAnyFeeder.ErrorMessage">
+            <summary>
+            Gets the error message.
+            </summary>
+            <value>The error message.</value>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IAnyFeeder&quot;]/Member[@name=&quot;ErrorMessage&quot;]/*" />
+        </member>
+        <member name="P:Ace.Feeder.Server.AnyFeeder.IAnyFeeder.IsBusy">
+            <summary>
+            Gets a value indicating whether this instance is busy.
+            </summary>
+            <value><c>true</c> if this instance is busy; otherwise, <c>false</c>.</value>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IAnyFeeder&quot;]/Member[@name=&quot;IsBusy&quot;]/*" />
+        </member>
+        <member name="P:Ace.Feeder.Server.AnyFeeder.IAnyFeeder.IsWellConfigured">
+            <summary>
+            Gets a value indicating whether this instance is well configured.
+            </summary>
+            <value>
+            	<c>true</c> if this instance is well configured; otherwise, <c>false</c>.
+            </value>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IAnyFeeder&quot;]/Member[@name=&quot;IsWellConfigured&quot;]/*" />
+        </member>
+        <member name="P:Ace.Feeder.Server.AnyFeeder.IAnyFeeder.CurrentFeederState">
+            <summary>
+            Gets or sets the  current state of the feeder.
+            </summary>
+            <value>The state of the AnyFeeder.</value>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IAnyFeeder&quot;]/Member[@name=&quot;CurrentFeederState&quot;]/*" />
+        </member>
+        <member name="P:Ace.Feeder.Server.AnyFeeder.IAnyFeeder.ControlProperties">
+            <summary>
+            Gets AnyFeederControlProperties
+            </summary>
+            <value>The control values.</value>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.cs" region="Header" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.vb" region="Header" />
+		</example>
+        </member>
+        <member name="P:Ace.Feeder.Server.AnyFeeder.IAnyFeeder.AdeptSightIndex">
+            <summary>
+            Gets or sets the index used to identify the AnyFeeder from Adept Sight 3
+            </summary>
+            <value>The index of this Anyfeeder in adept sight.</value>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.cs" region="Header" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.vb" region="Header" />
+		</example>
+        </member>
+        <member name="P:Ace.Feeder.Server.AnyFeeder.IAnyFeeder.ComPortName">
+            <summary>
+            Gets the name of the COM port.
+            </summary>
+            <value>The name of the COM port.</value>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.cs" region="Header" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.vb" region="Header" />
+		</example>
+        </member>
+        <member name="P:Ace.Feeder.Server.AnyFeeder.IAnyFeeder.AdeptSightVRunCommand">
+            <summary>
+            Gets or sets the command Feeder has to perform at a VRUN in AdeptSight 3 configuration
+            </summary>
+            <value>The index of this Anyfeeder in adept sight.</value>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.cs" region="Header" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.vb" region="Header" />
+		</example>
+        </member>
+        <member name="P:Ace.Feeder.Server.AnyFeeder.IAnyFeeder.ChannelType">
+            <summary>
+            Gets the type of the channel used by this Anyfeeder.
+            </summary>
+            <value>The type of the channel.</value>
+        </member>
+        <member name="P:Ace.Feeder.Server.AnyFeeder.IAnyFeeder.RunningCommand">
+            <summary>
+            Gets or sets the  current running command of the AnyFeeder.
+            </summary>
+            <value>The command.</value>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.cs" region="ControlSamples" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.vb" region="ControlSamples" />
+		</example>
+        </member>
+        <member name="P:Ace.Feeder.Server.AnyFeeder.IAnyFeeder.Log">
+            <summary>
+            Gets the log associated with the communications channel
+            </summary>
+            <value>
+            The log.
+            </value>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IAnyFeeder&quot;]/Member[@name=&quot;Log&quot;]/*" />
+        </member>
+        <member name="P:Ace.Feeder.Server.AnyFeeder.IAnyFeeder.FirmwareVersion">
+            <summary>
+            Gets the firmware version for the AnyFeeder
+            </summary>
+            <value>
+            The firmware version.
+            </value>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IAnyFeeder&quot;]/Member[@name=&quot;FirmwareVersion&quot;]/*" />
+        </member>
+        <member name="P:Ace.Feeder.Server.AnyFeeder.IAnyFeeder.Model">
+            <summary>
+            Gets or sets the model of the AnyFeeder.
+            </summary>
+            <value>
+            The AnyFeeder model.
+            </value>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IAnyFeeder&quot;]/Member[@name=&quot;Model&quot;]/*" />
+        </member>
+        <member name="P:Ace.Feeder.Server.AnyFeeder.IAnyFeeder.Sequences">
+            <summary>
+            Gets the custom defined motion sequences 
+            </summary>
+            <value>
+            The sequences.
+            </value>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IAnyFeeder&quot;]/Member[@name=&quot;Sequences&quot;]/*" />
+        </member>
+        <member name="M:Ace.Feeder.Server.AnyFeeder.IAnyFeeder.FeedForward(System.Boolean)">
+            <summary>
+            Performs a FeedForward operation. This action makes the parts advancing forward on the picking surface.
+            </summary>
+            <param name="waitCompletion">if set to <c>true</c> [wait completion].</param>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.cs" region="ControlSamples" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.vb" region="ControlSamples" />
+		</example>
+        </member>
+        <member name="M:Ace.Feeder.Server.AnyFeeder.IAnyFeeder.FeedBackward(System.Boolean)">
+            <summary>
+            Performs a FeedBackward operation. This action makes the parts advancing Backward on the picking surface.
+            </summary>
+            <param name="waitCompletion">if set to <c>true</c> [wait completion].</param>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.cs" region="ControlSamples" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.vb" region="ControlSamples" />
+		</example>
+        </member>
+        <member name="M:Ace.Feeder.Server.AnyFeeder.IAnyFeeder.FeedFlipForward(System.Boolean)">
+            <summary>
+            Performs a Feed/Flip Forward operation. This action makes the parts advancing forward on the picking surface and shakes them in the same time.
+            </summary>
+            <param name="waitCompletion">if set to <c>true</c> [wait completion].</param>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.cs" region="ControlSamples" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.vb" region="ControlSamples" />
+		</example>
+        </member>
+        <member name="M:Ace.Feeder.Server.AnyFeeder.IAnyFeeder.FeedFlipBackward(System.Boolean)">
+            <summary>
+            Performs a Feed/Flip Backward operation.This action makes the parts advancing backward on the picking surface and shakes them in the same time.
+            </summary>
+            <param name="waitCompletion">if set to <c>true</c> [wait completion].</param>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.cs" region="ControlSamples" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.vb" region="ControlSamples" />
+		</example>
+        </member>
+        <member name="M:Ace.Feeder.Server.AnyFeeder.IAnyFeeder.Flip(System.Boolean)">
+            <summary>
+            Performs a Flip operation. This action shakes the parts to separate and/or flip them.
+            </summary>
+            <param name="waitCompletion">if set to <c>true</c> [wait completion].</param>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.cs" region="ControlSamples" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.vb" region="ControlSamples" />
+		</example>
+        </member>
+        <member name="M:Ace.Feeder.Server.AnyFeeder.IAnyFeeder.Dispense(System.Boolean)">
+            <summary>
+            Performs a Dispense operation. This action makes the parts falling from the bulk to AnyFeeder pick Surface.
+            </summary>
+            <param name="waitCompletion">if set to <c>true</c> [wait completion].</param>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.cs" region="ControlSamples" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.vb" region="ControlSamples" />
+		</example>
+        </member>
+        <member name="M:Ace.Feeder.Server.AnyFeeder.IAnyFeeder.HeavyDispense(System.Boolean)">
+            <summary>
+            Performs a Heavy Dispense operation. This action makes the parts falling from the bulk to AnyFeeder pick Surface.
+            </summary>
+            <param name="waitCompletion">if set to <c>true</c> [wait completion].</param>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.cs" region="ControlSamples" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.vb" region="ControlSamples" />
+		</example>
+        </member>
+        <member name="M:Ace.Feeder.Server.AnyFeeder.IAnyFeeder.Purge(System.Boolean)">
+            <summary>
+            Performs a Purge operation. This operation makes the parts moving backward on the pick surface AND the bulk.
+            </summary>
+            <param name="waitCompletion">if set to <c>true</c> [wait completion].</param>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.cs" region="ControlSamples" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.vb" region="ControlSamples" />
+		</example>
+        </member>
+        <member name="M:Ace.Feeder.Server.AnyFeeder.IAnyFeeder.FirmwareRestart(System.Boolean)">
+            <summary>
+            Restarts the AnyFeeder device firmware
+            </summary>
+            <param name="waitCompletion">if set to <c>true</c> [wait completion].</param>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.cs" region="ControlSamples" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.vb" region="ControlSamples" />
+		</example>
+        </member>
+        <member name="M:Ace.Feeder.Server.AnyFeeder.IAnyFeeder.SwitchBackLight(System.Boolean,System.Boolean)">
+            <summary>
+            Switches the backlight ON or OFF.
+            </summary>
+            <param name="state">Indicates the Backlight state (ON or OFF)</param>
+            <param name="waitCompletion">if set to <c>true</c> [wait completion].</param>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.cs" region="ControlSamples" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.vb" region="ControlSamples" />
+		</example>
+        </member>
+        <member name="M:Ace.Feeder.Server.AnyFeeder.IAnyFeeder.AbortMotion(System.Boolean)">
+            <summary>
+            Stops the current operation performed by the AnyFeeder
+            </summary>
+            <param name="waitCompletion">if set to <c>true</c> [wait completion].</param>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IAnyFeeder&quot;]/Member[@name=&quot;AbortMotion&quot;]/*" />
+        </member>
+        <member name="M:Ace.Feeder.Server.AnyFeeder.IAnyFeeder.SystemInit(System.Boolean)">
+            <summary>
+            Initializes the Feeder object.
+            </summary>
+            <param name="waitCompletion">if set to <c>true</c> [wait completion].</param>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IAnyFeeder&quot;]/Member[@name=&quot;SystemInit&quot;]/*" />
+        </member>
+        <member name="M:Ace.Feeder.Server.AnyFeeder.IAnyFeeder.AddSequence(Ace.Feeder.Server.AnyFeeder.IAnyFeederSequence)">
+            <summary>
+            Adds the custom motion sequence.
+            </summary>
+            <param name="sequence">The sequence.</param>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IAnyFeeder&quot;]/Member[@name=&quot;AddSequence&quot;]/*" />
+        </member>
+        <member name="M:Ace.Feeder.Server.AnyFeeder.IAnyFeeder.RemoveSequence(Ace.Feeder.Server.AnyFeeder.IAnyFeederSequence)">
+            <summary>
+            Removes the custom motion sequence.
+            </summary>
+            <param name="sequence">The sequence.</param>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IAnyFeeder&quot;]/Member[@name=&quot;RemoveSequence&quot;]/*" />
+        </member>
+        <member name="M:Ace.Feeder.Server.AnyFeeder.IAnyFeeder.ExecuteSequence(System.Int32,System.Boolean)">
+            <summary>
+            Executes the sequence with the specified index
+            </summary>
+            <param name="commandIndex">Index of the command.</param>
+            <param name="waitComplete">if set to <c>true</c> wait until the command has completed.</param>
+            <exception cref="T:System.Exception">Unknown Command</exception>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IAnyFeeder&quot;]/Member[@name=&quot;ExecuteSequence&quot;]/*" />
+        </member>
+        <member name="M:Ace.Feeder.Server.AnyFeeder.IAnyFeeder.Delay(System.Int32,System.Boolean)">
+            <summary>
+            Issues a delay of the specified duration in ms.
+            </summary>
+            <param name="duration">The delay ms.</param>
+            <param name="waitCompletion">if set to <c>true</c> wait until the command has completed.</param>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IAnyFeeder&quot;]/Member[@name=&quot;Delay&quot;]/*" />
+        </member>
+        <member name="M:Ace.Feeder.Server.AnyFeeder.IAnyFeeder.ReadFirmwareVersion">
+            <summary>
+            Reads the firmware version.
+            </summary>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IAnyFeeder&quot;]/Member[@name=&quot;ReadFirmwareVersion&quot;]/*" />
+        </member>
+        <member name="T:Ace.Feeder.Server.AnyFeeder.IAnyFeederControlProperties">
+            <summary>
+            AnyFeeder interface 
+            </summary>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.cs" region="Header" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.vb" region="Header" />
+		</example>
+        </member>
+        <member name="P:Ace.Feeder.Server.AnyFeeder.IAnyFeederControlProperties.BackLightState">
+            <summary>
+            Gets or sets the AnyFeeder BackLight activity
+            </summary>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.cs" region="ControlSamples" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.vb" region="ControlSamples" />
+		</example>
+        </member>
+        <member name="P:Ace.Feeder.Server.AnyFeeder.IAnyFeederControlProperties.FeedForwardIterations">
+            <summary>
+            Gets or sets the feed forward action number of iterations
+            </summary>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.cs" region="ControlSamples" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.vb" region="ControlSamples" />
+		</example>
+        </member>
+        <member name="P:Ace.Feeder.Server.AnyFeeder.IAnyFeederControlProperties.FeedForwardSpeed">
+            <summary>
+            Gets or sets the feed forward action speed
+            </summary>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.cs" region="ControlSamples" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.vb" region="ControlSamples" />
+		</example>
+        </member>
+        <member name="P:Ace.Feeder.Server.AnyFeeder.IAnyFeederControlProperties.FeedBackwardIterations">
+            <summary>
+            Gets or sets the feed backward action number of iterations
+            </summary>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.cs" region="ControlSamples" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.vb" region="ControlSamples" />
+		</example>
+        </member>
+        <member name="P:Ace.Feeder.Server.AnyFeeder.IAnyFeederControlProperties.FeedBackwardSpeed">
+            <summary>
+            Gets or sets the feed action speed
+            </summary>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.cs" region="ControlSamples" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.vb" region="ControlSamples" />
+		</example>
+        </member>
+        <member name="P:Ace.Feeder.Server.AnyFeeder.IAnyFeederControlProperties.FeedFlipForwardIterations">
+            <summary>
+            Gets or sets the feed/flip forward action number of iterations
+            </summary>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.cs" region="ControlSamples" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.vb" region="ControlSamples" />
+		</example>
+        </member>
+        <member name="P:Ace.Feeder.Server.AnyFeeder.IAnyFeederControlProperties.FeedFlipForwardSpeed">
+            <summary>
+            Gets or sets the feed/flip forward action speed
+            </summary>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.cs" region="ControlSamples" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.vb" region="ControlSamples" />
+		</example>
+        </member>
+        <member name="P:Ace.Feeder.Server.AnyFeeder.IAnyFeederControlProperties.FeedFlipBackwardIterations">
+            <summary>
+            Gets or sets the feed/flip backward action number of iterations
+            </summary>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.cs" region="ControlSamples" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.vb" region="ControlSamples" />
+		</example>
+        </member>
+        <member name="P:Ace.Feeder.Server.AnyFeeder.IAnyFeederControlProperties.FeedFlipBackwardSpeed">
+            <summary>
+            Gets or sets the feed/flip action speed
+            </summary>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.cs" region="ControlSamples" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.vb" region="ControlSamples" />
+		</example>
+        </member>
+        <member name="P:Ace.Feeder.Server.AnyFeeder.IAnyFeederControlProperties.FlipIterations">
+            <summary>
+            Gets or sets the flip action number of iterations
+            </summary>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.cs" region="ControlSamples" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.vb" region="ControlSamples" />
+		</example>
+        </member>
+        <member name="P:Ace.Feeder.Server.AnyFeeder.IAnyFeederControlProperties.FlipSpeed">
+            <summary>
+            Gets or sets the flip action speed
+            </summary>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.cs" region="ControlSamples" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.vb" region="ControlSamples" />
+		</example>
+        </member>
+        <member name="P:Ace.Feeder.Server.AnyFeeder.IAnyFeederControlProperties.DispenseIterations">
+            <summary>
+            Gets or sets the dispense action number of iterations
+            </summary>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.cs" region="ControlSamples" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.vb" region="ControlSamples" />
+		</example>
+        </member>
+        <member name="P:Ace.Feeder.Server.AnyFeeder.IAnyFeederControlProperties.DispenseSpeed">
+            <summary>
+            Gets or sets the dispense action speed
+            </summary>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.cs" region="ControlSamples" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.vb" region="ControlSamples" />
+		</example>
+        </member>
+        <member name="P:Ace.Feeder.Server.AnyFeeder.IAnyFeederControlProperties.HeavyDispenseIterations">
+            <summary>
+            Gets or sets the heavy dispense action number of iterations
+            </summary>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.cs" region="ControlSamples" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.vb" region="ControlSamples" />
+		</example>
+        </member>
+        <member name="P:Ace.Feeder.Server.AnyFeeder.IAnyFeederControlProperties.HeavyDispenseSpeed">
+            <summary>
+            Gets or sets the heavy dispense action speed
+            </summary>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.cs" region="ControlSamples" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.vb" region="ControlSamples" />
+		</example>
+        </member>
+        <member name="P:Ace.Feeder.Server.AnyFeeder.IAnyFeederControlProperties.PurgeIterations">
+            <summary>
+            Gets or sets the purge action number of iterations
+            </summary>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.cs" region="ControlSamples" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.vb" region="ControlSamples" />
+		</example>
+        </member>
+        <member name="P:Ace.Feeder.Server.AnyFeeder.IAnyFeederControlProperties.PurgeSpeed">
+            <summary>
+            Gets or sets the purge action speed
+            </summary>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.cs" region="ControlSamples" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IAnyFeeder_Samples.vb" region="ControlSamples" />
+		</example>
+        </member>
+        <member name="T:Ace.Feeder.Server.FeederState">
+            <summary>
+            The possible states of a feeder object
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.FeederState.Available">
+            <summary>
+            The feeder is available
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.FeederState.Busy">
+            <summary>
+            The feeder is busy
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.FeederState.Cycling">
+            <summary>
+            The feeder is cycling
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.FeederState.WaitingForDelayBeforeStart">
+            <summary>
+            The Feeder is waiting for the delay before start
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.FeederState.WaitingForDwell">
+            <summary>
+            The Feeder is waiting for the Dwell delay
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.FeederState.WaitingForHandshakeHighLevel">
+            <summary>
+            The Feeder is waiting for the handshake input (high value)
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.FeederState.WaitingForHandshakeLowLevel">
+            <summary>
+            The Feeder is waiting for the handshake input  (low value)
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.FeederState.NotStarted">
+            <summary>
+            The Feeder is not Started. Mainly used in the case a Controller task is required.
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.FeederState.NotAvailable">
+            <summary>
+            The Feeder is not available.
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.FeederState.FeedRequestSent">
+            <summary>
+            A Feed request was sent. This is a fugitive state, between the moment we sent the Feed command
+            and the moment V+ sends actual status back.
+            </summary>
+        </member>
+        <member name="T:Ace.Feeder.Server.FeederStatusControlAttribute">
+            <summary>
+            Defines the Status control used for the different feeder types
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.FeederStatusControlAttribute.controlType">
+            <summary>
+            The type of the control
+            </summary>
+        </member>
+        <member name="M:Ace.Feeder.Server.FeederStatusControlAttribute.CreateEditorControl(Ace.Core.Client.IAceClient,System.Object)">
+            <summary>
+            Create a status control for the specified object.
+            </summary>
+        </member>
+        <member name="M:Ace.Feeder.Server.FeederStatusControlAttribute.#ctor(System.Type)">
+            <summary>
+            Specify that the class to which this attribute is applied has an editor of the specified type.
+            </summary>
+        </member>
+        <member name="P:Ace.Feeder.Server.FeederStatusControlAttribute.ControlType">
+            <summary>
+            Gets the type of the editor for the class to which this attribute is applied.
+            </summary>
+        </member>
+        <member name="T:Ace.Feeder.Server.Flexibowl.Commands.IFlexibowlFeederBaseCommand">
+            <summary>
+            The base flexibowl command class
+            </summary>
+        </member>
+        <member name="P:Ace.Feeder.Server.Flexibowl.Commands.IFlexibowlFeederBaseCommand.Details">
+            <summary>
+            Gets the details associated with the command
+            </summary>
+            <value>
+            The details.
+            </value>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlFeederBaseCommand&quot;]/Member[@name=&quot;Details&quot;]/*" />
+        </member>
+        <member name="P:Ace.Feeder.Server.Flexibowl.Commands.IFlexibowlFeederBaseCommand.Command">
+            <summary>
+            Gets the current operation Command
+            </summary>
+            <value>
+            The FlexiblowCommands type
+            </value>		
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlFeederBaseCommand&quot;]/Member[@name=&quot;Command&quot;]/*" />
+        </member>
+        <member name="E:Ace.Feeder.Server.Flexibowl.Commands.IFlexibowlFeederBaseCommand.PropertyModified">
+            <summary>
+            An event raised when the object is modified.
+            </summary>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlFeederBaseCommand&quot;]/Member[@name=&quot;PropertyModified&quot;]/*" />
+        </member>
+        <member name="M:Ace.Feeder.Server.Flexibowl.Commands.IFlexibowlFeederBaseCommand.Run">
+            <summary>
+            Runs the Command.
+            </summary>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlFeederBaseCommand&quot;]/Member[@name=&quot;Run&quot;]/*" />
+        </member>
+        <member name="M:Ace.Feeder.Server.Flexibowl.Commands.IFlexibowlFeederBaseCommand.WaitDone">
+            <summary>
+            Waits the command is done.
+            </summary>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlFeederBaseCommand&quot;]/Member[@name=&quot;WaitDone&quot;]/*" />
+        </member>
+        <member name="T:Ace.Feeder.Server.Flexibowl.FlexibowlState">
+            <summary>
+            The possible states of a flexibowl feeder
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.Flexibowl.FlexibowlState.Idle">
+            <summary>
+            The feeder is in idle state
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.Flexibowl.FlexibowlState.Busy">
+            <summary>
+            The feeder is busy
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.Flexibowl.FlexibowlState.Error">
+            <summary>
+            The feeder is cycling
+            </summary>
+        </member>
+        <member name="T:Ace.Feeder.Server.Flexibowl.FlexibowlFeederModel">
+            <summary>
+            The types of flexibowl feeder models
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.Flexibowl.FlexibowlFeederModel.Flexibowl350">
+            <summary>
+            Flexibowl 350
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.Flexibowl.FlexibowlFeederModel.Flexibowl500">
+            <summary>
+            Flexibowl 500
+            </summary>
+        </member>
+        <member name="T:Ace.Feeder.Server.Flexibowl.FlexibowlCommands">
+            <summary>
+            Contains the different commands available
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.Flexibowl.FlexibowlCommands.None">
+            <summary>
+            No command
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.Flexibowl.FlexibowlCommands.Blow">
+            <summary>
+            Command performing a blow operation
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.Flexibowl.FlexibowlCommands.Forward">
+            <summary>
+            Command performing a Forward operation
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.Flexibowl.FlexibowlCommands.Shake">
+            <summary>
+            Command performing a Shake operation
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.Flexibowl.FlexibowlCommands.Flip_1">
+            <summary>
+            Command performing a flip on piston 1
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.Flexibowl.FlexibowlCommands.Flip_2">
+            <summary>
+            Command performing a flip on piston 2
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.Flexibowl.FlexibowlCommands.FlipBlow">
+            <summary>
+            Command performing a Flip / Blow operation
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.Flexibowl.FlexibowlCommands.ForwardBlow">
+            <summary>
+            Command performing a Forward / Blow operation
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.Flexibowl.FlexibowlCommands.ForwardFlipBlow">
+            <summary>
+            Command performing a Forward / Flip / Blow
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.Flexibowl.FlexibowlCommands.Light_On">
+            <summary>
+            Command performing a light on
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.Flexibowl.FlexibowlCommands.Light_Off">
+            <summary>
+            Command performing a light off
+            </summary>	
+        </member>
+        <member name="F:Ace.Feeder.Server.Flexibowl.FlexibowlCommands.Delay">
+            <summary>
+            Command performing a delay
+            </summary>	
+        </member>
+        <member name="F:Ace.Feeder.Server.Flexibowl.FlexibowlCommands.Reset">
+            <summary>
+            Command performing a reset
+            </summary>	
+        </member>
+        <member name="T:Ace.Feeder.Server.Flexibowl.FlexibowlScanEventArgs">
+            <summary>
+            DeviceNet information data structure.
+            </summary>	
+        </member>
+        <member name="M:Ace.Feeder.Server.Flexibowl.FlexibowlScanEventArgs.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Ace.Feeder.Server.Flexibowl.FlexibowlScanEventArgs"/> class.
+            </summary>			
+        </member>
+        <member name="M:Ace.Feeder.Server.Flexibowl.FlexibowlScanEventArgs.#ctor(Ace.Feeder.Server.Flexibowl.IFlexibowlScanDetail)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Ace.Feeder.Server.Flexibowl.FlexibowlScanEventArgs"/> class.
+            </summary>
+            <param name="fbScanDetail">The scan details.</param>		
+        </member>
+        <member name="P:Ace.Feeder.Server.Flexibowl.FlexibowlScanEventArgs.FBScanDetail">
+            <summary>
+            The current progress percentage between 0 and 100.
+            </summary>		
+        </member>
+        <member name="T:Ace.Feeder.Server.Flexibowl.IFlexibowlFeederControlProperties">
+            <summary>
+            Identifies the properties associated with the flexibowl feeder control.
+            </summary>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlFeederControlProperties&quot;]/ClassHeader/*" />
+        </member>
+        <member name="P:Ace.Feeder.Server.Flexibowl.IFlexibowlFeederControlProperties.CurrentCommand">
+            <summary>
+            Gets or sets the current command through AdeptSight
+            </summary>
+            <value>
+            The current command.
+            </value>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlFeederControlProperties&quot;]/Member[@name=&quot;CurrentCommand&quot;]/*" />
+        </member>
+        <member name="P:Ace.Feeder.Server.Flexibowl.IFlexibowlFeederControlProperties.Acceleration">
+            <summary>
+            Gets or sets the handling acceleration
+            </summary>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlFeederControlProperties&quot;]/Member[@name=&quot;Acceleration&quot;]/*" />
+        </member>
+        <member name="P:Ace.Feeder.Server.Flexibowl.IFlexibowlFeederControlProperties.Deceleration">
+            <summary>
+            Gets or sets the handling deceleration
+            </summary>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlFeederControlProperties&quot;]/Member[@name=&quot;Deceleration&quot;]/*" />
+        </member>
+        <member name="P:Ace.Feeder.Server.Flexibowl.IFlexibowlFeederControlProperties.Angle">
+            <summary>
+            Gets or sets the handling Angle
+            </summary>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlFeederControlProperties&quot;]/Member[@name=&quot;Angle&quot;]/*" />
+        </member>
+        <member name="P:Ace.Feeder.Server.Flexibowl.IFlexibowlFeederControlProperties.Speed">
+            <summary>
+            Gets or sets the handling Speed
+            </summary>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlFeederControlProperties&quot;]/Member[@name=&quot;Speed&quot;]/*" />
+        </member>
+        <member name="P:Ace.Feeder.Server.Flexibowl.IFlexibowlFeederControlProperties.FlipCount">
+            <summary>
+            Gets or sets the flip 1 count
+            </summary>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlFeederControlProperties&quot;]/Member[@name=&quot;FlipCount&quot;]/*" />
+        </member>
+        <member name="P:Ace.Feeder.Server.Flexibowl.IFlexibowlFeederControlProperties.FlipDelay">
+            <summary>
+            Gets or sets the flip 1 delay
+            </summary>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlFeederControlProperties&quot;]/Member[@name=&quot;FlipDelay&quot;]/*" />
+        </member>
+        <member name="P:Ace.Feeder.Server.Flexibowl.IFlexibowlFeederControlProperties.ShakeAccel">
+            <summary>
+            Gets or sets the shake acceleration
+            </summary>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlFeederControlProperties&quot;]/Member[@name=&quot;ShakeAccel&quot;]/*" />
+        </member>
+        <member name="P:Ace.Feeder.Server.Flexibowl.IFlexibowlFeederControlProperties.ShakeDecel">
+            <summary>
+            Gets or sets the shake deceleration
+            </summary>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlFeederControlProperties&quot;]/Member[@name=&quot;ShakeDecel&quot;]/*" />
+        </member>
+        <member name="P:Ace.Feeder.Server.Flexibowl.IFlexibowlFeederControlProperties.ShakeAngle">
+            <summary>
+            Gets or sets the shake angle
+            </summary>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlFeederControlProperties&quot;]/Member[@name=&quot;ShakeAngle&quot;]/*" />
+        </member>
+        <member name="P:Ace.Feeder.Server.Flexibowl.IFlexibowlFeederControlProperties.ShakeSpeed">
+            <summary>
+            Gets or sets the shake speed
+            </summary>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlFeederControlProperties&quot;]/Member[@name=&quot;ShakeSpeed&quot;]/*" />
+        </member>
+        <member name="P:Ace.Feeder.Server.Flexibowl.IFlexibowlFeederControlProperties.ShakeCount">
+            <summary>
+            Gets or sets the shake count
+            </summary>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlFeederControlProperties&quot;]/Member[@name=&quot;ShakeCount&quot;]/*" />
+        </member>
+        <member name="P:Ace.Feeder.Server.Flexibowl.IFlexibowlFeederControlProperties.BlowTime">
+            <summary>
+            Gets or sets the blow time
+            </summary>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlFeederControlProperties&quot;]/Member[@name=&quot;BlowTime&quot;]/*" />
+        </member>
+        <member name="E:Ace.Feeder.Server.Flexibowl.IFlexibowlFeederControlProperties.PropertyModified">
+            <summary>
+            An event raised when the object is modified.
+            </summary>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlFeederControlProperties&quot;]/Member[@name=&quot;PropertyModified&quot;]/*" />
+        </member>
+        <member name="T:Ace.Feeder.Server.Flexibowl.IFlexibowlFeeder">
+            <summary>
+            Represents a physical instance of a Flexibowl feeder.
+            </summary>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlFeeder&quot;]/ClassHeader/*" />
+        </member>
+        <member name="P:Ace.Feeder.Server.Flexibowl.IFlexibowlFeeder.IsBusy">
+            <summary>
+            Gets the flag indicating a command is running
+            </summary>
+            <value>
+            	<c>true</c> if a command is running; otherwise, <c>false</c>.
+            </value>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlFeeder&quot;]/Member[@name=&quot;IsBusy&quot;]/*" />
+        </member>
+        <member name="P:Ace.Feeder.Server.Flexibowl.IFlexibowlFeeder.Address">
+            <summary>
+            Gets or sets the IP address used to communicate with the feeder
+            </summary>
+            <value>
+            The address.
+            </value>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlFeeder&quot;]/Member[@name=&quot;Address&quot;]/*" />
+        </member>
+        <member name="P:Ace.Feeder.Server.Flexibowl.IFlexibowlFeeder.AdeptSightIndex">
+            <summary>
+            Gets or sets the index used to identify the feeder from Adept Sight 3
+            </summary>
+            <value>The index of this feeder in adept sight.</value>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlFeeder&quot;]/Member[@name=&quot;AdeptSightIndex&quot;]/*" />
+        </member>
+        <member name="P:Ace.Feeder.Server.Flexibowl.IFlexibowlFeeder.ControlProperties">
+            <summary>
+            Gets AnyFeederControlProperties
+            </summary>
+            <value>The control values.</value>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlFeeder&quot;]/Member[@name=&quot;ControlProperties&quot;]/*" />
+        </member>
+        <member name="P:Ace.Feeder.Server.Flexibowl.IFlexibowlFeeder.Model">
+            <summary>
+            Gets or sets the model of the feeder.
+            </summary>
+            <value>
+            The AnyFeeder model.
+            </value>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlFeeder&quot;]/Member[@name=&quot;Model&quot;]/*" />
+        </member>
+        <member name="P:Ace.Feeder.Server.Flexibowl.IFlexibowlFeeder.Log">
+            <summary>
+            Gets the log associated with the communications channel
+            </summary>
+            <value>
+            The log.
+            </value>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlFeeder&quot;]/Member[@name=&quot;Log&quot;]/*" />
+        </member>
+        <member name="P:Ace.Feeder.Server.Flexibowl.IFlexibowlFeeder.IsError">
+            <summary>
+            Gets a value indicating whether the communication channel is in error
+            </summary>
+            <value>
+              <c>true</c> if this instance is error; otherwise, <c>false</c>.
+            </value>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlFeeder&quot;]/Member[@name=&quot;IsError&quot;]/*" />
+        </member>
+        <member name="P:Ace.Feeder.Server.Flexibowl.IFlexibowlFeeder.Error">
+            <summary>
+            Gets an error message associated with the channel
+            </summary>
+            <value>
+            The error.
+            </value>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlFeeder&quot;]/Member[@name=&quot;Error&quot;]/*" />
+        </member>
+        <member name="P:Ace.Feeder.Server.Flexibowl.IFlexibowlFeeder.Sequences">
+            <summary>
+            Gets the custom defined motion sequences 
+            </summary>
+            <value>
+            The sequences.
+            </value>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlFeeder&quot;]/Member[@name=&quot;Sequences&quot;]/*" />
+        </member>
+        <member name="M:Ace.Feeder.Server.Flexibowl.IFlexibowlFeeder.Blow(System.Boolean)">
+            <summary>
+            Performs a blow operation. 
+            </summary>
+            <param name="waitCompletion">Do we wait for the end of the operation</param>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlFeeder&quot;]/Member[@name=&quot;Blow&quot;]/*" />
+        </member>
+        <member name="M:Ace.Feeder.Server.Flexibowl.IFlexibowlFeeder.Forward(System.Boolean)">
+            <summary>
+            Performs a forward operation. 
+            </summary>
+            <param name="waitCompletion">Do we wait for the end of the operation</param>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlFeeder&quot;]/Member[@name=&quot;Forward&quot;]/*" />
+        </member>
+        <member name="M:Ace.Feeder.Server.Flexibowl.IFlexibowlFeeder.Shake(System.Boolean)">
+            <summary>
+            Performs a shake operation. 
+            </summary>
+            <param name="waitCompletion">Do we wait for the end of the operation</param>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlFeeder&quot;]/Member[@name=&quot;shake&quot;]/*" />
+        </member>
+        <member name="M:Ace.Feeder.Server.Flexibowl.IFlexibowlFeeder.Flip(System.Boolean,System.Int32)">
+            <summary>
+            Performs a flip operation.
+            </summary>
+            <param name="waitCompletion">Do we wait for the end of the operation</param>
+            <param name="piston">The piston to activate.</param>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlFeeder&quot;]/Member[@name=&quot;Flip&quot;]/*" />
+        </member>
+        <member name="M:Ace.Feeder.Server.Flexibowl.IFlexibowlFeeder.FlipBlow(System.Boolean)">
+            <summary>
+            Performs a flip operation.
+            </summary>
+            <param name="waitCompletion">Do we wait for the end of the operation</param>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlFeeder&quot;]/Member[@name=&quot;FlipBlow&quot;]/*" />
+        </member>
+        <member name="M:Ace.Feeder.Server.Flexibowl.IFlexibowlFeeder.ForwardBlow(System.Boolean)">
+            <summary>
+            Performs a forward / blow operation. 
+            </summary>
+            <param name="waitCompletion">Do we wait for the end of the operation</param>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlFeeder&quot;]/Member[@name=&quot;ForwardBlow&quot;]/*" />
+        </member>
+        <member name="M:Ace.Feeder.Server.Flexibowl.IFlexibowlFeeder.ForwardFlipBlow(System.Boolean)">
+            <summary>
+            Performs a forward / flip / blow operation. 
+            </summary>
+            <param name="waitCompletion">Do we wait for the end of the operation</param>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlFeeder&quot;]/Member[@name=&quot;ForwardFlipBlow&quot;]/*" />
+        </member>
+        <member name="M:Ace.Feeder.Server.Flexibowl.IFlexibowlFeeder.Reset(System.Boolean)">
+            <summary>
+            Performs a reset operation. 
+            </summary>
+            <param name="waitCompletion">Do we wait for the end of the operation</param>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlFeeder&quot;]/Member[@name=&quot;Reset&quot;]/*" />
+        </member>
+        <member name="M:Ace.Feeder.Server.Flexibowl.IFlexibowlFeeder.Light(System.Boolean,System.Boolean)">
+            <summary>
+            Performs a light on/off operation.
+            </summary>
+            <param name="waitCompletion">Do we wait for the end of the operation</param>
+            <param name="on">Is the light to be turned on</param>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlFeeder&quot;]/Member[@name=&quot;Light&quot;]/*" />
+        </member>
+        <member name="M:Ace.Feeder.Server.Flexibowl.IFlexibowlFeeder.Execute(Ace.Feeder.Server.Flexibowl.Commands.IFlexibowlFeederBaseCommand,System.Boolean)">
+            <summary>
+            Executes the specified command.
+            </summary>
+            <param name="command">The command.</param>
+            <param name="waitCompletion">Do we wait for the end of the operation</param>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlFeeder&quot;]/Member[@name=&quot;Execute&quot;]/*" />
+        </member>
+        <member name="M:Ace.Feeder.Server.Flexibowl.IFlexibowlFeeder.AddSequence(Ace.Feeder.Server.Flexibowl.IFlexibowlFeederSequence)">
+            <summary>
+            Adds the custom motion sequence.
+            </summary>
+            <param name="sequence">The sequence.</param>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlFeeder&quot;]/Member[@name=&quot;AddSequence&quot;]/*" />
+        </member>
+        <member name="M:Ace.Feeder.Server.Flexibowl.IFlexibowlFeeder.RemoveSequence(Ace.Feeder.Server.Flexibowl.IFlexibowlFeederSequence)">
+            <summary>
+            Removes the custom motion sequence.
+            </summary>
+            <param name="sequence">The sequence.</param>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlFeeder&quot;]/Member[@name=&quot;RemoveSequence&quot;]/*" />
+        </member>
+        <member name="M:Ace.Feeder.Server.Flexibowl.IFlexibowlFeeder.ExecuteSequence(System.Int32,System.Boolean)">
+            <summary>
+            Executes the sequence with the specified index
+            </summary>
+            <param name="commandIndex">Index of the command.</param>
+            <param name="waitComplete">if set to <c>true</c> wait until the command has completed.</param>
+            <exception cref="T:System.Exception">Unknown Command</exception>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlFeeder&quot;]/Member[@name=&quot;ExecuteSequence&quot;]/*" />
+        </member>
+        <member name="T:Ace.Feeder.Server.Flexibowl.IFlexibowlFeederSequence">
+            <summary>
+            Represents a sequence of Flexibowl feeder operations
+            </summary>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlFeederSequence&quot;]/ClassHeader/*" />
+        </member>
+        <member name="E:Ace.Feeder.Server.Flexibowl.IFlexibowlFeederSequence.PropertyModified">
+            <summary>
+            An event raised when a property is modified. Note that not all properties will throw this event.
+            </summary>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlFeederSequence&quot;]/Member[@name=&quot;PropertyModified&quot;]/*" />
+        </member>
+        <member name="P:Ace.Feeder.Server.Flexibowl.IFlexibowlFeederSequence.CommandIndex">
+            <summary>
+            Gets or sets the index used to trigger the command from V+.
+            </summary>
+            <value>
+            The index of the command.
+            </value>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlFeederSequence&quot;]/Member[@name=&quot;CommandIndex&quot;]/*" />
+        </member>
+        <member name="P:Ace.Feeder.Server.Flexibowl.IFlexibowlFeederSequence.Operations">
+            <summary>
+            Gets the operations associated with the sequence
+            </summary>
+            <value>
+            The operations.
+            </value>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlFeederSequence&quot;]/Member[@name=&quot;Operations&quot;]/*" />
+        </member>
+        <member name="M:Ace.Feeder.Server.Flexibowl.IFlexibowlFeederSequence.Execute(Ace.Feeder.Server.Flexibowl.IFlexibowlFeeder,System.Boolean)">
+            <summary>
+            Executes the sequence.
+            </summary>
+            <param name="feeder">The feeder used in the execution sequence.</param>
+            <param name="waitComplete">if set to <c>true</c> wait until execution has completed.</param>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlFeederSequence&quot;]/Member[@name=&quot;Execute&quot;]/*" />
+        </member>
+        <member name="M:Ace.Feeder.Server.Flexibowl.IFlexibowlFeederSequence.Add(System.Collections.Generic.List{Ace.Feeder.Server.Flexibowl.Commands.IFlexibowlFeederBaseCommand})">
+            <summary>
+            Adds the specified list operations.
+            </summary>
+            <param name="operations">The list operations.</param>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlFeederSequence&quot;]/Member[@name=&quot;Add&quot;]/*" />
+        </member>
+        <member name="M:Ace.Feeder.Server.Flexibowl.IFlexibowlFeederSequence.Add(Ace.Feeder.Server.Flexibowl.Commands.IFlexibowlFeederBaseCommand)">
+            <summary>
+            Adds the specified operation.
+            </summary>
+            <param name="operation">The operation.</param>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlFeederSequence&quot;]/Member[@name=&quot;Add&quot;]/*" />
+        </member>
+        <member name="M:Ace.Feeder.Server.Flexibowl.IFlexibowlFeederSequence.Insert(System.Int32,Ace.Feeder.Server.Flexibowl.Commands.IFlexibowlFeederBaseCommand)">
+            <summary>
+            Inserts the specified operation.
+            </summary>
+            <param name="index">The index.</param>
+            <param name="operation">The operation.</param>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlFeederSequence&quot;]/Member[@name=&quot;Insert&quot;]/*" />
+        </member>
+        <member name="M:Ace.Feeder.Server.Flexibowl.IFlexibowlFeederSequence.Remove(Ace.Feeder.Server.Flexibowl.Commands.IFlexibowlFeederBaseCommand)">
+            <summary>
+            Removes the specified operation.
+            </summary>
+            <param name="operation">The operation.</param>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlFeederSequence&quot;]/Member[@name=&quot;Remove&quot;]/*" />
+        </member>
+        <member name="M:Ace.Feeder.Server.Flexibowl.IFlexibowlFeederSequence.RemoveAt(System.Int32)">
+            <summary>
+            Removes the operation at the specified index
+            </summary>
+            <param name="index">The index.</param>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlFeederSequence&quot;]/Member[@name=&quot;RemoveAt&quot;]/*" />
+        </member>
+        <member name="M:Ace.Feeder.Server.Flexibowl.IFlexibowlFeederSequence.IndexOf(Ace.Feeder.Server.Flexibowl.Commands.IFlexibowlFeederBaseCommand)">
+            <summary>
+            Returns the index of the specified operation.
+            </summary>
+            <param name="operation">The operation.</param>
+            <returns>The index of the operation</returns>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlFeederSequence&quot;]/Member[@name=&quot;IndexOf&quot;]/*" />
+        </member>
+        <member name="T:Ace.Feeder.Server.Flexibowl.IFlexibowlScanDetail">
+            <summary>
+            Represents a physical instance of a Flexibowl feeder.
+            </summary>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlScanDetail&quot;]/ClassHeader/*" />
+        </member>
+        <member name="P:Ace.Feeder.Server.Flexibowl.IFlexibowlScanDetail.RespondMsg">
+            <summary>
+            Respond message from flexibowl
+            </summary>		
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlScanDetail&quot;]/Member[@name=&quot;RespondMsg&quot;]/*" />		
+        </member>
+        <member name="P:Ace.Feeder.Server.Flexibowl.IFlexibowlScanDetail.RespondingAddress">
+            <summary>
+            Respond IP Address from flexibowl
+            </summary>		
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlScanDetail&quot;]/Member[@name=&quot;RespondingAddress&quot;]/*" />		
+        </member>
+        <member name="P:Ace.Feeder.Server.Flexibowl.IFlexibowlScanDetail.RespondingSubNet">
+            <summary>
+            Respond Subnet mask from flexibowl
+            </summary>		
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlScanDetail&quot;]/Member[@name=&quot;RespondingSubNet&quot;]/*" />		
+        </member>
+        <member name="P:Ace.Feeder.Server.Flexibowl.IFlexibowlScanDetail.RespondingGateway">
+            <summary>
+            Respond Gateway from flexibowl
+            </summary>		
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlScanDetail&quot;]/Member[@name=&quot;RespondingGateway&quot;]/*" />		
+        </member>
+        <member name="T:Ace.Feeder.Server.Flexibowl.IFlexibowlScanManager">
+            <summary>
+            Represents a physical instance of a Flexibowl feeder.
+            </summary>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlScanManager&quot;]/ClassHeader/*" />
+        </member>
+        <member name="M:Ace.Feeder.Server.Flexibowl.IFlexibowlScanManager.StartScan(System.Int32)">
+            <summary>
+            Starts the scan of flexibowl IP Addresses
+            </summary>
+            <param name="waitTimeMillis">Response wait time in milliseconds</param>		
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlScanManager&quot;]/Member[@name=&quot;StartScan&quot;]/*" />
+        </member>
+        <member name="M:Ace.Feeder.Server.Flexibowl.IFlexibowlScanManager.StopScan">
+            <summary>
+            Stop the scan of controller IP Addresses
+            </summary>		
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlScanManager&quot;]/Member[@name=&quot;StopScan&quot;]/*" />
+        </member>
+        <member name="M:Ace.Feeder.Server.Flexibowl.IFlexibowlScanManager.WaitScan">
+            <summary>
+            Wait for scan operations to complete
+            </summary>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlScanManager&quot;]/Member[@name=&quot;WaitScan&quot;]/*" />
+        </member>
+        <member name="E:Ace.Feeder.Server.Flexibowl.IFlexibowlScanManager.Detected">
+            <summary>
+            Occurs when a flexibowl is detected.
+            </summary>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlScanManager&quot;]/Member[@name=&quot;Detected&quot;]/*" />
+        </member>
+        <member name="E:Ace.Feeder.Server.Flexibowl.IFlexibowlScanManager.ScanCompleted">
+            <summary>
+            Occurs when a flexibowl scan has completed.
+            </summary>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFlexibowlScanManager&quot;]/Member[@name=&quot;ScanCompleted&quot;]/*" />
+        </member>
+        <member name="T:Ace.Feeder.Server.IFeeder">
+            <summary>
+            Represents a physical instance of an AnyFeeder.
+            </summary>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IFeeder_Samples.cs" region="Header" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IFeeder_Samples.vb" region="Header" />
+		</example>
+        </member>
+        <member name="P:Ace.Feeder.Server.IFeeder.IsInError">
+            <summary>
+            Gets an information to know if a feeding device is in an error state.
+            </summary>
+            <value>The Error state.</value>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IFeeder_Samples.cs" region="ControlSamples" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IFeeder_Samples.vb" region="ControlSamples" />
+		</example>
+        </member>
+        <member name="P:Ace.Feeder.Server.IFeeder.VPlusTaskNumber">
+            <summary>
+            Gets or sets the V plus task number.
+            </summary>
+            <value>The V plus task number.</value>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IFeeder_Samples.cs" region="ControlSamples" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IFeeder_Samples.vb" region="ControlSamples" />
+		</example>
+        </member>
+        <member name="P:Ace.Feeder.Server.IFeeder.ErrorCode">
+            <summary>
+            Gets the error code as an integer.
+            </summary>
+            <value>The error code.</value>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IFeeder_Samples.cs" region="ControlSamples" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IFeeder_Samples.vb" region="ControlSamples" />
+		</example>
+        </member>
+        <member name="P:Ace.Feeder.Server.IFeeder.DelayBeforeFeedStart">
+            <summary>
+            Gets or set a delay that can be used before the feeding operation is started.
+            </summary>
+            <value>The delay in ms.</value>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFeeder&quot;]/Member[@name=&quot;DelayBeforeFeedStart&quot;]/*" />
+        </member>
+        <member name="P:Ace.Feeder.Server.IFeeder.ErrorMessage">
+            <summary>
+            Gets the error message.
+            </summary>
+            <value>The error message.</value>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IFeeder_Samples.cs" region="ControlSamples" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IFeeder_Samples.vb" region="ControlSamples" />
+		</example>
+        </member>
+        <member name="M:Ace.Feeder.Server.IFeeder.GetAvailableErrorResponses(System.Boolean@,System.Boolean@,System.Boolean@)">
+            <summary>
+            Decides the allowed responses depending on the error.
+            </summary>
+            <param name="abortAllowed">if set to <c>true</c> [abort allowed].</param>
+            <param name="retryAllowed">if set to <c>true</c> [retry allowed].</param>
+            <param name="skipAllowed">if set to <c>true</c> [skip allowed].</param>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IFeeder_Samples.cs" region="ControlSamples" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IFeeder_Samples.vb" region="ControlSamples" />
+		</example>
+        </member>
+        <member name="P:Ace.Feeder.Server.IFeeder.SkipText">
+            <summary>
+            Gets the text to be displayed in the process manager skip button
+            </summary>
+            <value>The skip text.</value>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IFeeder_Samples.cs" region="ControlSamples" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IFeeder_Samples.vb" region="ControlSamples" />
+		</example>
+        </member>
+        <member name="P:Ace.Feeder.Server.IFeeder.AbortText">
+            <summary>
+            Gets the text to be displayed in the process manager abort button
+            </summary>
+            <value>The abort text.</value>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IFeeder_Samples.cs" region="ControlSamples" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IFeeder_Samples.vb" region="ControlSamples" />
+		</example>
+        </member>
+        <member name="P:Ace.Feeder.Server.IFeeder.RetryText">
+            <summary>
+            Gets the text to be displayed in the process manager retry button
+            </summary>
+            <value>The retry text.</value>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IFeeder_Samples.cs" region="ControlSamples" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IFeeder_Samples.vb" region="ControlSamples" />
+		</example>
+        </member>
+        <member name="P:Ace.Feeder.Server.IFeeder.IsBusy">
+            <summary>
+            Gets a value indicating whether this instance is busy.
+            </summary>
+            <value><c>true</c> if this instance is busy; otherwise, <c>false</c>.</value>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IFeeder_Samples.cs" region="ControlSamples" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IFeeder_Samples.vb" region="ControlSamples" />
+		</example>
+        </member>
+        <member name="P:Ace.Feeder.Server.IFeeder.CurrentFeederState">
+            <summary>
+            Gets or sets the  current state of the feeder.
+            </summary>
+            <value>The state of the AnyFeeder.</value>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IFeeder_Samples.cs" region="ControlSamples" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IFeeder_Samples.vb" region="ControlSamples" />
+		</example>
+        </member>
+        <member name="P:Ace.Feeder.Server.IFeeder.CurrentFeederStateText">
+            <summary>
+            Gets the current feeder state string.
+            </summary>
+            <value>The current feeder state string.</value>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IFeeder_Samples.cs" region="ControlSamples" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IFeeder_Samples.vb" region="ControlSamples" />
+		</example>
+        </member>
+        <member name="P:Ace.Feeder.Server.IFeeder.IsRunningOnController">
+            <summary>
+            Gets a value indicating whether this feeder is piloted from a V+ program on a controller.
+            </summary>
+            <value>
+            	<c>true</c> if this instance is running on controller; otherwise, <c>false</c>.
+            </value>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IFeeder_Samples.cs" region="ControlSamples" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IFeeder_Samples.vb" region="ControlSamples" />
+		</example>
+        </member>
+        <member name="P:Ace.Feeder.Server.IFeeder.IsUsingCustomVPlus">
+            <summary>
+            Gets a value indicating whether this instance is using custom V+ code.
+            </summary>
+            <value>
+            	<c>true</c> if this instance is using custom V plus; otherwise, <c>false</c>.
+            </value>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IFeeder_Samples.cs" region="ControlSamples" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IFeeder_Samples.vb" region="ControlSamples" />
+		</example>
+        </member>
+        <member name="P:Ace.Feeder.Server.IFeeder.IsWellConfigured">
+            <summary>
+            Gets a value indicating whether this instance is well configured.
+            </summary>
+            <value>
+            	<c>true</c> if this instance is well configured; otherwise, <c>false</c>.
+            </value>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IFeeder_Samples.cs" region="ControlSamples" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IFeeder_Samples.vb" region="ControlSamples" />
+		</example>
+        </member>
+        <member name="P:Ace.Feeder.Server.IFeeder.ControllerName">
+            <summary>
+            Gets the name of the controller.
+            </summary>
+            <value>The name of the controller.</value>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IFeeder_Samples.cs" region="ControlSamples" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IFeeder_Samples.vb" region="ControlSamples" />
+		</example>
+        </member>
+        <member name="P:Ace.Feeder.Server.IFeeder.VPProgramName">
+            <summary>
+            Gets the name of the V+ program.
+            </summary>
+            <value>The name of the V+ program.</value>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IFeeder_Samples.cs" region="ControlSamples" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IFeeder_Samples.vb" region="ControlSamples" />
+		</example>
+        </member>
+        <member name="M:Ace.Feeder.Server.IFeeder.Feed(System.Boolean)">
+            <summary>
+            Performs the feed operation of a device.
+            </summary>
+            <param name="waitCompletion">if set to <c>true</c> [wait completion].</param>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFeeder&quot;]/Member[@name=&quot;&quot;]/*" />
+        </member>
+        <member name="M:Ace.Feeder.Server.IFeeder.AbortMotion(System.Boolean)">
+            <summary>
+            Stops the current operation performed by the AnyFeeder
+            </summary>
+            <param name="waitCompletion">if set to <c>true</c> [wait completion].</param>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IFeeder_Samples.cs" region="ControlSamples" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IFeeder_Samples.vb" region="ControlSamples" />
+		</example>
+        </member>
+        <member name="M:Ace.Feeder.Server.IFeeder.SystemInit(System.Boolean)">
+            <summary>
+            Initializes the Feeder object.
+            </summary>
+            <param name="waitCompletion">if set to <c>true</c> [wait completion].</param>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IFeeder_Samples.cs" region="ControlSamples" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IFeeder_Samples.vb" region="ControlSamples" />
+		</example>
+        </member>
+        <member name="M:Ace.Feeder.Server.IFeeder.Start">
+            <summary>
+            Starts this instance.
+            </summary>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IFeeder_Samples.cs" region="ControlSamples" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IFeeder_Samples.vb" region="ControlSamples" />
+		</example>
+        </member>
+        <member name="M:Ace.Feeder.Server.IFeeder.Stop">
+            <summary>
+            Stops this instance.
+            </summary>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IFeeder_Samples.cs" region="ControlSamples" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IFeeder_Samples.vb" region="ControlSamples" />
+		</example>
+        </member>
+        <member name="M:Ace.Feeder.Server.IFeeder.SetUserResponse(System.Int32)">
+            <summary>
+            Sends the user response to the Feeder when process manager error was handled by user.
+            This function is only used by ProcessManager to indicate what user want to do after an error.
+            </summary>
+            <param name="response">The response.</param>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IFeeder&quot;]/Member[@name=&quot;setUserResponse&quot;]/*" />
+        </member>
+        <member name="T:Ace.Feeder.Server.IOFeeder.IIOFeeder">
+            <summary>
+            IIO feeder interface
+            </summary>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IIOFeeder_Samples.cs" region="Header" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IIOFeeder_Samples.vb" region="Header" />
+		</example>
+        </member>
+        <member name="P:Ace.Feeder.Server.IOFeeder.IIOFeeder.ControlProperties">
+            <summary>
+            Gets IOFeederControlProperties
+            </summary>
+            <value>The control values.</value>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IIOFeeder_Samples.cs" region="Header" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IIOFeeder_Samples.vb" region="Header" />
+		</example>
+        </member>
+        <member name="M:Ace.Feeder.Server.IOFeeder.IIOFeeder.UpdateIOFeederOnController">
+            <summary>
+            Updates the IOFeeder object on controller, if possible.
+            </summary>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IIOFeeder_Samples.cs" region="Header" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IIOFeeder_Samples.vb" region="Header" />
+		</example>
+        </member>
+        <member name="P:Ace.Feeder.Server.IOFeeder.IIOFeeder.VPlusErrorMessage">
+            <summary>
+            Gets an information to know if IOFeeder is in error.
+            </summary>
+            <value>The Error state.</value>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IIOFeeder_Samples.cs" region="ControlSamples" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IIOFeeder_Samples.vb" region="ControlSamples" />
+		</example>
+        </member>
+        <member name="P:Ace.Feeder.Server.IOFeeder.IIOFeeder.Error">
+            <summary>
+            Gets or sets the error code.
+            </summary>
+            <value>The error code.</value>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IIOFeeder_Samples.cs" region="ControlSamples" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IIOFeeder_Samples.vb" region="ControlSamples" />
+		</example>
+        </member>
+        <member name="P:Ace.Feeder.Server.IOFeeder.IIOFeeder.ControllerRef">
+            <summary>
+            Gets the controller ref.
+            </summary>
+            <value>The controller ref.</value>
+        </member>
+        <member name="P:Ace.Feeder.Server.IOFeeder.IIOFeeder.Controller">
+            <summary>
+            Gets or sets the controller the I/O is associated with.
+            </summary>
+            <value>The controller.</value>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IIOFeeder_Samples.cs" region="Header" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IIOFeeder_Samples.vb" region="Header" />
+		</example>
+        </member>
+        <member name="M:Ace.Feeder.Server.IOFeeder.IIOFeeder.ToggleOutputs(System.Int32[])">
+            <summary>
+            Toggles values of a set of inputs
+            </summary>
+            <param name="signals">The signals.</param>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IIOFeeder_Samples.cs" region="ControlSamples" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IIOFeeder_Samples.vb" region="ControlSamples" />
+		</example>
+        </member>
+        <member name="T:Ace.Feeder.Server.IOFeeder.IIOFeederControlProperties">
+            <summary>
+            Defines the properties used to access a feeder by the process manager.
+            </summary>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IIOFeeder_Samples.cs" region="Header" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IIOFeeder_Samples.vb" region="Header" />
+		</example>
+        </member>
+        <member name="P:Ace.Feeder.Server.IOFeeder.IIOFeederControlProperties.FeederReadyInputs">
+            <summary>
+            Gets or sets an input signal indicating a part is ready
+            </summary>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IIOFeeder_Samples.cs" region="Header" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IIOFeeder_Samples.vb" region="Header" />
+		</example>
+        </member>
+        <member name="P:Ace.Feeder.Server.IOFeeder.IIOFeederControlProperties.PartProcessedOutputs">
+            <summary>
+            Gets or sets the output used to indicate a part has been processed
+            </summary>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IIOFeeder_Samples.cs" region="Header" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IIOFeeder_Samples.vb" region="Header" />
+		</example>
+        </member>
+        <member name="P:Ace.Feeder.Server.IOFeeder.IIOFeederControlProperties.PartProcessedOutputDwell">
+            <summary>
+            Gets or sets the amount of time (in ms) to dwell after the PartProcessedOutput is turned on.
+            </summary>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IIOFeeder_Samples.cs" region="Header" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IIOFeeder_Samples.vb" region="Header" />
+		</example>
+        </member>
+        <member name="P:Ace.Feeder.Server.IOFeeder.IIOFeederControlProperties.UsePartProcessedHandshakeInput">
+            <summary>
+            Gets or sets if the feeder require a handshake input when handling the part processed handshake output
+            </summary>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IIOFeeder_Samples.cs" region="Header" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IIOFeeder_Samples.vb" region="Header" />
+		</example>
+        </member>
+        <member name="P:Ace.Feeder.Server.IOFeeder.IIOFeederControlProperties.PartProcessedHandshakeInputs">
+            <summary>
+            Gets or sets the input used to indicate acknowledgment that a part has been processed
+            </summary>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IIOFeeder_Samples.cs" region="Header" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IIOFeeder_Samples.vb" region="Header" />
+		</example>
+        </member>
+        <member name="P:Ace.Feeder.Server.IOFeeder.IIOFeederControlProperties.UseCustomFeederProgram">
+            <summary>
+            Gets or sets if the feeder to use a custom V+ program
+            </summary>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IIOFeeder_Samples.cs" region="Header" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IIOFeeder_Samples.vb" region="Header" />
+		</example>
+        </member>
+        <member name="P:Ace.Feeder.Server.IOFeeder.IIOFeederControlProperties.CustomFeederProgram">
+            <summary>
+            Gets or sets the name of a custom V+ program used for feeder interface.
+            </summary>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IIOFeeder_Samples.cs" region="Header" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IIOFeeder_Samples.vb" region="Header" />
+		</example>
+        </member>
+        <member name="P:Ace.Feeder.Server.IOFeeder.IIOFeederControlProperties.DebounceTime">
+            <summary>
+            Gets or sets the debounce time. 
+            </summary>
+            <example>
+		    <code numberLines="False" escaped="True" lang="cs" source="..\Help\API Samples\C#\API Samples\Ace.Feeder\Server\IIOFeeder_Samples.cs" region="Header" />
+		    <code numberLines="False" escaped="True" lang="vbnet" source="..\Help\API Samples\VB.NET\API Samples\Ace.Feeder\Server\IIOFeeder_Samples.vb" region="Header" />
+		</example>
+        </member>
+        <member name="P:Ace.Feeder.Server.IOFeeder.IIOFeederControlProperties.DelayBeforeFeedStart">
+            <summary>
+            Gets or set a delay that can be used efore the feeding operation is started.
+            </summary>
+            <value>The delay in ms.</value>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IIOFeederControlProperties&quot;]/Member[@name=&quot;DelayBeforeFeedStart&quot;]/*" />
+        </member>
+        <member name="T:Ace.Feeder.Server.IOFeeder.IOFeederErrors">
+            <summary>
+            Identifies the possible default programs that can be extracted from the IOFeeder
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.IOFeeder.IOFeederErrors.ErrorCodeOK">
+            <summary>
+            Error code indicating everything is fine
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.IOFeeder.IOFeederErrors.ErrorCodeGeneric">
+            <summary>
+            Generic error code (used if no more details)
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.IOFeeder.IOFeederErrors.ErrorCodeNotReady">
+            <summary>
+            Error reported if we tried feeding and device was not ready
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.IOFeeder.IOFeederErrors.ErrorCodeHandshakeState">
+            <summary>
+            Error reported if handshake signal state is in an unexpected state
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.IOFeeder.IOFeederErrors.ErrorCodeNoTask">
+            <summary>
+            Error reported if there is no task specified to execute the feeding action
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.IOFeeder.IOFeederErrors.ErrorCodeTasksBusy">
+            <summary>
+            Error reported if all the tasks we can use to execute the feeding action are already running
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.IOFeeder.IOFeederErrors.ErrorCodeTasksStopped">
+            <summary>
+            Error reported if the task running the IOFeeder was stopped
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.IOFeeder.IOFeederErrors.ErrorCodeNoController">
+            <summary>
+            No controller defined
+            </summary>
+        </member>
+        <member name="F:Ace.Feeder.Server.IOFeeder.IOFeederErrors.ErrorCodeVPlus">
+            <summary>
+            Error reported from VPlus
+            </summary>
+        </member>
+    </members>
+</doc>

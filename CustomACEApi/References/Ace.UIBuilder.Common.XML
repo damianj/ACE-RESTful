@@ -1,0 +1,584 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Ace.UIBuilder.Common</name>
+    </assembly>
+    <members>
+        <member name="T:Ace.UIBuilder.Client.Controls.ClientConnection">
+            <summary>
+            Base class used by a control that wants to act as a client to connect to the server.
+            
+            This class will hold a reference to the client and the server objects used for the connection.
+            Inherited classes will handle extra information like the Exposable data or the ACE server object reference.
+            The goal is that a tool will use this class and its properties and events to become a "dynamic" tool.
+            
+            To avoid creating multiple server and client objects when it's not needed,
+            this class will also handle sharing of the client connection
+            between multiple instances of this class. This means:
+            - when the base form is created in the designer, the client and server objects are provided by the designer
+            - at run time, the base form will create a new client
+            - when a tool is added to a form, it inherits the connection parameters from the base form it belongs to (automatic mode)
+            or it has its own connection parameters (manual mode)
+            - when a connection property is changed, every tool that uses it must be informed
+            
+            Requires that the Ace.exe.config file be modified to enable remote access:
+            - Set the <c>RemotingPort</c> value to the port number on which ACE should
+            listen for connections, such as "12543" (default is "0", which disables remote access).
+            - Set the <c>RemotingName</c> value to the name by which the ACE instance should respond (default is "ace").
+            </summary>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;ClientConnection&quot;]/ClassHeader/*" />
+        </member>
+        <member name="T:Ace.UIBuilder.Client.Controls.ClientConnection.ControlTypeEnum">
+            <summary>
+            This enum is used to define the kind of host control this connection is used by.
+            
+            It will let us define which kind of connection we are using.
+            Based on this, we will hook/unhook to events, create client/server object, dispose of them...
+            </summary>
+        </member>
+        <member name="F:Ace.UIBuilder.Client.Controls.ClientConnection.ControlTypeEnum.ControlTypeUnknown">
+            <summary>
+            Initial state
+            </summary>
+        </member>
+        <member name="F:Ace.UIBuilder.Client.Controls.ClientConnection.ControlTypeEnum.ControlTypeFormInDesigner">
+            <summary>
+            The control is a form hosted by a designer
+            </summary>
+        </member>
+        <member name="F:Ace.UIBuilder.Client.Controls.ClientConnection.ControlTypeEnum.ControlTypeFormStandAlone">
+            <summary>
+            The control is a stand-alone form (ie not in a designer)
+            </summary>
+        </member>
+        <member name="F:Ace.UIBuilder.Client.Controls.ClientConnection.ControlTypeEnum.ControlTypeFormStandAloneWithACEClient">
+            <summary>
+            The control is a stand-alone form (ie not in a designer) with its own client
+            </summary>
+        </member>
+        <member name="F:Ace.UIBuilder.Client.Controls.ClientConnection.ControlTypeEnum.ControlTypeFormStandAloneInApplicationDomain">
+            <summary>
+            The control is a stand-alone form (ie not in a designer) running in an application domain of the ACE client
+            </summary>
+        </member>
+        <member name="F:Ace.UIBuilder.Client.Controls.ClientConnection.ControlTypeEnum.ControlTypeFormForConditional">
+            <summary>
+            The control is a form, and the connection is used in a conditional
+            so we will directly use the connection of the host control
+            which is a form
+            </summary>
+        </member>
+        <member name="F:Ace.UIBuilder.Client.Controls.ClientConnection.ControlTypeEnum.ControlTypeToolAutomatic">
+            <summary>
+            The control is a tool with automatic connection parameters
+            </summary>
+        </member>
+        <member name="F:Ace.UIBuilder.Client.Controls.ClientConnection.ControlTypeEnum.ControlTypeToolManual">
+             <summary>
+             The control is a tool with manual connection parameters
+            
+             This is not used for the moment, tool are always in Automatic mode.
+             </summary>
+        </member>
+        <member name="F:Ace.UIBuilder.Client.Controls.ClientConnection.controlType">
+            <summary>
+            Defines the hot control type.
+            </summary>
+        </member>
+        <member name="P:Ace.UIBuilder.Client.Controls.ClientConnection.ControlType">
+            <summary>
+            Gets or sets the type of the control.
+            </summary>
+            <value>The type of the control.</value>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;ClientConnection&quot;]/Member[@name=&quot;ControlType&quot;]/*" />
+        </member>
+        <member name="F:Ace.UIBuilder.Client.Controls.ClientConnection.clientConnectionFromParent">
+            <summary>
+            The client connection from the parent form, in case of automatic connection parameters
+            </summary>
+        </member>
+        <member name="E:Ace.UIBuilder.Client.Controls.ClientConnection.AccessLevelChanged">
+            <summary>
+            An event raised when the access level has changed.
+            </summary>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;ClientConnection&quot;]/Member[@name=&quot;AccessLevelChanged&quot;]/*" />
+        </member>
+        <member name="M:Ace.UIBuilder.Client.Controls.ClientConnection.OnAccessLevelChanged(Ace.Core.Server.Access.AccessLevelChangeEventArgs)">
+            <summary>
+            Called when the access level has changed.
+            </summary>
+        </member>
+        <member name="E:Ace.UIBuilder.Client.Controls.ClientConnection.RootCollectionChanged">
+            <summary>
+            An event raised when the root collection of the ACE server has changed.
+            </summary>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;ClientConnection&quot;]/Member[@name=&quot;RootCollectionChanged&quot;]/*" />
+        </member>
+        <member name="M:Ace.UIBuilder.Client.Controls.ClientConnection.OnRootCollectionChanged(Ace.Core.Server.Event.ContentsChangeEventArgs)">
+            <summary>
+            Called when the root collection of the ACE server has changed.
+            </summary>
+        </member>
+        <member name="E:Ace.UIBuilder.Client.Controls.ClientConnection.PropertyModified">
+            <summary>
+            An event raised when a property is modified. Note that not all properties will throw this event.
+            
+            The client connection can subscribe to this event to refresh itself.
+            </summary>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;ClientConnection&quot;]/Member[@name=&quot;PropertyModified&quot;]/*" />
+        </member>
+        <member name="M:Ace.UIBuilder.Client.Controls.ClientConnection.OnPropertyModified(System.String)">
+            <summary>
+            Called when a property is modified.
+            </summary>
+            <param name="propertyName">Name of the modified property.</param>
+        </member>
+        <member name="E:Ace.UIBuilder.Client.Controls.ClientConnection.UpdateControl">
+            <summary>
+            An event raised when a control must be updated.
+            
+            The host control can subscribe to this event to refresh itself.
+            </summary>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;ClientConnection&quot;]/Member[@name=&quot;UpdateControl&quot;]/*" />
+        </member>
+        <member name="M:Ace.UIBuilder.Client.Controls.ClientConnection.OnUpdateControl">
+            <summary>
+            Called when the control must be updated.
+            </summary>
+        </member>
+        <member name="M:Ace.UIBuilder.Client.Controls.ClientConnection.GenerateConnectionString(System.String,System.String,System.Int32)">
+            <summary>
+            Generates the connection string.
+            </summary>
+            <param name="serverName">Name of the server.</param>
+            <param name="serverAddress">The server address.</param>
+            <param name="serverPort">The server port.</param>
+            <returns />
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;ClientConnection&quot;]/Member[@name=&quot;GenerateConnectionString&quot;]/*" />
+        </member>
+        <member name="M:Ace.UIBuilder.Client.Controls.ClientConnection.GenerateConnectionString">
+            <summary>
+            Generates the connection string.
+            </summary>
+            <returns />
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;ClientConnection&quot;]/Member[@name=&quot;GenerateConnectionString&quot;]/*" />
+        </member>
+        <member name="F:Ace.UIBuilder.Client.Controls.ClientConnection.topLevelContainer">
+            <summary>
+            The top-level container our host control has been placed in.
+            If no container, this will be the host control itself.
+            </summary>
+        </member>
+        <member name="P:Ace.UIBuilder.Client.Controls.ClientConnection.HostControl">
+            <summary>
+            Gets or sets the host control.
+            </summary>
+            <value>The host control.</value>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;ClientConnection&quot;]/Member[@name=&quot;HostControl&quot;]/*" />
+        </member>
+        <member name="F:Ace.UIBuilder.Client.Controls.ClientConnection.manualParameters">
+            <summary>
+            The flag indicating if the connection parameters are set manually
+            </summary>
+        </member>
+        <member name="P:Ace.UIBuilder.Client.Controls.ClientConnection.ManualParameters">
+            <summary>
+            Gets or sets the flag indicating if the connection parameters are set manually
+            </summary>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;ClientConnection&quot;]/Member[@name=&quot;ManualParameters&quot;]/*" />
+        </member>
+        <member name="F:Ace.UIBuilder.Client.Controls.ClientConnection.aceServer">
+            <summary>
+            The ACE server.
+            </summary>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;ClientConnection&quot;]/Member[@name=&quot;aceServer&quot;]/*" />
+        </member>
+        <member name="P:Ace.UIBuilder.Client.Controls.ClientConnection.Server">
+            <summary>
+            Gets or sets the server associated with this control
+            
+            This property is written by the designer
+            when the host control is a base form.
+            </summary>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;ClientConnection&quot;]/Member[@name=&quot;Server&quot;]/*" />
+        </member>
+        <member name="F:Ace.UIBuilder.Client.Controls.ClientConnection.aceClient">
+            <summary>
+            The ACE client.
+            </summary>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;ClientConnection&quot;]/Member[@name=&quot;aceClient&quot;]/*" />
+        </member>
+        <member name="P:Ace.UIBuilder.Client.Controls.ClientConnection.Client">
+            <summary>
+            Gets or sets the client associated with this control
+            
+            This property is written by the designer
+            when the host control is a base form.
+            </summary>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;ClientConnection&quot;]/Member[@name=&quot;Client&quot;]/*" />
+        </member>
+        <member name="P:Ace.UIBuilder.Client.Controls.ClientConnection.ServerName">
+            <summary>
+            Gets or sets the server name associated with this control
+            </summary>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;ClientConnection&quot;]/Member[@name=&quot;ServerName&quot;]/*" />
+        </member>
+        <member name="P:Ace.UIBuilder.Client.Controls.ClientConnection.ServerAddress">
+            <summary>
+            Gets or sets the server address associated with this control
+            </summary>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;ClientConnection&quot;]/Member[@name=&quot;ServerAddress&quot;]/*" />
+        </member>
+        <member name="P:Ace.UIBuilder.Client.Controls.ClientConnection.ServerPort">
+            <summary>
+            Gets or sets the server port associated with this control
+            </summary>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;ClientConnection&quot;]/Member[@name=&quot;ServerPort&quot;]/*" />
+        </member>
+        <member name="M:Ace.UIBuilder.Client.Controls.ClientConnection.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Ace.UIBuilder.Client.Controls.ClientConnection" /> class.
+            </summary>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;ClientConnection&quot;]/Member[@name=&quot;ClientConnection&quot;]/*" />
+        </member>
+        <member name="M:Ace.UIBuilder.Client.Controls.ClientConnection.#ctor(System.Windows.Forms.Control)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Ace.UIBuilder.Client.Controls.ClientConnection" /> class.
+            </summary>
+            <param name="hostControl">The host control.</param>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;ClientConnection&quot;]/Member[@name=&quot;ClientConnection&quot;]/*" />
+        </member>
+        <member name="M:Ace.UIBuilder.Client.Controls.ClientConnection.SetHostControl(System.Windows.Forms.Control)">
+            <summary>
+            Sets the host control.
+            </summary>
+            <param name="value">The value.</param>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;ClientConnection&quot;]/Member[@name=&quot;SetHostControl&quot;]/*" />
+        </member>
+        <member name="M:Ace.UIBuilder.Client.Controls.ClientConnection.SetConnectionInDesigner(Ace.Core.Client.IAceClient,Ace.Core.Server.IAceServer)">
+            <summary>
+            Sets the connection properties.
+            This allows initializing the client in the UI Form when it is run in the Designer.
+            The client is the ACE Client.
+            </summary>
+            <param name="aceClient">The ace client.</param>
+            <param name="aceServer">The ace server.</param>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;ClientConnection&quot;]/Member[@name=&quot;SetConnectionInDesigner&quot;]/*" />
+        </member>
+        <member name="M:Ace.UIBuilder.Client.Controls.ClientConnection.SetConnectionInAceClient(Ace.Core.Client.IAceClient,Ace.Core.Server.IAceServer)">
+            <summary>
+            Sets the connection properties.
+            This allows initializing the client in the UI Form when it is run inside the ACE Client.
+            The client has been created in a separate application domain.
+            </summary>
+            <param name="aceClient">The ace client.</param>
+            <param name="aceServer">The ace server.</param>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;ClientConnection&quot;]/Member[@name=&quot;SetConnectionInAceClient&quot;]/*" />
+        </member>
+        <member name="M:Ace.UIBuilder.Client.Controls.ClientConnection.aceClient_AccessLevelChanged(System.Object,Ace.Core.Server.Access.AccessLevelChangeEventArgs)">
+            <summary>
+            Handles the AccessLevelChanged event of the aceClient control.
+            </summary>
+            <param name="sender">The source of the event.</param>
+            <param name="e">The <see cref="T:Ace.Core.Server.Access.AccessLevelChangeEventArgs"/> instance containing the event data.</param>
+        </member>
+        <member name="M:Ace.UIBuilder.Client.Controls.ClientConnection.aceClient_RootCollectionChanged(System.Object,Ace.Core.Server.Event.ContentsChangeEventArgs)">
+            <summary>
+            Handles the RootCollectionChanged event of the aceClient control.
+            </summary>
+            <param name="sender">The source of the event.</param>
+            <param name="e">The <see cref="T:Ace.Core.Server.Event.ContentsChangeEventArgs"/> instance containing the event data.</param>
+        </member>
+        <member name="M:Ace.UIBuilder.Client.Controls.ClientConnection.hostControl_ControlAdded(System.Object,System.Windows.Forms.ControlEventArgs)">
+            <summary>
+            Handles the ControlAdded event of the hostControl control.
+            </summary>
+            <param name="sender">The source of the event.</param>
+            <param name="e">The <see cref="T:System.Windows.Forms.ControlEventArgs"/> instance containing the event data.</param>
+        </member>
+        <member name="M:Ace.UIBuilder.Client.Controls.ClientConnection.topLevelContainer_ParentChanged(System.Object,System.EventArgs)">
+            <summary>
+            Handles the ParentChanged event of the topLovelContainer control.
+            </summary>
+            <param name="sender">The source of the event.</param>
+            <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
+        </member>
+        <member name="M:Ace.UIBuilder.Client.Controls.ClientConnection.FindTopLevelContainer">
+            <summary>
+            Finds the top level container.
+            This is the first control that has no parent or is a base form
+            in the host control parent tree.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Ace.UIBuilder.Client.Controls.ClientConnection.ClientConnection_PropertyModified(System.Object,Ace.Core.Server.Event.PropertyModifiedEventArgs)">
+            <summary>
+            Handles the PropertyModified event of the ClientConnection control.
+            </summary>
+            <param name="sender">The source of the event.</param>
+            <param name="e">The <see cref="T:Ace.Core.Server.Event.PropertyModifiedEventArgs"/> instance containing the event data.</param>
+        </member>
+        <member name="M:Ace.UIBuilder.Client.Controls.ClientConnection.UpdateRemoting(System.Boolean)">
+            <summary>
+            Update the remoting.
+            This method will be called:
+            - when a property of this object gets changed,
+            if we do not inherit the connection properties from the base form
+            - when a property of the connection object of the parent form gets changed,
+            if we inherit the connection properties from the base form
+            </summary>
+            <param name="raiseOnUpdateControlEvent">if set to <c>true</c> [raise on update control event].</param>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;ClientConnection&quot;]/Member[@name=&quot;ClientConnectionUIForm&quot;]/*" />
+        </member>
+        <member name="M:Ace.UIBuilder.Client.Controls.ClientConnection.UpdateRemotingFromParentForm">
+            <summary>
+            Updates the remoting from parent form.
+            </summary>
+        </member>
+        <member name="M:Ace.UIBuilder.Client.Controls.ClientConnection.UpdateRemotingFormStandAlone">
+            <summary>
+            Updates the remoting for a form in stand-alone mode.
+            </summary>
+        </member>
+        <member name="M:Ace.UIBuilder.Client.Controls.ClientConnection.form_Load(System.Object,System.EventArgs)">
+            <summary>
+            Handles the Load event of the form control.
+            </summary>
+            <param name="sender">The source of the event.</param>
+            <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
+        </member>
+        <member name="M:Ace.UIBuilder.Client.Controls.ClientConnection.CreateACEClient">
+            <summary>
+            Creates the ACE client.
+            </summary>
+        </member>
+        <member name="M:Ace.UIBuilder.Client.Controls.ClientConnection.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            </summary>
+        </member>
+        <member name="T:Ace.UIBuilder.Client.Controls.ClientConnectionAceObject">
+            <summary>
+            Class used by a control that wants to act as a client to connect to the server, and get an ACE object
+            </summary>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;ClientConnectionAceObject&quot;]/ClassHeader/*" />
+        </member>
+        <member name="E:Ace.UIBuilder.Client.Controls.ClientConnectionAceObject.BeforeUpdateRemoting">
+            <summary>
+            An event raised when remoting will be updated.
+            
+            We will use it to momentary stop polling in each client connection that are using us.
+            </summary>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;ClientConnectionAceObject&quot;]/Member[@name=&quot;BeforeUpdateRemoting&quot;]/*" />
+        </member>
+        <member name="M:Ace.UIBuilder.Client.Controls.ClientConnectionAceObject.OnBeforeUpdateRemoting">
+            <summary>
+            Called before updating the remoting.
+            </summary>
+        </member>
+        <member name="E:Ace.UIBuilder.Client.Controls.ClientConnectionAceObject.AfterUpdateRemoting">
+            <summary>
+            An event raised when remoting has been updated.
+            
+            We will use it to re-start polling in each client connection that are using us.
+            </summary>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;ClientConnectionAceObject&quot;]/Member[@name=&quot;AfterUpdateRemoting&quot;]/*" />
+        </member>
+        <member name="M:Ace.UIBuilder.Client.Controls.ClientConnectionAceObject.OnAfterUpdateRemoting">
+            <summary>
+            Called after updating the remoting.
+            </summary>
+        </member>
+        <member name="P:Ace.UIBuilder.Client.Controls.ClientConnectionAceObject.AceObject">
+            <summary>
+            Gets or sets the ACE object associated with the control.
+            
+            This property is only used by the property editor of the UI Builder designer, it is not serialized.
+            </summary>
+            <value>The variable properties.</value>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;ClientConnectionAceObject&quot;]/Member[@name=&quot;AceObject&quot;]/*" />
+        </member>
+        <member name="P:Ace.UIBuilder.Client.Controls.ClientConnectionAceObject.AceObjectFullPath">
+            <summary>
+            Gets or sets the ACE object full path associated with the control.
+            
+            This property is only used by the C# script generator.
+            </summary>
+            <value>The variable.</value>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;ClientConnectionAceObject&quot;]/Member[@name=&quot;AceObjectFullPath&quot;]/*" />
+        </member>
+        <member name="M:Ace.UIBuilder.Client.Controls.ClientConnectionAceObject.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Ace.UIBuilder.Client.Controls.ClientConnectionAceObject" /> class.
+            </summary>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;ClientConnectionAceObject&quot;]/Member[@name=&quot;ClientConnectionAceObject&quot;]/*" />
+        </member>
+        <member name="M:Ace.UIBuilder.Client.Controls.ClientConnectionAceObject.#ctor(System.Windows.Forms.Control)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Ace.UIBuilder.Client.Controls.ClientConnectionAceObject" /> class.
+            </summary>
+            <param name="hostControl">The host control.</param>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;ClientConnectionAceObject&quot;]/Member[@name=&quot;ClientConnectionAceObject&quot;]/*" />
+        </member>
+        <member name="M:Ace.UIBuilder.Client.Controls.ClientConnectionAceObject.ClientConnectionAceObject_RootCollectionChanged(System.Object,Ace.Core.Server.Event.ContentsChangeEventArgs)">
+            <summary>
+            Handles the RootCollectionChanged event of the ClientConnectionAceObject control.
+            
+            When the ACE object used in this connection is removed from the Workspace,
+            we need to update the state of our connection.
+            Note that when an object is renamed in the Workspace, it is first removed
+            then added.
+            So we will really detect that the object will be or is disposed.
+            </summary>
+            <param name="sender">The source of the event.</param>
+            <param name="e">The <see cref="T:Ace.Core.Server.Event.ContentsChangeEventArgs"/> instance containing the event data.</param>
+        </member>
+        <member name="M:Ace.UIBuilder.Client.Controls.ClientConnectionAceObject.UpdateRemoting(System.Boolean)">
+            <summary>
+            Update the remoting.
+            This method will be called:
+            - when a property of this object gets changed,
+            if we do not inherit the connection properties from the base form
+            - when a property of the connection object of the parent form gets changed,
+            if we inherit the connection properties from the base form
+            </summary>
+            <param name="raiseOnUpdateControlEvent">if set to <c>true</c> [raise on update control event].</param>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;ClientConnectionAceObject&quot;]/Member[@name=&quot;UpdateRemoting&quot;]/*" />
+        </member>
+        <member name="M:Ace.UIBuilder.Client.Controls.ClientConnectionAceObject.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            </summary>
+        </member>
+        <member name="T:Ace.UIBuilder.Client.Controls.IUIBuilderForm">
+            <summary>
+            Represents the main client side UI Builder Form
+            </summary>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IUIBuilderForm&quot;]/ClassHeader/*" />
+        </member>
+        <member name="P:Ace.UIBuilder.Client.Controls.IUIBuilderForm.ClientConnectionUIForm">
+            <summary>
+            Gets or sets the client connection associated with the server object.
+            </summary>
+            <value>The client connection.</value>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IUIBuilderForm&quot;]/Member[@name=&quot;ClientConnectionUIForm&quot;]/*" />
+        </member>
+        <member name="T:Ace.UIBuilder.Client.Controls.UIBuilderAttribute">
+            <summary>
+            Indicates that a control is a UIBuilder control and should appear in the Designer
+            </summary>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;UIBuilderAttribute&quot;]/ClassHeader/*" />
+        </member>
+        <member name="P:Ace.UIBuilder.Client.Controls.UIBuilderAttribute.CustomTypeDescriptorType">
+            <summary>
+            Gets the type of the custom type descriptor for the class to which this attribute is applied.
+            </summary>
+            <value>The type of the custom type descriptor.</value>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;UIBuilderAttribute&quot;]/Member[@name=&quot;CustomTypeDescriptorType&quot;]/*" />
+        </member>
+        <member name="P:Ace.UIBuilder.Client.Controls.UIBuilderAttribute.ToolboxTabName">
+            <summary>
+            Gets the toolbox tab name of the custom type descriptor for the class to which this attribute is applied.
+            </summary>
+            <value>The name of the toolbox tab.</value>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;UIBuilderAttribute&quot;]/Member[@name=&quot;ToolboxTabName&quot;]/*" />
+        </member>
+        <member name="M:Ace.UIBuilder.Client.Controls.UIBuilderAttribute.#ctor(System.Type,System.String)">
+            <summary>
+            Specify that the class to which this attribute is applied has a custom type descriptor of the specified type.
+            </summary>
+            <param name="customTypeDescriptorType">Type of the custom type descriptor.</param>
+            <param name="toolboxTabName">Name of the toolbox tab.</param>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;UIBuilderAttribute&quot;]/Member[@name=&quot;UIBuilderAttribute&quot;]/*" />
+        </member>
+        <member name="T:Ace.UIBuilder.Client.Descriptors.CustomTypeDescriptorComponent">
+            <summary>
+            This class implements ICustomTypeDescriptor and is used to filter
+            the properties shown in the PropertyGrid in the designer.
+            </summary>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;CustomTypeDescriptorComponent&quot;]/ClassHeader/*" />
+        </member>
+        <member name="M:Ace.UIBuilder.Client.Descriptors.CustomTypeDescriptorComponent.#ctor(Ace.Core.Client.DefaultObjectEditor,System.ComponentModel.IComponent)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Ace.UIBuilder.Client.Descriptors.CustomTypeDescriptorComponent" /> class.
+            </summary>
+            <param name="objectEditor">The object editor.</param>
+            <param name="component">The component.</param>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;CustomTypeDescriptorComponent&quot;]/Member[@name=&quot;CustomTypeDescriptorComponent&quot;]/*" />
+        </member>
+        <member name="M:Ace.UIBuilder.Client.Descriptors.CustomTypeDescriptorComponent.AddDescriptorForDesign(System.ComponentModel.PropertyDescriptor)">
+            <summary>
+            Adds the descriptor to design.
+            </summary>
+            <param name="item">The item.</param>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;CustomTypeDescriptorComponent&quot;]/Member[@name=&quot;AddDescriptorForDesign&quot;]/*" />
+        </member>
+        <member name="M:Ace.UIBuilder.Client.Descriptors.CustomTypeDescriptorComponent.RemoveDescriptorForDesign(System.ComponentModel.PropertyDescriptor)">
+            <summary>
+            Removes the descriptor to design.
+            </summary>
+            <param name="item">The item.</param>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;CustomTypeDescriptorComponent&quot;]/Member[@name=&quot;RemoveDescriptorForDesign&quot;]/*" />
+        </member>
+        <member name="T:Ace.UIBuilder.Client.Descriptors.CustomTypeDescriptorControl">
+            <summary>
+            This class implements ICustomTypeDescriptor and is used to filter
+            the properties shown in the PropertyGrid in the designer.
+            </summary>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;CustomTypeDescriptorControl&quot;]/ClassHeader/*" />
+        </member>
+        <member name="M:Ace.UIBuilder.Client.Descriptors.CustomTypeDescriptorControl.#ctor(Ace.Core.Client.DefaultObjectEditor,System.ComponentModel.IComponent)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Ace.UIBuilder.Client.Descriptors.CustomTypeDescriptorControl" /> class.
+            </summary>
+            <param name="objectEditor">The object editor.</param>
+            <param name="component">The component.</param>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;CustomTypeDescriptorControl&quot;]/Member[@name=&quot;CustomTypeDescriptorControl&quot;]/*" />
+        </member>
+        <member name="T:Ace.UIBuilder.Server.Event.SetPropertyEventArgs">
+            <summary>
+            Event argument describing a property set.
+            </summary>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;SetPropertyEventArgs&quot;]/ClassHeader/*" />
+        </member>
+        <member name="M:Ace.UIBuilder.Server.Event.SetPropertyEventArgs.#ctor(System.String,System.String,System.Object)">
+            <summary>
+            Creates a set property description for a property with the specified control name, property name and new value.
+            </summary>
+            <param name="controlName">Name of the control.</param>
+            <param name="propertyName">Name of the property.</param>
+            <param name="value">The value.</param>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;SetPropertyEventArgs&quot;]/Member[@name=&quot;SetPropertyEventArgs&quot;]/*" />
+        </member>
+        <member name="P:Ace.UIBuilder.Server.Event.SetPropertyEventArgs.ControlName">
+            <summary>
+            Gets the control name.
+            </summary>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;SetPropertyEventArgs&quot;]/Member[@name=&quot;ControlName&quot;]/*" />
+        </member>
+        <member name="P:Ace.UIBuilder.Server.Event.SetPropertyEventArgs.PropertyName">
+            <summary>
+            Gets the property name.
+            </summary>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;SetPropertyEventArgs&quot;]/Member[@name=&quot;PropertyName&quot;]/*" />
+        </member>
+        <member name="P:Ace.UIBuilder.Server.Event.SetPropertyEventArgs.Value">
+            <summary>
+            Gets the value of the property.
+            </summary>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;SetPropertyEventArgs&quot;]/Member[@name=&quot;Value&quot;]/*" />
+        </member>
+        <member name="M:Ace.UIBuilder.Server.Event.SetPropertyEventArgs.ToString">
+            <summary>
+            Returns a string version of the set property.
+            </summary>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;SetPropertyEventArgs&quot;]/Member[@name=&quot;ToString&quot;]/*" />
+        </member>
+        <member name="T:Ace.UIBuilder.Server.IUIForm">
+            <summary>
+            Represents a custom user interface object
+            </summary>
+            <!-- No matching elements were found for the following include tag --><include file="DocumentationMap.xml" path="Docs/Classes/Class[@name=&quot;IUIForm&quot;]/ClassHeader/*" />
+        </member>
+    </members>
+</doc>
