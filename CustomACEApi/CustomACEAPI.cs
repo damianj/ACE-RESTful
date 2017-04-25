@@ -6,7 +6,9 @@ using Ace.Core.Server.Motion;
 using Ace.Core.Util;
 using Nancy;
 using Nancy.Hosting.Self;
-
+using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Text;
 
 namespace CustomACEAPI
 {
@@ -38,14 +40,72 @@ namespace CustomACEAPI
             _nancy.Stop();
         }
 
-        public class CartesianMove : Nancy.NancyModule
+        public class CartesianMoveAPI : NancyModule
         {
-            public CartesianMove()
+            public CartesianMoveAPI()
             {
-                Get["/CartesianMove"] = _ => "Received GET request";
+                Get["/CartesianMove"] = _ => 
+                {
+                    return new Response()
+                    {
+                        StatusCode = HttpStatusCode.BadRequest,
+                        ContentType = "application/json",
+                        ReasonPhrase = "GET requests not supported by this API endpoint. Please send a POST request with the appropriate payload.",
+                        Headers = new Dictionary<string, string>()
+                        {
+                            { "Content-Type", "application/json" },
+                            { "X-Custom-Header", "" }
+                        },
+                    };
+                };
 
-                Post["/"] = _ => "Received POST request";
+                Post["/CartesianMove"] = _ =>
+                {
+                    try
+                    {
+                        var id = this.Request.Body;
+                        var length = this.Request.Body.Length;
+                        var data = new byte[length];
+
+                        id.Read(data, 0, (int)length);
+                        var body = Encoding.Default.GetString(data);
+                        var request = JsonConvert.DeserializeObject<CartesianMove>(body);
+
+                        Console.WriteLine($"{request.Name}, {request.Accel}, {request.Decel}, {request.Speed}, {request.StraightMotion}, {request.MotionEnd}, {request.SCurveProfile}");
+
+                        return 200;
+                    }
+                    catch(Exception e)
+                    {
+                        string jsonString = $"{{ status: \"failure\", error: \"{e.Message}\" }}";
+                        byte[] jsonBytes = Encoding.UTF8.GetBytes(jsonString);
+
+                        return new Response()
+                        {
+                            StatusCode = HttpStatusCode.BadRequest,
+                            ContentType = "application/json",
+                            ReasonPhrase = "Unable to successfully interpret the request.",
+                            Headers = new Dictionary<string, string>()
+                            {
+                                { "Content-Type", "application/json" },
+                                { "X-Custom-Header", "Please check the error message below, and make sure the JSON payload is properly formatted." }
+                            },
+                            Contents = c => c.Write(jsonBytes, 0, jsonBytes.Length)
+                        };
+                    }
+                };
             }
+        }
+
+        private class CartesianMove
+        {
+            public string Name = "Cartesian Move";
+            public int Accel { get; set; }
+            public int Decel { get; set; }
+            public int Speed { get; set; }
+            public Boolean StraightMotion { get; set; }
+            public String MotionEnd { get; set; }
+            public int SCurveProfile { get; set; }
         }
 
         static void Main(string[] args)
