@@ -5,7 +5,7 @@ This is a C# RESTful style API for the Adept ACE environment. This API was devel
   - Install a licensed version of Adept ACE 3.7 and start up Adept ACE
   - Connect to the robot within Adept ACE and make sure the robot is powered on
   - Build the project in Visual Studio and run the application
-  - The application will start listening on localhost:12345
+  - The application will start listening on `localhost:12345`
   - See the documentation for available API endpoints and how to use them
 
 ### Resources
