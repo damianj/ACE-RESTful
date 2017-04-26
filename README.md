@@ -12,9 +12,6 @@ This is a C# RESTful style API for the Adept ACE environment. This API was devel
 * [Newtonsoft] - Popular high-performance JSON framework for .NET
 * [Volkanpaksoy] - Tutorial to get started developing with Nancy
 
-And of course Dillinger itself is open source with a [public repository][dill]
- on GitHub.
-
 ### Continuing Development
 You will need to install some packages via the Package Manager Console in Visual Studio
 
@@ -25,7 +22,6 @@ You will need to install some packages via the Package Manager Console in Visual
 ---
 [![N|Solid](https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/License_icon-mit-88x31-2.svg/2000px-License_icon-mit-88x31-2.svg.png)](https://opensource.org/licenses/MIT)
 ###### [Wikimedia] - MIT licenese image
-
 
 [//]: # (Reference Links - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)
 
