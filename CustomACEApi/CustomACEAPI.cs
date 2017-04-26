@@ -14,6 +14,12 @@ using System.Threading.Tasks;
 
 namespace CustomACEAPI
 {
+    /// <summary>
+    /// Class that wraps the Custom ACE API server and all of its associated classes and methods
+    /// </summary>
+    /// <author>
+    /// Damian Jimenez
+    /// </author>
     public class APIServer
     {
         private static SemaphoreSlim _SEMAPHORE= new SemaphoreSlim(1, 1);
@@ -29,6 +35,12 @@ namespace CustomACEAPI
         private static IAceServer ace;
         private static IAdeptRobot robot;
 
+        /// <summary>
+        /// Constructor method that preps the NancyFX server with the appropriate settings for a successful launch
+        /// </summary>
+        /// <author>
+        /// Damian Jimenez
+        /// </author>
         public APIServer()
         {
             var configuration = new HostConfiguration()
@@ -42,6 +54,13 @@ namespace CustomACEAPI
             _nancy = new NancyHost(configuration, new Uri($"{_url}:{_port}/"));
         }
 
+        /// <summary>
+        /// Starts the NancyFX server to allow it to start listening for requests on localhost:12345
+        /// The server can only be stopped once the user presses ESC or Q/q on the keyboard
+        /// </summary>
+        /// <author>
+        /// Damian Jimenez
+        /// </author>
         private void Start()
         {
             ConsoleKeyInfo cki;
@@ -59,8 +78,35 @@ namespace CustomACEAPI
             _nancy.Stop();
         }
 
+        /// <summary>
+        /// Entry point for the application, starts the app and server
+        /// </summary>
+        /// <author>
+        /// Damian Jimenez
+        /// </author>
+        static void Main(string[] args)
+        {
+            var api_server = new APIServer();
+            api_server.Start();
+        }
+
+        /// <summary>
+        /// Class to handle setting up the connection to the Adept ACE server
+        /// </summary>
+        /// <author>
+        /// Damian Jimenez
+        /// </author>
         private class AdeptAce
         {
+            /// <summary>
+            /// Method that connects to the Adept ACE server and sets up the robot for use
+            /// </summary>
+            /// <author>
+            /// Damian Jimenez
+            /// </author>
+            /// <returns>
+            /// Nothing
+            /// </returns>
             public void ConnectToServer(String controllerPath="/SmartController 9/SmartController 9", String robotPath= "/SmartController 9/R1 Viper650")
             {
 
@@ -82,10 +128,34 @@ namespace CustomACEAPI
             }
         }
 
+        /// <summary>
+        /// Class to handle CartesianMove API calls
+        /// </summary>
+        /// <author>
+        /// Damian Jimenez
+        /// </author>
         public class CartesianMoveAPI : NancyModule
         {
+            /// <summary>
+            /// API endpoint for the Cartesian Move command
+            /// </summary>
+            /// <author>
+            /// Damian Jimenez
+            /// </author>
+            /// <returns>
+            /// Nothing
+            /// </returns>
             public CartesianMoveAPI()
             {
+                /// <summary>
+                /// GET request handler
+                /// </summary>
+                /// <author>
+                /// Damian Jimenez
+                /// </author>
+                /// <returns>
+                /// Response object specifying to the user that GET requests are not supported
+                /// </returns>
                 Get["/CartesianMove"] = _ => 
                 {
                     return new Response()
@@ -102,6 +172,15 @@ namespace CustomACEAPI
                     };
                 };
 
+                /// <summary>
+                /// POST request handler. Takes the JSON payload and attempts to parse the commands and execute a CartesianMove using the Ace.Adept.Server.Motion
+                /// </summary>
+                /// <author>
+                /// Damian Jimenez
+                /// </author>
+                /// <returns>
+                /// HttpStatusCode.OK or a Response object detailing what went wrong
+                /// </returns>
                 Post["/CartesianMove", runAsync: true] = async (_, token) =>
                 {
                     await _SEMAPHORE.WaitAsync();
@@ -156,6 +235,12 @@ namespace CustomACEAPI
             }
         }
 
+        /// <summary>
+        /// Class to handle setting up and executing a CartesianMove from Ace.Adept.Server.Motion
+        /// </summary>
+        /// <author>
+        /// Damian Jimenez
+        /// </author>
         private class CartesianMoveCommand
         {
             public string Name = "Cartesian Move";
@@ -166,27 +251,21 @@ namespace CustomACEAPI
             public string MotionEnd { get; set; }
             public int SCurveProfile { get; set; }
 
+            /// <summary>
+            /// Method that executes a command for an instance of the CartesianMoveCommand class
+            /// </summary>
+            /// <author>
+            /// Damian Jimenez
+            /// </author>
+            /// <returns>
+            /// Nothing
+            /// </returns>
             public void Execute()
             {
-                Thread.Sleep(3000);
-                // Read various properties of the robot
-                Console.WriteLine("Number of joints = " + robot.JointCount);
-
                 double[] jointPositions = robot.JointPosition;
-                for (int i = 0; i < robot.JointCount; i++)
-                {
-                    Console.WriteLine("Joint " + i + " " + jointPositions);
-                }
 
                 // Transform the current joint position to a world location
-                try
-                {
-                    Transform3D loc = robot.JointToWorld(jointPositions);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
+                Transform3D loc = robot.JointToWorld(jointPositions);
 
                 // Check if the current location is inrange           
                 Transform3D currentPosition = robot.WorldLocationWithTool;
@@ -200,6 +279,7 @@ namespace CustomACEAPI
                 CartesianMove cartesianMove = ace.CreateObject(typeof(CartesianMove)) as CartesianMove;
                 cartesianMove.MoveConfiguration = moveConfig;
                 Transform3D t1 = new Transform3D(10, 10, 0);
+
                 t1 = -t1;
                 cartesianMove.WorldLocation = currentPosition * t1;
 
@@ -210,12 +290,6 @@ namespace CustomACEAPI
                 // Force the robot to issue a DETACH
                 robot.AutomaticControlActive = false;
             }
-        }
-
-        static void Main(string[] args)
-        {
-            var api_server = new APIServer();
-            api_server.Start();
         }
     }
 }
