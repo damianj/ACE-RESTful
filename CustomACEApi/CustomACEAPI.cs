@@ -78,7 +78,7 @@ namespace CustomACEAPI
                 }
                 AdeptControllerUtil.AddAllRobots(ace, controller, ace.Root);
 
-                robot = ace.Root["/SmartController 9/R1 Viper650"] as IAdeptRobot;
+                robot = ace.Root[robotPath] as IAdeptRobot;
             }
         }
 
