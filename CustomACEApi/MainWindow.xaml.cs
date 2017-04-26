@@ -23,13 +23,13 @@ namespace CustomACEAPI
     public partial class MainWindow : Window
     {
         private const string _url = "http://localhost";
-        private const int _port = 12345;
+        private const int _port = 9001;
         private static NancyHost _nancy;
-        private static APIServer api_server;
+        private static AdeptAce adept_ace;
 
         public MainWindow()
         {
-            api_server = new APIServer();
+            adept_ace = new AdeptAce();
             InitializeComponent();
             OutputText.Document.Blocks.Clear();
 
@@ -57,6 +57,7 @@ namespace CustomACEAPI
         /// </author>
         void Start_APP(object sender, RoutedEventArgs e)
         {
+            adept_ace.ConnectToServer();
             _nancy.Start();
             OutputText.Document.Blocks.Add(new Paragraph(new Run($"Listening on {_url}:{_port}/")));
         }
@@ -69,6 +70,7 @@ namespace CustomACEAPI
         /// </author>
         void Stop_APP(object sender, RoutedEventArgs e)
         {
+            adept_ace.DisconnectFromServer();
             _nancy.Stop();
             OutputText.Document.Blocks.Add(new Paragraph(new Run("Successfuly stopped the HTTP server.")));
         }
@@ -140,8 +142,7 @@ namespace CustomACEAPI
                         var body = Encoding.Default.GetString(data);
                         var command = JsonConvert.DeserializeObject<CartesianMoveCommand>(body);
 
-                        
-                        command.Execute(api_server.AceRobot, api_server.AceServer.CreateObject(typeof(CartesianMove)) as CartesianMove);
+                        command.Execute(adept_ace.AceRobot, adept_ace.AceServer.CreateObject(typeof(CartesianMove)) as CartesianMove);
 
                         return HttpStatusCode.OK;
                     }
@@ -179,7 +180,7 @@ namespace CustomACEAPI
     /// <author>
     /// Damian Jimenez
     /// </author>
-    public class APIServer
+    public class AdeptAce
     {
         private const string REMOTING_NAME = "ace";
         private const string REMOTING_HOST = "localhost";
@@ -206,41 +207,45 @@ namespace CustomACEAPI
         }
 
         /// <summary>
-        /// Class to handle setting up the connection to the Adept ACE server
+        /// Method that connects to the Adept ACE server and sets up the robot for use
         /// </summary>
         /// <author>
         /// Damian Jimenez
         /// </author>
-        private class AdeptAce
+        /// <returns>
+        /// Nothing
+        /// </returns>
+        public void ConnectToServer(String controllerPath = "/SmartController 9/SmartController 9", String robotPath = "/SmartController 9/R1 Viper650")
         {
-            /// <summary>
-            /// Method that connects to the Adept ACE server and sets up the robot for use
-            /// </summary>
-            /// <author>
-            /// Damian Jimenez
-            /// </author>
-            /// <returns>
-            /// Nothing
-            /// </returns>
-            public void ConnectToServer(String controllerPath = "/SmartController 9/SmartController 9", String robotPath = "/SmartController 9/R1 Viper650")
+
+            RemotingUtil.InitializeRemotingSubsystem(true, CALLBACK_PORT);
+            ace = (IAceServer)RemotingUtil.GetRemoteServerObject(typeof(IAceServer), REMOTING_NAME, REMOTING_HOST, REMOTING_PORT);
+
+            // Get a list of all the controllers in the system, and enable the appropriate one
+            foreach (IAdeptController controller in ace.Root.Filter(new ObjectTypeFilter(typeof(IAdeptController)), true))
             {
-
-                RemotingUtil.InitializeRemotingSubsystem(true, CALLBACK_PORT);
-                ace = (IAceServer)RemotingUtil.GetRemoteServerObject(typeof(IAceServer), REMOTING_NAME, REMOTING_HOST, REMOTING_PORT);
-
-                IAdeptController controller = ace.Root[controllerPath] as IAdeptController;
-                controller.Enabled = true;
-                controller.HighPower = true;
-                controller.Calibrate();
-                if (!controller.IsEVPlus)
+                Console.WriteLine(controller.FullPath);
+                if(controllerPath.Equals(controller.FullPath))
                 {
-                    controller.DryRun = true;
-                    controller.DryRun = false;
-                }
-                AdeptControllerUtil.AddAllRobots(ace, controller, ace.Root);
+                    controller.Enabled = true;
+                    controller.HighPower = true;
+                    controller.Calibrate();
+                    if (!controller.IsEVPlus)
+                    {
+                        controller.DryRun = true;
+                        controller.DryRun = false;
+                    }
+                    AdeptControllerUtil.AddAllRobots(ace, controller, ace.Root);
 
-                robot = ace.Root[robotPath] as IAdeptRobot;
+                    robot = ace.Root[robotPath] as IAdeptRobot;
+                }
             }
+        }
+
+        public void DisconnectFromServer()
+        {
+            ace.Dispose();
+            robot.Dispose();
         }
     }
 
@@ -252,13 +257,27 @@ namespace CustomACEAPI
     /// </author>
     public class CartesianMoveCommand
     {
+        private static Dictionary<string, MotionEnd> MOTION_END = new Dictionary<string, MotionEnd>()
+        {
+            { "Blend", Ace.Adept.Server.Motion.MotionEnd.Blend },
+            { "NoNull", Ace.Adept.Server.Motion.MotionEnd.NoNull },
+            { "SettleCoarse", Ace.Adept.Server.Motion.MotionEnd.SettleCoarse },
+            { "SettleFine", Ace.Adept.Server.Motion.MotionEnd.SettleFine },
+        };
+
         public string Name = "Cartesian Move";
         public int Accel { get; set; }
         public int Decel { get; set; }
         public int Speed { get; set; }
-        public bool StraightMotion { get; set; }
-        public string MotionEnd { get; set; }
-        public int SCurveProfile { get; set; }
+        public bool StraightMotion { get; set; } // Get or set a flag indicating whether the motion should be straight-line. If false, motion will be joint-interpolated. 
+        public string MotionEnd { get; set; } // One of: Blend, NoNull, SettleCoarse, or SettleFine
+        public int SCurveProfile { get; set; } // Get or set the S-curve profile number, from 0 (for trapezoidal) to 8, or -1 to leave unchanged.
+        public double X { get; set; }
+        public double Y { get; set; }
+        public double Z { get; set; }
+        public double Yaw { get; set; }
+        public double Pitch { get; set; }
+        public double Roll { get; set; }
 
         /// <summary>
         /// Method that executes a command for an instance of the CartesianMoveCommand class
@@ -273,6 +292,13 @@ namespace CustomACEAPI
         {
             double[] jointPositions = robot.JointPosition;
 
+            cartesianMove.Param.Accel = Accel;
+            cartesianMove.Param.Decel = Decel;
+            cartesianMove.Param.Speed = Speed;
+            cartesianMove.Param.Straight = StraightMotion;
+            cartesianMove.Param.MotionEnd = MOTION_END[MotionEnd];
+            cartesianMove.Param.SCurveProfile = SCurveProfile;
+
             // Transform the current joint position to a world location
             Transform3D loc = robot.JointToWorld(jointPositions);
 
@@ -286,10 +312,10 @@ namespace CustomACEAPI
 
             // Create a motion object and command the robot to move
             cartesianMove.MoveConfiguration = moveConfig;
-            Transform3D t1 = new Transform3D(10, 10, 0);
+            Transform3D transform = new Transform3D(X, Y, Z, Yaw, Pitch, Roll);
 
-            t1 = -t1;
-            cartesianMove.WorldLocation = currentPosition * t1;
+            // t1 = -t1;
+            cartesianMove.WorldLocation = currentPosition * transform;
 
             // Issue the move and wait until it is done
             robot.Move(cartesianMove);
