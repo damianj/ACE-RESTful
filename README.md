@@ -1,7 +1,5 @@
 # Adept ACE Custom API - MARS Lab (UT Arlington)
 ---
-[![N|Solid](https://cldup.com/dTxpPi9lDf.thumb.png)](https://nodesource.com/products/nsolid)
-
 This is a C# RESTful style API for the Adept ACE environment. This API was developed specifically to control a ViperS650 robot, but could be extended to control other robots easily.
 
   - Build the project in Visual Studio and run the application
