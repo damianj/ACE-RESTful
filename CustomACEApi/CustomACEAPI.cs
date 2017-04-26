@@ -27,6 +27,8 @@ namespace CustomACEAPI
         private const string REMOTING_HOST = "localhost";
         private const int CALLBACK_PORT = 43431;
         private const int REMOTING_PORT = 43434;
+        private static UserControl1 USER_GUI;
+        public bool KEEP_RUNNING = true;
 
         private const string _url = "http://localhost";
         private const int _port = 12345;
@@ -61,19 +63,17 @@ namespace CustomACEAPI
         /// <author>
         /// Damian Jimenez
         /// </author>
-        private void Start()
+        public void Start()
         {
-            ConsoleKeyInfo cki;
             _nancy.Start();
             _status = $"Listennig on port {_port}";
 
             Console.WriteLine(_status);
-            Console.WriteLine("Press ESC or Q/q to exit the application.");
             do
             {
-                cki = Console.ReadKey();
+                // Keep the application alive until the user presses the Quit button in the application GUI
             }
-            while(cki.Key != ConsoleKey.Escape && cki.Key != ConsoleKey.Q);
+            while(KEEP_RUNNING);
 
             _nancy.Stop();
         }
@@ -87,7 +87,10 @@ namespace CustomACEAPI
         static void Main(string[] args)
         {
             var api_server = new APIServer();
-            api_server.Start();
+
+            USER_GUI = new UserControl1(api_server);
+            //            api_server.Start();
+
         }
 
         /// <summary>

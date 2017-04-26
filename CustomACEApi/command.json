@@ -1,9 +1,0 @@
-{
-  "name": "cartesianmove",
-  "accel": 100,
-  "decel": 100,
-  "speed": 10,
-  "straight": true,
-  "motionend": "Motion.Blend",
-  "scurveprofile": -1
-}
