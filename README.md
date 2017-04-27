@@ -25,15 +25,15 @@ PS > Invoke-WebRequest -UseBasicParsing http://localhost:9001/api/move/cartesian
 ### Continuing Development
 You will need to install some packages via the Package Manager Console in Visual Studio
 
-  - ```powershell
-    PM> Install-Package Newtonsoft.Json
-    ```
-  - ```powershell
-    PM> Install-Package Nancy
-    ```
-  - ```powershell
-    PM> Install-Package Nancy.Hosting.Self
-    ```
+```powershell
+PM> Install-Package Newtonsoft.Json
+```
+```powershell
+PM> Install-Package Nancy
+```
+```powershell
+PM> Install-Package Nancy.Hosting.Self
+```
 
 Alternatively, you can enable the Package Restore function of NuGet within Visual Studio, and clean and build the project which should install the necessary packages automatically.
 
