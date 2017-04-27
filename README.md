@@ -10,7 +10,7 @@ This is a C# RESTful style API for the Adept ACE environment. This API was devel
 
 ### Testing
 
-You can quickly test out API endpoints via the PowerShell by starting up Adept ACE, connecting to the robot, and starting the application and clicking 'START'. After these you can use the PowerShell command below as a template to test out your API endpoints.
+You can quickly test out API endpoints via the PowerShell by starting up Adept ACE, connecting to the robot, and starting the application and clicking 'START'. After these steps you can use the PowerShell command below as a template to test out your API endpoints.
 
 ```powershell
 
@@ -29,6 +29,8 @@ You will need to install some packages via the Package Manager Console in Visual
   - `PM> Install-Package Newtonsoft.Json`
   - `PM> Install-Package Nancy`
   - `PM> Install-Package Nancy.Hosting.Self`
+
+Alternatively, you can enable the Package Restore function of NuGet within Visual Studio, and clean and build the project which should install the necessary packages automatically.
 
 ---
 [![N|Solid](https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/License_icon-mit-88x31-2.svg/2000px-License_icon-mit-88x31-2.svg.png)](https://opensource.org/licenses/MIT)
