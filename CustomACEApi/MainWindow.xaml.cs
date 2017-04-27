@@ -200,7 +200,7 @@ namespace CustomACEAPI
             public bool StraightMotion { get; set; }
             /// <summary>Determines how the motion should finish (i.e., Blend, NoNull, SettleCoarse, or SettleFine)</summary>
             public string MotionEnd { get; set; }
-            /// <summary>Specifies the S-curve trajectory profile, from 0 (for trapezoidal) to 8, or -1 to leave unchanged.</summary>
+            /// <summary>Specifies the S-curve trajectory profile, from 0 (for trapezoidal) to 8, or -1 to leave unchanged. An S-curve can smooth the trajectory into an "S" shape by limiting the rate of change of acceleration. Robots with flexible links or drive trains can benefit from S-curves to reduce oscillation.</summary>
             public int SCurveProfile { get; set; }
             /// <summary>Specifies the X coordinate of the motion</summary>
             public double X { get; set; }
