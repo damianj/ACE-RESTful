@@ -50,7 +50,7 @@
       </ComponentConfig>
     </ComponentConfigurations>
     <DocumentationSources>
-      <DocumentationSource sourceFile="CustomACEAPI.sln" xmlns="" />
+      <DocumentationSource sourceFile="CustomACEAPI.sln" />
     </DocumentationSources>
   </PropertyGroup>
   <!-- There are no properties for these groups.  AnyCPU needs to appear in order for Visual Studio to perform
