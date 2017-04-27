@@ -226,7 +226,8 @@ namespace CustomACEAPI
                 double[] jointPositions = robot.JointPosition;
 
                 // Print out joint information for the user to see
-                foreach(var joint in jointPositions.Select((value, i) => new { i, value }))
+                WriteOutput("Curernt joint values:");
+                foreach (var joint in jointPositions.Select((value, i) => new { i, value }))
                 {
                     WriteOutput($"joint[{joint.i}] = {joint.value}");
                 }
@@ -257,12 +258,164 @@ namespace CustomACEAPI
                 // Calculate the new position of the robot based on the transform and the robots current position
                 cartesianMove.WorldLocation = currentPosition * transform;
 
+                // Write out the CartesianMove that is to be excuted to the console and GUI
+                WriteOutput(cartesianMove.Description);
+
                 // Issue the move and wait until it is done
                 robot.Move(cartesianMove);
                 robot.WaitMoveDone();
 
                 // Force the robot to issue a DETACH
                 robot.AutomaticControlActive = false;
+            }
+        }
+
+        /// <summary>Class to handle CartesianMove API calls</summary>
+        /// <author>Damian Jimenez</author>
+        public class JointMoveAPI : NancyModule
+        {
+            /// <summary>API endpoint for the Cartesian Move command</summary>
+            /// <author>Damian Jimenez</author>
+            /// <returns><c>void</c></returns>
+            public JointMoveAPI()
+            {
+                Get["/api/move/joints"] = _ =>
+                {
+                    return new Response()
+                    {
+                        StatusCode = HttpStatusCode.BadRequest,
+                        ContentType = "application/json",
+                        ReasonPhrase = "GET requests are not supported by this endpoint, use a POST request instead.",
+                        Headers = new Dictionary<string, string>()
+                        {
+                            {
+                                "Content-Type", "application/json"
+                            }
+                        },
+                    };
+                };
+
+                Post["/api/move/joints"] = _ =>
+                {
+                    try
+                    {
+                        var id = Request.Body;
+                        var length = Request.Body.Length;
+                        var data = new byte[length];
+
+                        id.Read(data, 0, (int)length);
+                        var body = Encoding.Default.GetString(data);
+                        var command = JsonConvert.DeserializeObject<JointMoveCommand>(body);
+
+                        WriteOutput($"Received the following POST request:\n{body.ToString()}\n");
+                        command.Execute(adept_ace.AceRobot, adept_ace.AceServer.CreateObject(typeof(JointMove)) as JointMove);
+
+                        return HttpStatusCode.OK;
+                    }
+                    catch (Exception e)
+                    {
+                        WriteOutput($"ERROR:\n{e.Message}\n");
+                        string jsonString = $"{{ status: \"failure\", error: \"{e.Message}\" }}";
+                        byte[] jsonBytes = Encoding.UTF8.GetBytes(jsonString);
+
+
+                        return new Response()
+                        {
+                            StatusCode = HttpStatusCode.BadRequest,
+                            ContentType = "application/json",
+                            ReasonPhrase = "Unable to successfully interpret the request.",
+                            Headers = new Dictionary<string, string>()
+                            {
+                                {
+                                    "Content-Type", "application/json"
+                                },
+                                {
+                                    "X-Custom-Header", "Please check the error message below, make sure the JSON payload is properly formatted, and that the robot is initialized properly."
+                                }
+                            },
+                            Contents = c => c.Write(jsonBytes, 0, jsonBytes.Length)
+                        };
+                    }
+                };
+            }
+        }
+
+        /// <summary>Class to handle setting up and executing a CartesianMove from Ace.Adept.Server.Motion</summary>
+        /// <author>Damian Jimenez</author>
+        public class JointMoveCommand
+        {
+            /// <summary>Mapping of all the possible values for <c>MotionEnd</c>, to be easily accessed with a <c>String</c> parsed from the JSON file in the HTTP POST request</summary>
+            private static Dictionary<string, MotionEnd> MOTION_END = new Dictionary<string, MotionEnd>()
+            {
+                { "Blend", Ace.Adept.Server.Motion.MotionEnd.Blend },
+                { "NoNull", Ace.Adept.Server.Motion.MotionEnd.NoNull },
+                { "SettleCoarse", Ace.Adept.Server.Motion.MotionEnd.SettleCoarse },
+                { "SettleFine", Ace.Adept.Server.Motion.MotionEnd.SettleFine },
+            };
+
+            /// <summary>The name of this type of motion, derived from the ACE command name.</summary>
+            public string Name = "Joint Move";
+            /// <summary>Maximum acceleration of the robot when it moves.</summary>
+            public int Accel { get; set; }
+            /// <summary>Maximum deceleration of the robot when it moves.</summary>
+            public int Decel { get; set; }
+            /// <summary>Maximum speed of the robot when it moves.</summary>
+            public int Speed { get; set; }
+            /// <summary>Determines whether the robot's motion should be straight or not (i.e., true: straight-line, false: motion will be joint-interpolated)</summary>
+            public bool StraightMotion { get; set; }
+            /// <summary>Determines how the motion should finish (i.e., Blend, NoNull, SettleCoarse, or SettleFine)</summary>
+            public string MotionEnd { get; set; }
+            /// <summary>Specifies the S-curve trajectory profile, from 0 (for trapezoidal) to 8, or -1 to leave unchanged. An S-curve can smooth the trajectory into an "S" shape by limiting the rate of change of acceleration. Robots with flexible links or drive trains can benefit from S-curves to reduce oscillation.</summary>
+            public int SCurveProfile { get; set; }
+            /// <summary>Specifies the joint positions of the move that is to be executed.</summary>
+            public Double[] JointPosition { get; set; }
+
+            /// <summary>Method that executes a command for an instance of the JointMoveCommand class</summary>
+            /// <author>Damian Jimenez</author>
+            /// <param name="robot">The robot that is to be controlled via the API call</param>
+            /// <param name="jointMove">Joint move object to handle calculating the motion of the joints of the robot</param>
+            /// <returns><c>void</c></returns>
+            public void Execute(IAdeptRobot robot, JointMove jointMove)
+            {
+                if (JointPosition.Length != 6)
+                {
+                    WriteOutput($"Invalid number of joints specified in the joint position arary. " +
+                        $"The array should specify 6 floating point values.\nCurrently it is: {JointPosition.ToString()}\n");
+                }
+                else
+                {
+                    jointMove.Initialize();
+                    // Get the current joint positions of the robot
+                    double[] jointPositions = robot.JointPosition;
+
+                    // Print out joint information for the user to see
+                    WriteOutput("Curernt joint values:");
+                    foreach (var joint in jointPositions.Select((value, i) => new { i, value }))
+                    {
+                        WriteOutput($"joint[{joint.i}] = {joint.value}");
+                    }
+
+                    // Assign jointMove the parameters that were passed via the API call
+                    jointMove.Param.Accel = Accel;
+                    jointMove.Param.Decel = Decel;
+                    jointMove.Param.Speed = Speed;
+                    jointMove.Param.Straight = StraightMotion;
+                    jointMove.Param.MotionEnd = MOTION_END[MotionEnd];
+                    jointMove.Param.SCurveProfile = SCurveProfile;
+                    jointMove.JointPosition = JointPosition;
+
+                    // Assing the robot that was passed as the one taht will execute the move
+                    jointMove.Robot = robot;
+
+                    // Write out the JointMove that is to be excuted to the console and GUI
+                    WriteOutput(jointMove.Description);
+
+                    // Execute the move
+                    jointMove.Go();
+
+                    // Force the robot to issue a DETACH
+                    robot.AutomaticControlActive = false;
+                }
             }
         }
     }
