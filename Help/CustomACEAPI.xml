@@ -77,11 +77,18 @@
             InitializeComponent
             </summary>
     </member>
+    <member name="M:CustomACEAPI.MainWindow.WriteOutput(System.String)">
+      <summary>Writes to the console and the GUI text-box. Necessary to re-route calls from different threads onto the thread the GUI is running on.</summary>
+      <param name="output_text">String to be written to the console and GUI text-box</param>
+      <returns>
+        <c>void</c>
+      </returns>
+    </member>
     <member name="T:CustomACEAPI.MainWindow.CartesianMoveAPI">
       <summary>Class to handle CartesianMove API calls</summary>
     </member>
     <member name="M:CustomACEAPI.MainWindow.CartesianMoveAPI.#ctor">
-      <summary>API endpoint for the Cartesian Move command</summary>
+      <summary>API endpoint for the CartesianMove command</summary>
       <returns>
         <c>void</c>
       </returns>
@@ -125,7 +132,7 @@
       <summary>Specifies the Roll coordinate of the motion</summary>
     </member>
     <member name="P:CustomACEAPI.MainWindow.CartesianMoveCommand.SCurveProfile">
-      <summary>Specifies the S-curve trajectory profile, from 0 (for trapezoidal) to 8, or -1 to leave unchanged.</summary>
+      <summary>Specifies the S-curve trajectory profile, from 0 (for trapezoidal) to 8, or -1 to leave unchanged. An S-curve can smooth the trajectory into an "S" shape by limiting the rate of change of acceleration. Robots with flexible links or drive trains can benefit from S-curves to reduce oscillation.</summary>
     </member>
     <member name="P:CustomACEAPI.MainWindow.CartesianMoveCommand.Speed">
       <summary>Maximum speed of the robot when it moves.</summary>
@@ -144,6 +151,60 @@
     </member>
     <member name="P:CustomACEAPI.MainWindow.CartesianMoveCommand.Z">
       <summary>Specifies the Z coordinate of the motion</summary>
+    </member>
+    <member name="T:CustomACEAPI.MainWindow.JointMoveAPI">
+      <summary>Class to handle JointMove API calls</summary>
+    </member>
+    <member name="M:CustomACEAPI.MainWindow.JointMoveAPI.#ctor">
+      <summary>API endpoint for the JointMove command</summary>
+      <returns>
+        <c>void</c>
+      </returns>
+    </member>
+    <member name="T:CustomACEAPI.MainWindow.JointMoveCommand">
+      <summary>Class to handle setting up and executing a JointMove from Ace.Adept.Server.Motion</summary>
+    </member>
+    <member name="M:CustomACEAPI.MainWindow.JointMoveCommand.#ctor">
+      <summary>
+        <markup>
+          <include item="SMCAutoDocConstructor">
+            <parameter>CustomACEAPI.MainWindow.JointMoveCommand</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:CustomACEAPI.MainWindow.JointMoveCommand.Accel">
+      <summary>Maximum acceleration of the robot when it moves.</summary>
+    </member>
+    <member name="P:CustomACEAPI.MainWindow.JointMoveCommand.Decel">
+      <summary>Maximum deceleration of the robot when it moves.</summary>
+    </member>
+    <member name="M:CustomACEAPI.MainWindow.JointMoveCommand.Execute(Ace.Adept.Server.Motion.IAdeptRobot,Ace.Adept.Server.Motion.JointMove)">
+      <summary>Method that executes a command for an instance of the JointMoveCommand class</summary>
+      <param name="robot">The robot that is to be controlled via the API call</param>
+      <param name="jointMove">
+        <c>JointMove</c> object to handle calculating the motion of the joints of the robot</param>
+      <returns>
+        <c>void</c>
+      </returns>
+    </member>
+    <member name="P:CustomACEAPI.MainWindow.JointMoveCommand.JointPosition">
+      <summary>Specifies the joint positions of the move that is to be executed.</summary>
+    </member>
+    <member name="P:CustomACEAPI.MainWindow.JointMoveCommand.MotionEnd">
+      <summary>Determines how the motion should finish (i.e., Blend, NoNull, SettleCoarse, or SettleFine)</summary>
+    </member>
+    <member name="F:CustomACEAPI.MainWindow.JointMoveCommand.Name">
+      <summary>The name of this type of motion, derived from the ACE command name.</summary>
+    </member>
+    <member name="P:CustomACEAPI.MainWindow.JointMoveCommand.SCurveProfile">
+      <summary>Specifies the S-curve trajectory profile, from 0 (for trapezoidal) to 8, or -1 to leave unchanged. An S-curve can smooth the trajectory into an "S" shape by limiting the rate of change of acceleration. Robots with flexible links or drive trains can benefit from S-curves to reduce oscillation.</summary>
+    </member>
+    <member name="P:CustomACEAPI.MainWindow.JointMoveCommand.Speed">
+      <summary>Maximum speed of the robot when it moves.</summary>
+    </member>
+    <member name="P:CustomACEAPI.MainWindow.JointMoveCommand.StraightMotion">
+      <summary>Determines whether the robot's motion should be straight or not (i.e., true: straight-line, false: motion will be joint-interpolated)</summary>
     </member>
     <member name="T:CustomACEAPI.MultiTextWriter">
       <summary>Class to assist in re-routing <c>stdout</c> to multiple outputs. In our case to re-route it to the text-box that is displayed and also to the console as well.</summary>

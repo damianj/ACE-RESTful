@@ -1,6 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <HelpKI>
-  <HelpKINode Title="Accel property" Url="html/96631c77-55c1-fbfc-0bfd-f6cbe513d09a.htm" />
+  <HelpKINode Title="Accel property">
+    <HelpKINode Title="MainWindow.CartesianMoveCommand.Accel Property " Url="html/96631c77-55c1-fbfc-0bfd-f6cbe513d09a.htm" />
+    <HelpKINode Title="MainWindow.JointMoveCommand.Accel Property " Url="html/4359c487-b490-5ec9-3e79-dddf0ee12f37.htm" />
+  </HelpKINode>
   <HelpKINode Title="AceRobot property" Url="html/69c8ab61-610e-037a-1bb6-5e0a6eff1ec2.htm" />
   <HelpKINode Title="AceServer property" Url="html/f61ab1fd-c454-5fd5-6fbf-834ba2f91a51.htm" />
   <HelpKINode Title="AdeptAce class">
@@ -44,19 +47,37 @@
   <HelpKINode Title="CustomACEAPI.MainWindow class" Url="html/9b1bc35b-dc36-2687-19ec-701821ac4095.htm" />
   <HelpKINode Title="CustomACEAPI.MainWindow.CartesianMoveAPI class" Url="html/9c5cf50d-df38-8be7-3ad4-346139f9dde4.htm" />
   <HelpKINode Title="CustomACEAPI.MainWindow.CartesianMoveCommand class" Url="html/e0b89c97-553a-545e-bd81-414233f6b74e.htm" />
+  <HelpKINode Title="CustomACEAPI.MainWindow.JointMoveAPI class" Url="html/f83ab55a-0949-d583-fd50-60c2723a6640.htm" />
+  <HelpKINode Title="CustomACEAPI.MainWindow.JointMoveCommand class" Url="html/570bfdb3-50ac-047f-c6a4-5c841037d08d.htm" />
   <HelpKINode Title="CustomACEAPI.MultiTextWriter class" Url="html/91df1d2f-ee44-3758-d522-fae437444406.htm" />
   <HelpKINode Title="CustomACEAPI.TextBoxWriter class" Url="html/43e6dec9-bab9-a356-0c17-303c0e3b629f.htm" />
-  <HelpKINode Title="Decel property" Url="html/841a26b7-bf36-dfe9-8d2c-1cfc7ca22691.htm" />
+  <HelpKINode Title="Decel property">
+    <HelpKINode Title="MainWindow.CartesianMoveCommand.Decel Property " Url="html/841a26b7-bf36-dfe9-8d2c-1cfc7ca22691.htm" />
+    <HelpKINode Title="MainWindow.JointMoveCommand.Decel Property " Url="html/bc2007ef-5b1f-384d-0d31-e176ff39cc86.htm" />
+  </HelpKINode>
   <HelpKINode Title="Encoding property">
     <HelpKINode Title="MultiTextWriter.Encoding Property " Url="html/d88e35fe-46f1-5b2e-30cb-933889080f66.htm" />
     <HelpKINode Title="TextBoxWriter.Encoding Property " Url="html/83264331-84e3-3254-caf6-a175706d5c2a.htm" />
   </HelpKINode>
-  <HelpKINode Title="Execute method" Url="html/0c610246-f7ec-3e34-5a53-237360fd1e13.htm" />
+  <HelpKINode Title="Execute method">
+    <HelpKINode Title="MainWindow.CartesianMoveCommand.Execute Method " Url="html/0c610246-f7ec-3e34-5a53-237360fd1e13.htm" />
+    <HelpKINode Title="MainWindow.JointMoveCommand.Execute Method " Url="html/362fee58-abfe-ace3-c0fd-5e7d686bc598.htm" />
+  </HelpKINode>
   <HelpKINode Title="Flush method" Url="html/ceafe0b7-c3bc-4259-095c-1afdb0d5753f.htm" />
   <HelpKINode Title="InitializeComponent method">
     <HelpKINode Title="App.InitializeComponent Method " Url="html/d2a5ae3c-1e01-73ac-cd03-4dbfea6ac68f.htm" />
     <HelpKINode Title="MainWindow.InitializeComponent Method " Url="html/3453cfba-00a3-866f-5f08-a587b06f43c8.htm" />
   </HelpKINode>
+  <HelpKINode Title="JointMoveAPI class">
+    <HelpKINode Title="methods" Url="html/6d9c879d-e348-876b-2812-6e836e21ea60.htm" />
+    <HelpKINode Title="properties" Url="html/77b1d929-95cd-353d-f6ff-e98ea5cc5ff6.htm" />
+  </HelpKINode>
+  <HelpKINode Title="JointMoveCommand class">
+    <HelpKINode Title="fields" Url="html/798269d1-3bc3-81b3-d364-a95f88c5e9ba.htm" />
+    <HelpKINode Title="methods" Url="html/024d2a78-599a-205a-29ce-8ded5be64c99.htm" />
+    <HelpKINode Title="properties" Url="html/c1021881-3137-f92f-adc0-3237b95eb82e.htm" />
+  </HelpKINode>
+  <HelpKINode Title="JointPosition property" Url="html/0ba30a19-9ed5-eaac-0777-9e43e2703cad.htm" />
   <HelpKINode Title="Main method" Url="html/98d0cfcf-5fc5-1a49-bcd5-879ab26da124.htm" />
   <HelpKINode Title="MainWindow class">
     <HelpKINode Title="MainWindow Class" Url="html/9b1bc35b-dc36-2687-19ec-701821ac4095.htm" />
@@ -93,8 +114,33 @@
   <HelpKINode Title="MainWindow.CartesianMoveCommand.Yaw property" Url="html/d01724f9-a8b6-4b17-1639-7230b57c417a.htm" />
   <HelpKINode Title="MainWindow.CartesianMoveCommand.Z property" Url="html/e8f70144-d2b2-4b0f-5d02-979e537b803f.htm" />
   <HelpKINode Title="MainWindow.InitializeComponent method" Url="html/3453cfba-00a3-866f-5f08-a587b06f43c8.htm" />
+  <HelpKINode Title="MainWindow.JointMoveAPI class">
+    <HelpKINode Title="MainWindow.JointMoveAPI Class" Url="html/f83ab55a-0949-d583-fd50-60c2723a6640.htm" />
+    <HelpKINode Title="about MainWindow.JointMoveAPI class" Url="html/f83ab55a-0949-d583-fd50-60c2723a6640.htm" />
+    <HelpKINode Title="constructor" Url="html/32b57d9a-fba0-b466-515c-e88c4eb91297.htm" />
+  </HelpKINode>
+  <HelpKINode Title="MainWindow.JointMoveAPI.JointMoveAPI constructor" Url="html/32b57d9a-fba0-b466-515c-e88c4eb91297.htm" />
+  <HelpKINode Title="MainWindow.JointMoveCommand class">
+    <HelpKINode Title="MainWindow.JointMoveCommand Class" Url="html/570bfdb3-50ac-047f-c6a4-5c841037d08d.htm" />
+    <HelpKINode Title="about MainWindow.JointMoveCommand class" Url="html/570bfdb3-50ac-047f-c6a4-5c841037d08d.htm" />
+    <HelpKINode Title="constructor" Url="html/2186cc17-bbc7-6d29-4164-aa6b7cc6433d.htm" />
+  </HelpKINode>
+  <HelpKINode Title="MainWindow.JointMoveCommand.Accel property" Url="html/4359c487-b490-5ec9-3e79-dddf0ee12f37.htm" />
+  <HelpKINode Title="MainWindow.JointMoveCommand.Decel property" Url="html/bc2007ef-5b1f-384d-0d31-e176ff39cc86.htm" />
+  <HelpKINode Title="MainWindow.JointMoveCommand.Execute method" Url="html/362fee58-abfe-ace3-c0fd-5e7d686bc598.htm" />
+  <HelpKINode Title="MainWindow.JointMoveCommand.JointMoveCommand constructor" Url="html/2186cc17-bbc7-6d29-4164-aa6b7cc6433d.htm" />
+  <HelpKINode Title="MainWindow.JointMoveCommand.JointPosition property" Url="html/0ba30a19-9ed5-eaac-0777-9e43e2703cad.htm" />
+  <HelpKINode Title="MainWindow.JointMoveCommand.MotionEnd property" Url="html/b2f40931-82d2-f28e-2617-cf8ae577255d.htm" />
+  <HelpKINode Title="MainWindow.JointMoveCommand.Name field" Url="html/b6e8540a-d155-a057-5024-e5a5c2cd9288.htm" />
+  <HelpKINode Title="MainWindow.JointMoveCommand.SCurveProfile property" Url="html/f7a85772-5a04-ace9-9d4b-9ccc2d47327f.htm" />
+  <HelpKINode Title="MainWindow.JointMoveCommand.Speed property" Url="html/a3df06c9-c010-ec3b-a6e8-209be15388b9.htm" />
+  <HelpKINode Title="MainWindow.JointMoveCommand.StraightMotion property" Url="html/17279c6c-4b11-5145-538c-eeab570e75dd.htm" />
   <HelpKINode Title="MainWindow.MainWindow constructor" Url="html/2bdf3aec-608f-8ec6-72c5-db8b60adbd0b.htm" />
-  <HelpKINode Title="MotionEnd property" Url="html/33989e23-9ed1-bc32-6996-81c5bc3fa38d.htm" />
+  <HelpKINode Title="MainWindow.WriteOutput method" Url="html/4ddccb57-ea51-9ac7-7947-b015b7f779d0.htm" />
+  <HelpKINode Title="MotionEnd property">
+    <HelpKINode Title="MainWindow.CartesianMoveCommand.MotionEnd Property " Url="html/33989e23-9ed1-bc32-6996-81c5bc3fa38d.htm" />
+    <HelpKINode Title="MainWindow.JointMoveCommand.MotionEnd Property " Url="html/b2f40931-82d2-f28e-2617-cf8ae577255d.htm" />
+  </HelpKINode>
   <HelpKINode Title="MultiTextWriter class">
     <HelpKINode Title="MultiTextWriter Class" Url="html/91df1d2f-ee44-3758-d522-fae437444406.htm" />
     <HelpKINode Title="about MultiTextWriter class" Url="html/91df1d2f-ee44-3758-d522-fae437444406.htm" />
@@ -108,12 +154,24 @@
   <HelpKINode Title="MultiTextWriter.Flush method" Url="html/ceafe0b7-c3bc-4259-095c-1afdb0d5753f.htm" />
   <HelpKINode Title="MultiTextWriter.MultiTextWriter constructor" Url="html/f2e40436-588a-6bab-bf60-318c6677d9db.htm" />
   <HelpKINode Title="MultiTextWriter.Write method" Url="html/f5158317-76fd-363b-0332-956e1df09b2e.htm" />
-  <HelpKINode Title="Name field" Url="html/a1e0b543-f53c-6a53-db47-8041a40a5ae7.htm" />
+  <HelpKINode Title="Name field">
+    <HelpKINode Title="MainWindow.CartesianMoveCommand.Name Field" Url="html/a1e0b543-f53c-6a53-db47-8041a40a5ae7.htm" />
+    <HelpKINode Title="MainWindow.JointMoveCommand.Name Field" Url="html/b6e8540a-d155-a057-5024-e5a5c2cd9288.htm" />
+  </HelpKINode>
   <HelpKINode Title="Pitch property" Url="html/702ece53-3238-b808-a9cb-4edfc8798d58.htm" />
   <HelpKINode Title="Roll property" Url="html/dc35d1dc-4308-0ee0-1aa7-0ac19dcb48ba.htm" />
-  <HelpKINode Title="SCurveProfile property" Url="html/8e06d8ec-b22d-4f54-e75c-40d08a780f72.htm" />
-  <HelpKINode Title="Speed property" Url="html/dc66f376-df91-ad88-1327-5879cc94d0ab.htm" />
-  <HelpKINode Title="StraightMotion property" Url="html/60028f59-7dfb-83ef-afad-c5269908f0c9.htm" />
+  <HelpKINode Title="SCurveProfile property">
+    <HelpKINode Title="MainWindow.CartesianMoveCommand.SCurveProfile Property " Url="html/8e06d8ec-b22d-4f54-e75c-40d08a780f72.htm" />
+    <HelpKINode Title="MainWindow.JointMoveCommand.SCurveProfile Property " Url="html/f7a85772-5a04-ace9-9d4b-9ccc2d47327f.htm" />
+  </HelpKINode>
+  <HelpKINode Title="Speed property">
+    <HelpKINode Title="MainWindow.CartesianMoveCommand.Speed Property " Url="html/dc66f376-df91-ad88-1327-5879cc94d0ab.htm" />
+    <HelpKINode Title="MainWindow.JointMoveCommand.Speed Property " Url="html/a3df06c9-c010-ec3b-a6e8-209be15388b9.htm" />
+  </HelpKINode>
+  <HelpKINode Title="StraightMotion property">
+    <HelpKINode Title="MainWindow.CartesianMoveCommand.StraightMotion Property " Url="html/60028f59-7dfb-83ef-afad-c5269908f0c9.htm" />
+    <HelpKINode Title="MainWindow.JointMoveCommand.StraightMotion Property " Url="html/17279c6c-4b11-5145-538c-eeab570e75dd.htm" />
+  </HelpKINode>
   <HelpKINode Title="TextBoxWriter class">
     <HelpKINode Title="TextBoxWriter Class" Url="html/43e6dec9-bab9-a356-0c17-303c0e3b629f.htm" />
     <HelpKINode Title="about TextBoxWriter class" Url="html/43e6dec9-bab9-a356-0c17-303c0e3b629f.htm" />
@@ -129,6 +187,7 @@
     <HelpKINode Title="MultiTextWriter.Write Method " Url="html/f5158317-76fd-363b-0332-956e1df09b2e.htm" />
     <HelpKINode Title="TextBoxWriter.Write Method " Url="html/11dc74ba-35a4-de3a-1b1f-95c4f3c941dc.htm" />
   </HelpKINode>
+  <HelpKINode Title="WriteOutput method" Url="html/4ddccb57-ea51-9ac7-7947-b015b7f779d0.htm" />
   <HelpKINode Title="X property" Url="html/f762e6d2-9c7d-d405-a9be-bd9293be90aa.htm" />
   <HelpKINode Title="Y property" Url="html/2b3a993f-8c36-2c8f-4ca3-4bd2649dfaf1.htm" />
   <HelpKINode Title="Yaw property" Url="html/d01724f9-a8b6-4b17-1639-7230b57c417a.htm" />

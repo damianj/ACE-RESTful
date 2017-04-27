@@ -60,7 +60,7 @@ namespace CustomACEAPI
 
             // Prep the NancyFX server for use later on
             _nancy = new NancyHost(configuration, new Uri($"{_url}:{_port}/"));
-            WriteOutput("App started successfully...\n---------------------------");
+            WriteOutput("Application started successfully...\n-----------------------------------");
         }
 
         /// <summary>Starts the NancyFX server to allow it to start listening for requests on localhost:9001</summary>
@@ -109,7 +109,7 @@ namespace CustomACEAPI
         /// <author>Damian Jimenez</author>
         public class CartesianMoveAPI : NancyModule
         {
-            /// <summary>API endpoint for the Cartesian Move command</summary>
+            /// <summary>API endpoint for the CartesianMove command</summary>
             /// <author>Damian Jimenez</author>
             /// <returns><c>void</c></returns>
             public CartesianMoveAPI()
@@ -143,7 +143,9 @@ namespace CustomACEAPI
                         var command = JsonConvert.DeserializeObject<CartesianMoveCommand>(body);
 
                         WriteOutput($"Received the following POST request:\n{body.ToString()}\n");
-                        command.Execute(adept_ace.AceRobot, adept_ace.AceServer.CreateObject(typeof(CartesianMove)) as CartesianMove);
+
+                        Thread command_thread = new Thread(() => command.Execute(adept_ace.AceRobot, adept_ace.AceServer.CreateObject(typeof(CartesianMove)) as CartesianMove));
+                        command_thread.Start();
 
                         return HttpStatusCode.OK;
                     }
@@ -222,59 +224,69 @@ namespace CustomACEAPI
             /// <returns><c>void</c></returns>
             public void Execute(IAdeptRobot robot, CartesianMove cartesianMove)
             {
-                // Get the current joint positions of the robot
-                double[] jointPositions = robot.JointPosition;
-
-                // Print out joint information for the user to see
-                WriteOutput("Curernt joint values:");
-                foreach (var joint in jointPositions.Select((value, i) => new { i, value }))
+                _SEMAPHORE.WaitOne();
+                /*################################################################################
+                ########################## BEGINNING OF PROTECTED BLOCK ##########################
+                ################################################################################*/
                 {
-                    WriteOutput($"joint[{joint.i}] = {joint.value}");
+                    // Get the current joint positions of the robot
+                    double[] jointPositions = robot.JointPosition;
+
+                    // Print out joint information for the user to see
+                    WriteOutput("Current joint values:");
+                    foreach (var joint in jointPositions.Select((value, i) => new { i, value }))
+                    {
+                        WriteOutput($"joint[{joint.i}] = {joint.value}");
+                    }
+
+                    // Assign the cartesianMove the parameters that were passed via the API call
+                    cartesianMove.Param.Accel = Accel;
+                    cartesianMove.Param.Decel = Decel;
+                    cartesianMove.Param.Speed = Speed;
+                    cartesianMove.Param.Straight = StraightMotion;
+                    cartesianMove.Param.MotionEnd = MOTION_END[MotionEnd];
+                    cartesianMove.Param.SCurveProfile = SCurveProfile;
+
+                    // Transform the current joint position to a world location
+                    Transform3D loc = robot.JointToWorld(jointPositions);
+
+                    // Check if the current location is inrange           
+                    Transform3D currentPosition = robot.WorldLocationWithTool;
+                    int inRange = robot.InRange(currentPosition);
+                    WriteOutput($"[{currentPosition}], inrange check = {inRange}\n");
+
+                    // Get the current robot configuration
+                    IMoveConfiguration moveConfig = robot.GetMoveConfiguration(jointPositions);
+
+                    // Create a new Transform3D object specifying how the robot should move
+                    cartesianMove.MoveConfiguration = moveConfig;
+                    Transform3D transform = new Transform3D(X, Y, Z, Yaw, Pitch, Roll);
+
+                    // Calculate the new position of the robot based on the transform and the robots current position
+                    cartesianMove.WorldLocation = currentPosition * transform;
+
+                    // Write out the CartesianMove that is to be executed to the console and GUI
+                    WriteOutput(cartesianMove.Description);
+
+                    // Issue the move and wait until it is done
+                    robot.Move(cartesianMove);
+                    robot.WaitMoveDone();
+
+                    // Force the robot to issue a DETACH
+                    robot.AutomaticControlActive = false;
                 }
-
-                // Assign the cartesianMove the parameters that were passed via the API call
-                cartesianMove.Param.Accel = Accel;
-                cartesianMove.Param.Decel = Decel;
-                cartesianMove.Param.Speed = Speed;
-                cartesianMove.Param.Straight = StraightMotion;
-                cartesianMove.Param.MotionEnd = MOTION_END[MotionEnd];
-                cartesianMove.Param.SCurveProfile = SCurveProfile;
-
-                // Transform the current joint position to a world location
-                Transform3D loc = robot.JointToWorld(jointPositions);
-
-                // Check if the current location is inrange           
-                Transform3D currentPosition = robot.WorldLocationWithTool;
-                int inRange = robot.InRange(currentPosition);
-                WriteOutput($"[{currentPosition}], inrange check = {inRange}\n");
-
-                // Get the current robot configuration
-                IMoveConfiguration moveConfig = robot.GetMoveConfiguration(jointPositions);
-
-                // Create a new Transform3D object specifying how the robot should move
-                cartesianMove.MoveConfiguration = moveConfig;
-                Transform3D transform = new Transform3D(X, Y, Z, Yaw, Pitch, Roll);
-
-                // Calculate the new position of the robot based on the transform and the robots current position
-                cartesianMove.WorldLocation = currentPosition * transform;
-
-                // Write out the CartesianMove that is to be excuted to the console and GUI
-                WriteOutput(cartesianMove.Description);
-
-                // Issue the move and wait until it is done
-                robot.Move(cartesianMove);
-                robot.WaitMoveDone();
-
-                // Force the robot to issue a DETACH
-                robot.AutomaticControlActive = false;
+                /*################################################################################
+                ############################# END OF PROTECTED BLOCK #############################
+                ################################################################################*/
+                _SEMAPHORE.Release();
             }
         }
 
-        /// <summary>Class to handle CartesianMove API calls</summary>
+        /// <summary>Class to handle JointMove API calls</summary>
         /// <author>Damian Jimenez</author>
         public class JointMoveAPI : NancyModule
         {
-            /// <summary>API endpoint for the Cartesian Move command</summary>
+            /// <summary>API endpoint for the JointMove command</summary>
             /// <author>Damian Jimenez</author>
             /// <returns><c>void</c></returns>
             public JointMoveAPI()
@@ -340,7 +352,7 @@ namespace CustomACEAPI
             }
         }
 
-        /// <summary>Class to handle setting up and executing a CartesianMove from Ace.Adept.Server.Motion</summary>
+        /// <summary>Class to handle setting up and executing a JointMove from Ace.Adept.Server.Motion</summary>
         /// <author>Damian Jimenez</author>
         public class JointMoveCommand
         {
@@ -373,49 +385,58 @@ namespace CustomACEAPI
             /// <summary>Method that executes a command for an instance of the JointMoveCommand class</summary>
             /// <author>Damian Jimenez</author>
             /// <param name="robot">The robot that is to be controlled via the API call</param>
-            /// <param name="jointMove">Joint move object to handle calculating the motion of the joints of the robot</param>
+            /// <param name="jointMove"><c>JointMove</c> object to handle calculating the motion of the joints of the robot</param>
             /// <returns><c>void</c></returns>
             public void Execute(IAdeptRobot robot, JointMove jointMove)
             {
-                if (JointPosition.Length != 6)
+                _SEMAPHORE.WaitOne();
+                /*################################################################################
+                ########################## BEGINNING OF PROTECTED BLOCK ##########################
+                ################################################################################*/
                 {
-                    WriteOutput($"Invalid number of joints specified in the joint position arary. " +
-                        $"The array should specify 6 floating point values.\nCurrently it is: {JointPosition.ToString()}\n");
-                }
-                else
-                {
-                    jointMove.Initialize();
-                    // Get the current joint positions of the robot
-                    double[] jointPositions = robot.JointPosition;
-
-                    // Print out joint information for the user to see
-                    WriteOutput("Curernt joint values:");
-                    foreach (var joint in jointPositions.Select((value, i) => new { i, value }))
+                    if (JointPosition.Length != 6)
                     {
-                        WriteOutput($"joint[{joint.i}] = {joint.value}");
+                        WriteOutput($"Invalid number of joints specified in the joint position array. The array should specify 6 floating point values.\nCurrently it is: {JointPosition.ToString()}\n");
                     }
+                    else
+                    {
+                        jointMove.Initialize();
+                        // Get the current joint positions of the robot
+                        double[] jointPositions = robot.JointPosition;
 
-                    // Assign jointMove the parameters that were passed via the API call
-                    jointMove.Param.Accel = Accel;
-                    jointMove.Param.Decel = Decel;
-                    jointMove.Param.Speed = Speed;
-                    jointMove.Param.Straight = StraightMotion;
-                    jointMove.Param.MotionEnd = MOTION_END[MotionEnd];
-                    jointMove.Param.SCurveProfile = SCurveProfile;
-                    jointMove.JointPosition = JointPosition;
+                        // Print out joint information for the user to see
+                        WriteOutput("Current joint values:");
+                        foreach (var joint in jointPositions.Select((value, i) => new { i, value }))
+                        {
+                            WriteOutput($"joint[{joint.i}] = {joint.value}");
+                        }
 
-                    // Assing the robot that was passed as the one taht will execute the move
-                    jointMove.Robot = robot;
+                        // Assign jointMove the parameters that were passed via the API call
+                        jointMove.Param.Accel = Accel;
+                        jointMove.Param.Decel = Decel;
+                        jointMove.Param.Speed = Speed;
+                        jointMove.Param.Straight = StraightMotion;
+                        jointMove.Param.MotionEnd = MOTION_END[MotionEnd];
+                        jointMove.Param.SCurveProfile = SCurveProfile;
+                        jointMove.JointPosition = JointPosition;
 
-                    // Write out the JointMove that is to be excuted to the console and GUI
-                    WriteOutput(jointMove.Description);
+                        // Assigning the robot that was passed as the one that will execute the move
+                        jointMove.Robot = robot;
 
-                    // Execute the move
-                    jointMove.Go();
+                        // Write out the JointMove that is to be executed to the console and GUI
+                        WriteOutput(jointMove.Description);
 
-                    // Force the robot to issue a DETACH
-                    robot.AutomaticControlActive = false;
+                        // Execute the move
+                        jointMove.Go();
+
+                        // Force the robot to issue a DETACH
+                        robot.AutomaticControlActive = false;
+                    }
                 }
+                /*################################################################################
+                ############################# END OF PROTECTED BLOCK #############################
+                ################################################################################*/
+                _SEMAPHORE.Release();
             }
         }
     }
