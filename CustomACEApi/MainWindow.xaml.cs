@@ -438,6 +438,7 @@ namespace CustomACEAPI
             foreach (IAdeptController controller in ace.Root.Filter(new ObjectTypeFilter(typeof(IAdeptController)), true))
             {
                 // Print out all the controllers that are found and available
+                // We don't use WriteOutput, because that method definition isn't available to this class and it isn't required for things to work.
                 Console.WriteLine($"Found controller: {controller.FullPath}");
                 if(controllerPath.Equals(controller.FullPath))
                 {
@@ -457,6 +458,7 @@ namespace CustomACEAPI
                     // Print out all the robots that are found connected to the workspace and available
                     foreach (IAdeptRobot available_robot in ace.Root.Filter(new ObjectTypeFilter(typeof(IAdeptRobot)), true))
                     {
+                        // We don't use WriteOutput, because that method definition isn't available to this class and it isn't required for things to work.
                         Console.WriteLine($"Found robot: {available_robot.FullPath}");
                         if(robotPath.Equals(available_robot.FullPath))
                         {
@@ -466,6 +468,7 @@ namespace CustomACEAPI
                 }
             }
 
+            // We don't use WriteOutput, because that method definition isn't available to this class and it isn't required for things to work.
             Console.WriteLine($"Connected to the Adept ACE server successfully on: {REMOTING_HOST}:{REMOTING_PORT}/");
             ACE_SERVER_ON = true;
         }
