@@ -1,3 +1,5 @@
 theme: jekyll-theme-minimal
-title: An extendable C# API for Adept ACE
+title: Adept ACE Custom API
+description: An extendable RESTful API for Adept ACE written in C#
 show_downloads: true
+google_analytics: UA-98210243-1
