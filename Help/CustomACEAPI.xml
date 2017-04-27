@@ -1,0 +1,539 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>CustomACEAPI</name>
+  </assembly>
+  <members>
+    <member name="T:CustomACEAPI.AdeptAce">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>T:CustomACEAPI.AdeptAce</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:CustomACEAPI.AdeptAce.#ctor">
+      <summary>
+        <markup>
+          <include item="SMCAutoDocConstructor">
+            <parameter>CustomACEAPI.AdeptAce</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:CustomACEAPI.AdeptAce.AceRobot">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:CustomACEAPI.AdeptAce.AceRobot</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:CustomACEAPI.AdeptAce.AceServer">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:CustomACEAPI.AdeptAce.AceServer</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:CustomACEAPI.AdeptAce.Connected">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:CustomACEAPI.AdeptAce.Connected</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:CustomACEAPI.AdeptAce.ConnectToServer(System.String,System.String)">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:CustomACEAPI.AdeptAce.ConnectToServer(System.String,System.String)</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="controllerPath">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>controllerPath</parameter>
+            <parameter>M:CustomACEAPI.AdeptAce.ConnectToServer(System.String,System.String)</parameter>
+          </include>
+        </markup>
+      </param>
+      <param name="robotPath">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>robotPath</parameter>
+            <parameter>M:CustomACEAPI.AdeptAce.ConnectToServer(System.String,System.String)</parameter>
+          </include>
+        </markup>
+      </param>
+    </member>
+    <member name="T:CustomACEAPI.App">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>T:CustomACEAPI.App</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:CustomACEAPI.App.#ctor">
+      <summary>
+        <markup>
+          <include item="SMCAutoDocConstructor">
+            <parameter>CustomACEAPI.App</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:CustomACEAPI.App.InitializeComponent">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:CustomACEAPI.App.InitializeComponent</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:CustomACEAPI.App.Main">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:CustomACEAPI.App.Main</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="T:CustomACEAPI.MainWindow">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>T:CustomACEAPI.MainWindow</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:CustomACEAPI.MainWindow.#ctor">
+      <summary>
+        <markup>
+          <include item="SMCAutoDocConstructor">
+            <parameter>CustomACEAPI.MainWindow</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:CustomACEAPI.MainWindow.InitializeComponent">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:CustomACEAPI.MainWindow.InitializeComponent</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="T:CustomACEAPI.MainWindow.CartesianMoveAPI">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>T:CustomACEAPI.MainWindow.CartesianMoveAPI</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:CustomACEAPI.MainWindow.CartesianMoveAPI.#ctor">
+      <summary>
+        <markup>
+          <include item="SMCAutoDocConstructor">
+            <parameter>CustomACEAPI.MainWindow.CartesianMoveAPI</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="T:CustomACEAPI.MainWindow.CartesianMoveCommand">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>T:CustomACEAPI.MainWindow.CartesianMoveCommand</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:CustomACEAPI.MainWindow.CartesianMoveCommand.#ctor">
+      <summary>
+        <markup>
+          <include item="SMCAutoDocConstructor">
+            <parameter>CustomACEAPI.MainWindow.CartesianMoveCommand</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:CustomACEAPI.MainWindow.CartesianMoveCommand.Accel">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:CustomACEAPI.MainWindow.CartesianMoveCommand.Accel</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:CustomACEAPI.MainWindow.CartesianMoveCommand.Decel">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:CustomACEAPI.MainWindow.CartesianMoveCommand.Decel</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:CustomACEAPI.MainWindow.CartesianMoveCommand.Execute(Ace.Adept.Server.Motion.IAdeptRobot,Ace.Adept.Server.Motion.CartesianMove)">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:CustomACEAPI.MainWindow.CartesianMoveCommand.Execute(Ace.Adept.Server.Motion.IAdeptRobot,Ace.Adept.Server.Motion.CartesianMove)</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="robot">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>robot</parameter>
+            <parameter>M:CustomACEAPI.MainWindow.CartesianMoveCommand.Execute(Ace.Adept.Server.Motion.IAdeptRobot,Ace.Adept.Server.Motion.CartesianMove)</parameter>
+          </include>
+        </markup>
+      </param>
+      <param name="cartesianMove">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>cartesianMove</parameter>
+            <parameter>M:CustomACEAPI.MainWindow.CartesianMoveCommand.Execute(Ace.Adept.Server.Motion.IAdeptRobot,Ace.Adept.Server.Motion.CartesianMove)</parameter>
+          </include>
+        </markup>
+      </param>
+    </member>
+    <member name="P:CustomACEAPI.MainWindow.CartesianMoveCommand.MotionEnd">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:CustomACEAPI.MainWindow.CartesianMoveCommand.MotionEnd</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="F:CustomACEAPI.MainWindow.CartesianMoveCommand.Name">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>F:CustomACEAPI.MainWindow.CartesianMoveCommand.Name</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:CustomACEAPI.MainWindow.CartesianMoveCommand.Pitch">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:CustomACEAPI.MainWindow.CartesianMoveCommand.Pitch</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:CustomACEAPI.MainWindow.CartesianMoveCommand.Roll">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:CustomACEAPI.MainWindow.CartesianMoveCommand.Roll</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:CustomACEAPI.MainWindow.CartesianMoveCommand.SCurveProfile">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:CustomACEAPI.MainWindow.CartesianMoveCommand.SCurveProfile</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:CustomACEAPI.MainWindow.CartesianMoveCommand.Speed">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:CustomACEAPI.MainWindow.CartesianMoveCommand.Speed</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:CustomACEAPI.MainWindow.CartesianMoveCommand.StraightMotion">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:CustomACEAPI.MainWindow.CartesianMoveCommand.StraightMotion</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:CustomACEAPI.MainWindow.CartesianMoveCommand.X">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:CustomACEAPI.MainWindow.CartesianMoveCommand.X</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:CustomACEAPI.MainWindow.CartesianMoveCommand.Y">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:CustomACEAPI.MainWindow.CartesianMoveCommand.Y</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:CustomACEAPI.MainWindow.CartesianMoveCommand.Yaw">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:CustomACEAPI.MainWindow.CartesianMoveCommand.Yaw</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:CustomACEAPI.MainWindow.CartesianMoveCommand.Z">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:CustomACEAPI.MainWindow.CartesianMoveCommand.Z</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="T:CustomACEAPI.MultiTextWriter">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>T:CustomACEAPI.MultiTextWriter</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:CustomACEAPI.MultiTextWriter.#ctor(System.Collections.Generic.IEnumerable{System.IO.TextWriter})">
+      <summary>
+        <markup>
+          <include item="SMCAutoDocConstructor">
+            <parameter>CustomACEAPI.MultiTextWriter</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="writers">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>writers</parameter>
+            <parameter>M:CustomACEAPI.MultiTextWriter.#ctor(System.Collections.Generic.IEnumerable{System.IO.TextWriter})</parameter>
+          </include>
+        </markup>
+      </param>
+    </member>
+    <member name="M:CustomACEAPI.MultiTextWriter.#ctor(System.IO.TextWriter[])">
+      <summary>
+        <markup>
+          <include item="SMCAutoDocConstructor">
+            <parameter>CustomACEAPI.MultiTextWriter</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="writers">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>writers</parameter>
+            <parameter>M:CustomACEAPI.MultiTextWriter.#ctor(System.IO.TextWriter[])</parameter>
+          </include>
+        </markup>
+      </param>
+    </member>
+    <member name="M:CustomACEAPI.MultiTextWriter.Close">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:CustomACEAPI.MultiTextWriter.Close</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:CustomACEAPI.MultiTextWriter.Encoding">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:CustomACEAPI.MultiTextWriter.Encoding</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:CustomACEAPI.MultiTextWriter.Flush">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:CustomACEAPI.MultiTextWriter.Flush</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:CustomACEAPI.MultiTextWriter.Write(System.Char)">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:CustomACEAPI.MultiTextWriter.Write(System.Char)</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="value">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>value</parameter>
+            <parameter>M:CustomACEAPI.MultiTextWriter.Write(System.Char)</parameter>
+          </include>
+        </markup>
+      </param>
+    </member>
+    <member name="M:CustomACEAPI.MultiTextWriter.Write(System.String)">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:CustomACEAPI.MultiTextWriter.Write(System.String)</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="value">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>value</parameter>
+            <parameter>M:CustomACEAPI.MultiTextWriter.Write(System.String)</parameter>
+          </include>
+        </markup>
+      </param>
+    </member>
+    <member name="T:CustomACEAPI.TextBoxWriter">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>T:CustomACEAPI.TextBoxWriter</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:CustomACEAPI.TextBoxWriter.#ctor(System.Windows.Controls.TextBox)">
+      <summary>
+        <markup>
+          <include item="SMCAutoDocConstructor">
+            <parameter>CustomACEAPI.TextBoxWriter</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="textbox">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>textbox</parameter>
+            <parameter>M:CustomACEAPI.TextBoxWriter.#ctor(System.Windows.Controls.TextBox)</parameter>
+          </include>
+        </markup>
+      </param>
+    </member>
+    <member name="P:CustomACEAPI.TextBoxWriter.Encoding">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:CustomACEAPI.TextBoxWriter.Encoding</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:CustomACEAPI.TextBoxWriter.Write(System.Char)">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:CustomACEAPI.TextBoxWriter.Write(System.Char)</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="value">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>value</parameter>
+            <parameter>M:CustomACEAPI.TextBoxWriter.Write(System.Char)</parameter>
+          </include>
+        </markup>
+      </param>
+    </member>
+    <member name="M:CustomACEAPI.TextBoxWriter.Write(System.String)">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:CustomACEAPI.TextBoxWriter.Write(System.String)</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="value">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>value</parameter>
+            <parameter>M:CustomACEAPI.TextBoxWriter.Write(System.String)</parameter>
+          </include>
+        </markup>
+      </param>
+    </member>
+  </members>
+</doc>

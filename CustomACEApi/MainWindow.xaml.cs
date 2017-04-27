@@ -15,16 +15,10 @@ using Newtonsoft.Json;
 using System.Threading;
 using System.IO;
 
-/// <summary>
-/// The following project implements a C# API for the Adept ACE server, it allows robots to be controlled via
-/// a local server that is run on NancyFX (a light-weight web framework) and allows Adept robots to be easily
-/// controlled via other methods (e.g., LabView, Python, or anything that can issue HTTP POST/GET requests).
-/// </summary>
+/// <summary>The following project implements a C# API for the Adept ACE server, it allows robots to be controlled via local server that is run on NancyFX (a light-weight web framework) and allows Adept robots to be easily controlled via other methods (e.g., LabView, Python, or anything that can issue HTTP POST/GET requests).</summary>
 namespace CustomACEAPI
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
+    /// <summary>Class that handles creating and maintaining an instance of the GUI as well as setting up the application for use.</summary>
     public partial class MainWindow : Window
     {
         private static Semaphore _SEMAPHORE = new Semaphore(1, 1);
@@ -33,15 +27,9 @@ namespace CustomACEAPI
         private static NancyHost _nancy;
         private static AdeptAce adept_ace;
 
-        /// <summary>
-        /// Initiates the GUI and preps everything needed to successfully start the NancyFX server and connect to the Adept ACE server 
-        /// </summary>
-        /// <author>
-        /// Damian Jimenez
-        /// </author>
-        /// <returns>
-        /// Noting
-        /// </returns>
+        /// <summary>Initiates the GUI and preps everything needed to successfully start the NancyFX server and connect to the Adept ACE server </summary>
+        /// <author>Damian Jimenez</author>
+        /// <returns>Noting</returns>
         public MainWindow()
         {
             adept_ace = new AdeptAce();
@@ -61,21 +49,11 @@ namespace CustomACEAPI
             Console.WriteLine("App started successfully...\n---------------------------");
         }
 
-        /// <summary>
-        /// Starts the NancyFX server to allow it to start listening for requests on localhost:9001
-        /// </summary>
-        /// <author>
-        /// Damian Jimenez
-        /// </author>
-        /// <param name="sender">
-        /// Object that triggered the call to this method
-        /// </param>
-        /// <param name="e">
-        /// Event information of the routed event
-        /// </param>
-        /// <returns>
-        /// Noting
-        /// </returns>
+        /// <summary>Starts the NancyFX server to allow it to start listening for requests on localhost:9001</summary>
+        /// <author>Damian Jimenez</author>
+        /// <param name="sender">Object that triggered the call to this method</param>
+        /// <param name="e">Event information of the routed event</param>
+        /// <returns>Noting</returns>
         void Start_APP(object sender, RoutedEventArgs e)
         {
             if(!adept_ace.Connected)
@@ -87,21 +65,11 @@ namespace CustomACEAPI
             Console.WriteLine($"Listening on {_url}:{_port}/\n");
         }
 
-        /// <summary>
-        /// Stops the NancyFX server
-        /// </summary>
-        /// <author>
-        /// Damian Jimenez
-        /// </author>
-        /// <param name="sender">
-        /// Object that triggered the call to this method
-        /// </param>
-        /// <param name="e">
-        /// Event information of the routed event
-        /// </param>
-        /// <returns>
-        /// Noting
-        /// </returns>
+        /// <summary>Stops the NancyFX server</summary>
+        /// <author>Damian Jimenez</author>
+        /// <param name="sender">Object that triggered the call to this method</param>
+        /// <param name="e">Event information of the routed event</param>
+        /// <returns>Noting</returns>
         void Stop_APP(object sender, RoutedEventArgs e)
         {
             _nancy.Stop();
@@ -109,34 +77,18 @@ namespace CustomACEAPI
         }
 
 
-        /// <summary>
-        /// Class to handle CartesianMove API calls
-        /// </summary>
-        /// <author>
-        /// Damian Jimenez
-        /// </author>
+        /// <summary>Class to handle CartesianMove API calls</summary>
+        /// <author>Damian Jimenez</author>
         public class CartesianMoveAPI : NancyModule
         {
-            /// <summary>
-            /// API endpoint for the Cartesian Move command
-            /// </summary>
-            /// <author>
-            /// Damian Jimenez
-            /// </author>
-            /// <returns>
-            /// Nothing
-            /// </returns>
+            /// <summary>API endpoint for the Cartesian Move command</summary>
+            /// <author>Damian Jimenez</author>
+            /// <returns>Nothing</returns>
             public CartesianMoveAPI()
             {
-                /// <summary>
-                /// GET request handler
-                /// </summary>
-                /// <author>
-                /// Damian Jimenez
-                /// </author>
-                /// <returns>
-                /// Response object specifying to the user that GET requests are not supported
-                /// </returns>
+                /// <summary>GET request handler</summary>
+                /// <author>Damian Jimenez</author>
+                /// <returns>Response object specifying to the user that GET requests are not supported</returns>
                 Get["/api/move/cartesian"] = _ =>
                 {
                     return new Response()
@@ -153,15 +105,9 @@ namespace CustomACEAPI
                     };
                 };
 
-                /// <summary>
-                /// POST request handler. Takes the JSON payload and attempts to parse the commands and execute a CartesianMove using the Ace.Adept.Server.Motion
-                /// </summary>
-                /// <author>
-                /// Damian Jimenez
-                /// </author>
-                /// <returns>
-                /// HttpStatusCode.OK or a Response object detailing what went wrong
-                /// </returns>
+                /// <summary>POST request handler. Takes the JSON payload and attempts to parse the commands and execute a CartesianMove using the Ace.Adept.Server.Motion</summary>
+                /// <author>Damian Jimenez</author>
+                /// <returns>HttpStatusCode.OK or a Response object detailing what went wrong</returns>
                 Post["/api/move/cartesian"] = _ =>
                 {
                     try
@@ -208,12 +154,8 @@ namespace CustomACEAPI
             }
         }
 
-        /// <summary>
-        /// Class to handle setting up and executing a CartesianMove from Ace.Adept.Server.Motion
-        /// </summary>
-        /// <author>
-        /// Damian Jimenez
-        /// </author>
+        /// <summary>Class to handle setting up and executing a CartesianMove from Ace.Adept.Server.Motion</summary>
+        /// <author>Damian Jimenez</author>
         public class CartesianMoveCommand
         {
             private static Dictionary<string, MotionEnd> MOTION_END = new Dictionary<string, MotionEnd>()
@@ -238,21 +180,11 @@ namespace CustomACEAPI
             public double Pitch { get; set; }
             public double Roll { get; set; }
 
-            /// <summary>
-            /// Method that executes a command for an instance of the CartesianMoveCommand class
-            /// </summary>
-            /// <author>
-            /// Damian Jimenez
-            /// </author>
-            /// <param name="robot">
-            /// The robot that is to be controlled via the API call
-            /// </param>
-            /// <param name="cartesianMove">
-            /// Cartesian move object to handle calculating the motion of the robot
-            /// </param>
-            /// <returns>
-            /// Nothing
-            /// </returns>
+            /// <summary>Method that executes a command for an instance of the CartesianMoveCommand class</summary>
+            /// <author>Damian Jimenez</author>
+            /// <param name="robot">The robot that is to be controlled via the API call</param>
+            /// <param name="cartesianMove">Cartesian move object to handle calculating the motion of the robot</param>
+            /// <returns>Nothing</returns>
             public void Execute(IAdeptRobot robot, CartesianMove cartesianMove)
             {
                 _SEMAPHORE.WaitOne();
@@ -312,12 +244,8 @@ namespace CustomACEAPI
         }
     }
 
-    /// <summary>
-    /// Class to assist in re-routing stdout to the GUI textbox that is displayed
-    /// </summary>
-    /// <author>
-    /// Damian Jimenez -- [http://stackoverflow.com/a/18727100]
-    /// </author>
+    /// <summary>Class to assist in re-routing STDOUT to the GUI text-box that is displayed</summary>
+    /// <author>Damian Jimenez -- [http://stackoverflow.com/a/18727100]</author>
     public class TextBoxWriter : TextWriter
     {
         private TextBox textbox;
@@ -343,14 +271,8 @@ namespace CustomACEAPI
         }
     }
 
-    /// <summary>
-    /// Class to assist in re-routing stdout to multiple outputs, in our case
-    /// to re-route it to the textbox that is displayed and also display it on
-    /// the console as well.
-    /// </summary>
-    /// <author>
-    /// Damian Jimenez -- [http://stackoverflow.com/a/18727100]
-    /// </author>
+    /// <summary>Class to assist in re-routing STDOUT to multiple outputs. In our case to re-route it to the text-box that is displayed and also to the console as well.</summary>
+    /// <author>Damian Jimenez -- [http://stackoverflow.com/a/18727100]</author>
     public class MultiTextWriter : TextWriter
     {
         private IEnumerable<TextWriter> writers;
@@ -393,12 +315,8 @@ namespace CustomACEAPI
         }
     }
 
-    /// <summary>
-    /// Class that wraps the Custom ACE API server and all of its associated classes and methods
-    /// </summary>
-    /// <author>
-    /// Damian Jimenez
-    /// </author>
+    /// <summary>Class that wraps the Custom ACE API server and all of its associated classes and methods</summary>
+    /// <author>Damian Jimenez</author>
     public class AdeptAce
     {
         private const string REMOTING_NAME = "ace";
@@ -410,15 +328,9 @@ namespace CustomACEAPI
         private static IAceServer ace;
         private static IAdeptRobot robot;
 
-        /// <summary>
-        /// Method that allows a user to check whether the connection to the ACE server has been started
-        /// </summary>
-        /// <author>
-        /// Damian Jimenez
-        /// </author>
-        /// <returns>
-        /// bool specifying whether the connection to the ACE server is active or not
-        /// </returns>
+        /// <summary>Method that allows a user to check whether the connection to the ACE server has been started</summary>
+        /// <author>Damian Jimenez</author>
+        /// <returns>bool specifying whether the connection to the ACE server is active or not</returns>
         public bool Connected
         {
             get
@@ -427,15 +339,9 @@ namespace CustomACEAPI
             }
         }
 
-        /// <summary>
-        /// Method that returns the class instance of IAceServer
-        /// </summary>
-        /// <author>
-        /// Damian Jimenez
-        /// </author>
-        /// <returns>
-        /// IAceServer the ace server used to communicate with ACE and the robot
-        /// </returns>
+        /// <summary>Method that returns the class instance of IAceServer</summary>
+        /// <author>Damian Jimenez</author>
+        /// <returns>IAceServer the ace server used to communicate with ACE and the robot</returns>
         public IAceServer AceServer
         {
             get
@@ -444,15 +350,9 @@ namespace CustomACEAPI
             }
         }
 
-        /// <summary>
-        /// Method that returns the class instance of IAdeptRobot
-        /// </summary>
-        /// <author>
-        /// Damian Jimenez
-        /// </author>
-        /// <returns>
-        /// IAdeptRobot the robot that is to be controlled
-        /// </returns>
+        /// <summary>Method that returns the class instance of IAdeptRobot</summary>
+        /// <author>Damian Jimenez</author>
+        /// <returns>IAdeptRobot the robot that is to be controlled</returns>
         public IAdeptRobot AceRobot
         {
             get
@@ -461,21 +361,11 @@ namespace CustomACEAPI
             }
         }
 
-        /// <summary>
-        /// Method that connects to the Adept ACE server and sets up the robot for use
-        /// </summary>
-        /// <author>
-        /// Damian Jimenez
-        /// </author>
-        /// <param name="controllerPath">
-        /// Specifies where the server should search for the controller, can be found by opening up a default workspace in Adept ACE and connecting to a desired robot.
-        /// </param>
-        /// <param name="robotPath">
-        /// Specifies where the server should search for the robot, can be found by opening up a default workspace in Adept ACE and connecting to a desired robot.
-        /// </param>
-        /// <returns>
-        /// Nothing
-        /// </returns>
+        /// <summary>Method that connects to the Adept ACE server and sets up the robot for use</summary>
+        /// <author>Damian Jimenez</author>
+        /// <param name="controllerPath">Specifies where the server should search for the controller, can be found by opening up a default workspace in Adept ACE and connecting to a desired robot.</param>
+        /// <param name="robotPath">Specifies where the server should search for the robot, can be found by opening up a default workspace in Adept ACE and connecting to a desired robot.</param>
+        /// <returns>Nothing</returns>
         public void ConnectToServer(String controllerPath = "/SmartController 9/SmartController 9", String robotPath = "/SmartController 9/R1 Viper650")
         {
 
