@@ -14,8 +14,7 @@ You can quickly test out API endpoints via the PowerShell by starting up Adept A
 
 ```powershell
 
-PS > Invoke-WebRequest -UseBasicParsing http://localhost:9001/api/move/cartesian -ContentType "applica
-tion/json" -Method POST -Body "{ 'Accel': 100, 'Decel': 100, 'Speed': 10, 'StraightMotion': true, 'MotionEnd': 'Blend', 'SCurveProfile': 0, 'X': 10, 'Y': 10, 'Z': 0, 'Yaw': 0, 'Pitch': 0, 'Roll': 0}"
+PS > Invoke-WebRequest -UseBasicParsing http://localhost:9001/api/move/cartesian -ContentType "application/json" -Method POST -Body "{ 'Accel': 100, 'Decel': 100, 'Speed': 10, 'StraightMotion': true, 'MotionEnd': 'Blend', 'SCurveProfile': 0, 'X': 10, 'Y': 10, 'Z': 0, 'Yaw': 0, 'Pitch': 0, 'Roll': 0}"
 ```
 
 ### Resources
