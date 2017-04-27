@@ -1,4 +1,4 @@
-# Adept ACE Custom API
+# [Adept ACE Custom API]
 
 This is a C# RESTful API for the Adept ACE environment. This API was developed specifically to control a ViperS650 robot, but could be easily extended to control other robots.
 
@@ -41,6 +41,7 @@ Alternatively, you can enable the Package Restore function of NuGet within Visua
 
 [//]: # (Reference Links - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)
 
+   [Adept ACE Custom API]: <https://damianj.github.io/MARSLab_ACEAPI/>
    [Volkanpaksoy]: <http://volkanpaksoy.com/archive/2015/11/11/building-a-simple-http-server-with-nancy/>
    [Nancy]: <http://nancyfx.org/>
    [Newtonsoft]: <http://www.newtonsoft.com/json>
