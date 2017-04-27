@@ -1,6 +1,6 @@
-# Adept ACE Custom API - MARS Lab (UT Arlington)
+# Adept ACE Custom API
 
-This is a C# RESTful style API for the Adept ACE environment. This API was developed specifically to control a ViperS650 robot, but could be extended to control other robots easily.
+This is a C# RESTful API for the Adept ACE environment. This API was developed specifically to control a ViperS650 robot, but could be easily extended to control other robots.
 
   - Install a licensed version of Adept ACE 3.7 and start up Adept ACE
   - Connect to the robot within Adept ACE and make sure the robot is powered on
@@ -13,7 +13,6 @@ This is a C# RESTful style API for the Adept ACE environment. This API was devel
 You can quickly test out API endpoints via the PowerShell by starting up Adept ACE, connecting to the robot, and starting the application and clicking 'START'. After these steps you can use the PowerShell command below as a template to test out your API endpoints.
 
 ```powershell
-
 PS > Invoke-WebRequest -UseBasicParsing http://localhost:9001/api/move/cartesian -ContentType "application/json" -Method POST -Body "{ 'Accel': 100, 'Decel': 100, 'Speed': 10, 'StraightMotion': true, 'MotionEnd': 'Blend', 'SCurveProfile': 0, 'X': 10, 'Y': 10, 'Z': 0, 'Yaw': 0, 'Pitch': 0, 'Roll': 0}"
 ```
 
@@ -26,7 +25,7 @@ PS > Invoke-WebRequest -UseBasicParsing http://localhost:9001/api/move/cartesian
 ### Continuing Development
 You will need to install some packages via the Package Manager Console in Visual Studio
 
-  - `PM> Install-Package Newtonsoft.Json`
+  - ```powershell PM> Install-Package Newtonsoft.Json```
   - `PM> Install-Package Nancy`
   - `PM> Install-Package Nancy.Hosting.Self`
 
