@@ -6,7 +6,8 @@ This is a C# RESTful API for the Adept ACE environment. This API was developed s
   - Connect to the robot within Adept ACE and make sure the robot is powered on
   - Build the project in Visual Studio and run the application
   - The application gui will pop-up and once you click 'START' it will start listening on `localhost:9001`
-  - See the documentation for available API endpoints and how to use them
+  - See the usage documentation for available API endpoints and how to use them
+  - Aside from being well-commented there is an HTML documentation for the code (more technical than the usage documentation) available in the 'Help' folder of this repo and opening 'index.html' in your browser of choice.
 
 ### Testing
 
