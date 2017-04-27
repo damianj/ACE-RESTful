@@ -82,4 +82,10 @@
     </PostBuildEvent>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
   </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="CustomACEAPI\CustomACEAPI.csproj">
+      <Name>CustomACEAPI</Name>
+      <Project>{FAB2675E-D535-473C-83C8-91977B6EE29D}</Project>
+    </ProjectReference>
+  </ItemGroup>
 </Project>
