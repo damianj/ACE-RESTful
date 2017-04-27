@@ -88,7 +88,7 @@ namespace CustomACEAPI
         {
             // Stop the HTTP Server
             _nancy.Stop();
-            Console.WriteLine("Successfuly stopped the HTTP server.\n------------------------------------\n");
+            Console.WriteLine("Successfully stopped the HTTP server.\n------------------------------------\n");
         }
 
 
@@ -133,7 +133,7 @@ namespace CustomACEAPI
                         var body = Encoding.Default.GetString(data);
                         var command = JsonConvert.DeserializeObject<CartesianMoveCommand>(body);
 
-                        Console.WriteLine($"Recieved the following POST request:\n{body.ToString()}\n");
+                        Console.WriteLine($"Received the following POST request:\n{body.ToString()}\n");
                         Thread command_thread = new Thread(() => command.Execute(adept_ace.AceRobot, adept_ace.AceServer.CreateObject(typeof(CartesianMove)) as CartesianMove));
                         command_thread.Start();
 
@@ -229,7 +229,7 @@ namespace CustomACEAPI
                         Console.WriteLine($"joint[{joint.i}] = {joint.value}");
                     }
 
-                    // Assign the cartesianMove the parameteres that were passed via the API call
+                    // Assign the cartesianMove the parameters that were passed via the API call
                     cartesianMove.Param.Accel = Accel;
                     cartesianMove.Param.Decel = Decel;
                     cartesianMove.Param.Speed = Speed;
@@ -468,7 +468,7 @@ namespace CustomACEAPI
                 }
             }
 
-            Console.WriteLine($"Connected to the Adept ACE server succesfully on: {REMOTING_HOST}:{REMOTING_PORT}/");
+            Console.WriteLine($"Connected to the Adept ACE server successfully on: {REMOTING_HOST}:{REMOTING_PORT}/");
             ACE_SERVER_ON = true;
         }
     }

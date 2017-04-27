@@ -99,14 +99,10 @@
       </summary>
     </member>
     <member name="P:CustomACEAPI.MainWindow.CartesianMoveCommand.Accel">
-      <summary>
-            Maximum acceleration of the robot when it moves.
-            </summary>
+      <summary>Maximum acceleration of the robot when it moves.</summary>
     </member>
     <member name="P:CustomACEAPI.MainWindow.CartesianMoveCommand.Decel">
-      <summary>
-            Maximum deceleration of the robot when it moves.
-            </summary>
+      <summary>Maximum deceleration of the robot when it moves.</summary>
     </member>
     <member name="M:CustomACEAPI.MainWindow.CartesianMoveCommand.Execute(Ace.Adept.Server.Motion.IAdeptRobot,Ace.Adept.Server.Motion.CartesianMove)">
       <summary>Method that executes a command for an instance of the CartesianMoveCommand class</summary>
@@ -117,59 +113,37 @@
       </returns>
     </member>
     <member name="P:CustomACEAPI.MainWindow.CartesianMoveCommand.MotionEnd">
-      <summary>
-            Determines how the motion should finish (i.e., Blend, NoNull, SettleCoarse, or SettleFine)
-            </summary>
+      <summary>Determines how the motion should finish (i.e., Blend, NoNull, SettleCoarse, or SettleFine)</summary>
     </member>
     <member name="F:CustomACEAPI.MainWindow.CartesianMoveCommand.Name">
-      <summary>
-            The name of this type of motion, derived from the ACE command name.
-            </summary>
+      <summary>The name of this type of motion, derived from the ACE command name.</summary>
     </member>
     <member name="P:CustomACEAPI.MainWindow.CartesianMoveCommand.Pitch">
-      <summary>
-            Specifies the Pitch coordinate of the motion
-            </summary>
+      <summary>Specifies the Pitch coordinate of the motion</summary>
     </member>
     <member name="P:CustomACEAPI.MainWindow.CartesianMoveCommand.Roll">
-      <summary>
-            Specifies the Roll coordinate of the motion
-            </summary>
+      <summary>Specifies the Roll coordinate of the motion</summary>
     </member>
     <member name="P:CustomACEAPI.MainWindow.CartesianMoveCommand.SCurveProfile">
-      <summary>
-            Specifies the S-curve trajectory profile, from 0 (for trapezoidal) to 8, or -1 to leave unchanged.
-            </summary>
+      <summary>Specifies the S-curve trajectory profile, from 0 (for trapezoidal) to 8, or -1 to leave unchanged.</summary>
     </member>
     <member name="P:CustomACEAPI.MainWindow.CartesianMoveCommand.Speed">
-      <summary>
-            Maximum speed of the robot when it moves.
-            </summary>
+      <summary>Maximum speed of the robot when it moves.</summary>
     </member>
     <member name="P:CustomACEAPI.MainWindow.CartesianMoveCommand.StraightMotion">
-      <summary>
-            Determines whether the robot's motion should be straight or not (i.e., true: straight-line, false: motion will be joint-interpolated)
-            </summary>
+      <summary>Determines whether the robot's motion should be straight or not (i.e., true: straight-line, false: motion will be joint-interpolated)</summary>
     </member>
     <member name="P:CustomACEAPI.MainWindow.CartesianMoveCommand.X">
-      <summary>
-            Specifies the X coordinate of the motion
-            </summary>
+      <summary>Specifies the X coordinate of the motion</summary>
     </member>
     <member name="P:CustomACEAPI.MainWindow.CartesianMoveCommand.Y">
-      <summary>
-            Specifies the Y coordinate of the motion
-            </summary>
+      <summary>Specifies the Y coordinate of the motion</summary>
     </member>
     <member name="P:CustomACEAPI.MainWindow.CartesianMoveCommand.Yaw">
-      <summary>
-            Specifies the Yaw coordinate of the motion
-            </summary>
+      <summary>Specifies the Yaw coordinate of the motion</summary>
     </member>
     <member name="P:CustomACEAPI.MainWindow.CartesianMoveCommand.Z">
-      <summary>
-            Specifies the Z coordinate of the motion
-            </summary>
+      <summary>Specifies the Z coordinate of the motion</summary>
     </member>
     <member name="T:CustomACEAPI.MultiTextWriter">
       <summary>Class to assist in re-routing <c>stdout</c> to multiple outputs. In our case to re-route it to the text-box that is displayed and also to the console as well.</summary>
