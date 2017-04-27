@@ -18,8 +18,10 @@ using System.IO;
 
 namespace CustomACEAPI
 {
-    /// <summary>
-    /// The <see cref="CustomACEAPI"/> project implements a C# RESTful API for the Adept ACE server. It allows robots to be controlled via a local HTTP server that is run on NancyFX (a light-weight web framework), and allows Adept robots to be easily controlled via other mediums (e.g., LabView, Python, or anything that can issue HTTP POST/GET requests).
+    /// <summary>The <see cref="CustomACEAPI"/> project implements a C# RESTful API for the Adept ACE server. 
+    /// It allows robots to be controlled via a local HTTP server that is run on NancyFX (a light-weight 
+    /// web framework), and allows Adept robots to be easily controlled via other mediums (e.g., LabView, 
+    /// Python, or anything that can issue HTTP POST/GET requests).
     /// </summary>
     [System.Runtime.CompilerServices.CompilerGenerated]
     class NamespaceDoc
@@ -99,7 +101,6 @@ namespace CustomACEAPI
             /// <returns><c>void</c></returns>
             public CartesianMoveAPI()
             {
-                /// <summary>GET request handler</summary>
                 /// <author>Damian Jimenez</author>
                 /// <returns><c>Response</c> object specifying to the user that GET requests are not supported</returns>
                 Get["/api/move/cartesian"] = _ =>
@@ -118,7 +119,6 @@ namespace CustomACEAPI
                     };
                 };
 
-                /// <summary>POST request handler. Takes the JSON payload and attempts to parse the commands and execute a CartesianMove using the Ace.Adept.Server.Motion</summary>
                 /// <author>Damian Jimenez</author>
                 /// <returns><c>HttpStatusCode.OK</c> or a Response object detailing what went wrong</returns>
                 Post["/api/move/cartesian"] = _ =>
@@ -171,9 +171,7 @@ namespace CustomACEAPI
         /// <author>Damian Jimenez</author>
         public class CartesianMoveCommand
         {
-            /// <summary>
-            /// Mapping of all the possible values for <c>MotionEnd</c>, to be easily accessed with a <c>String</c> parsed from the JSON file in the HTTP POST request
-            /// </summary>
+            /// <summary>Mapping of all the possible values for <c>MotionEnd</c>, to be easily accessed with a <c>String</c> parsed from the JSON file in the HTTP POST request</summary>
             private static Dictionary<string, MotionEnd> MOTION_END = new Dictionary<string, MotionEnd>()
             {
                 { "Blend", Ace.Adept.Server.Motion.MotionEnd.Blend },
@@ -182,57 +180,31 @@ namespace CustomACEAPI
                 { "SettleFine", Ace.Adept.Server.Motion.MotionEnd.SettleFine },
             };
 
-            /// <summary>
-            /// The name of this type of motion, derived from the ACE command name.
-            /// </summary>
+            /// <summary>The name of this type of motion, derived from the ACE command name.</summary>
             public string Name = "Cartesian Move";
-            /// <summary>
-            /// Maximum acceleration of the robot when it moves.
-            /// </summary>
+            /// <summary>Maximum acceleration of the robot when it moves.</summary>
             public int Accel { get; set; }
-            /// <summary>
-            /// Maximum deceleration of the robot when it moves.
-            /// </summary>
+            /// <summary>Maximum deceleration of the robot when it moves.</summary>
             public int Decel { get; set; }
-            /// <summary>
-            /// Maximum speed of the robot when it moves.
-            /// </summary>
+            /// <summary>Maximum speed of the robot when it moves.</summary>
             public int Speed { get; set; }
-            /// <summary>
-            /// Determines whether the robot's motion should be straight or not (i.e., true: straight-line, false: motion will be joint-interpolated)
-            /// </summary>
+            /// <summary>Determines whether the robot's motion should be straight or not (i.e., true: straight-line, false: motion will be joint-interpolated)</summary>
             public bool StraightMotion { get; set; }
-            /// <summary>
-            /// Determines how the motion should finish (i.e., Blend, NoNull, SettleCoarse, or SettleFine)
-            /// </summary>
+            /// <summary>Determines how the motion should finish (i.e., Blend, NoNull, SettleCoarse, or SettleFine)</summary>
             public string MotionEnd { get; set; }
-            /// <summary>
-            /// Specifies the S-curve trajectory profile, from 0 (for trapezoidal) to 8, or -1 to leave unchanged.
-            /// </summary>
+            /// <summary>Specifies the S-curve trajectory profile, from 0 (for trapezoidal) to 8, or -1 to leave unchanged.</summary>
             public int SCurveProfile { get; set; }
-            /// <summary>
-            /// Specifies the X coordinate of the motion
-            /// </summary>
+            /// <summary>Specifies the X coordinate of the motion</summary>
             public double X { get; set; }
-            /// <summary>
-            /// Specifies the Y coordinate of the motion
-            /// </summary>
+            /// <summary>Specifies the Y coordinate of the motion</summary>
             public double Y { get; set; }
-            /// <summary>
-            /// Specifies the Z coordinate of the motion
-            /// </summary>
+            /// <summary>Specifies the Z coordinate of the motion</summary>
             public double Z { get; set; }
-            /// <summary>
-            /// Specifies the Yaw coordinate of the motion
-            /// </summary>
+            /// <summary>Specifies the Yaw coordinate of the motion</summary>
             public double Yaw { get; set; }
-            /// <summary>
-            /// Specifies the Pitch coordinate of the motion
-            /// </summary>
+            /// <summary>Specifies the Pitch coordinate of the motion</summary>
             public double Pitch { get; set; }
-            /// <summary>
-            /// Specifies the Roll coordinate of the motion
-            /// </summary>
+            /// <summary>Specifies the Roll coordinate of the motion</summary>
             public double Roll { get; set; }
 
             /// <summary>Method that executes a command for an instance of the CartesianMoveCommand class</summary>
