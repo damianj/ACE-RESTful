@@ -125,6 +125,54 @@ namespace CustomACEAPI
             }));
         }
 
+        /// <summary>Class to handle landing page of the application serer</summary>
+        /// <author>Damian Jimenez</author>
+        public class IndexPage : NancyModule
+        {
+            /// <summary>Endpoint for the landing page</summary>
+            /// <author>Damian Jimenez</author>
+            /// <returns><c>void</c></returns>
+            public IndexPage()
+            {
+                Get["/"] = _ => View["index"];
+
+                Post["/"] = _ => View["index"];
+            }
+        }
+
+        /// <summary>Class to handle Camera API calls</summary>
+        /// <author>Damian Jimenez</author>
+        public class CameraAPI : NancyModule
+        {
+            /// <summary>API endpoint for the Camera commands</summary>
+            /// <author>Damian Jimenez</author>
+            /// <returns><c>void</c></returns>
+            public CameraAPI()
+            {
+                Get["/api/camera/get/alldata"] = _ =>
+                {
+                    return "Hello world.";
+                };
+
+                Post[@"/api/camera/.*"] = _ =>
+                {
+                    WriteOutput($"POST requests not supported by /api/move/cartesian\n");
+                    return new Response()
+                    {
+                        StatusCode = HttpStatusCode.BadRequest,
+                        ContentType = "application/json",
+                        ReasonPhrase = "POST requests are not supported by this endpoint, use a GET request instead.",
+                        Headers = new Dictionary<string, string>()
+                        {
+                            {
+                                "Content-Type", "application/json"
+                            }
+                        },
+                    };
+                };
+            }
+        }
+
         /// <summary>Class to handle CartesianMove API calls</summary>
         /// <author>Damian Jimenez</author>
         public class CartesianMoveAPI : NancyModule
@@ -136,6 +184,7 @@ namespace CustomACEAPI
             {
                 Get["/api/move/cartesian"] = _ =>
                 {
+                    WriteOutput($"GET requests not supported by /api/move/cartesian\n");
                     return new Response()
                     {
                         StatusCode = HttpStatusCode.BadRequest,
@@ -320,6 +369,7 @@ namespace CustomACEAPI
             {
                 Get["/api/move/joints"] = _ =>
                 {
+                    WriteOutput($"GET requests not supported by /api/move/joints\n");
                     return new Response()
                     {
                         StatusCode = HttpStatusCode.BadRequest,
