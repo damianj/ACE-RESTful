@@ -33,11 +33,12 @@ namespace CustomACEAPI
     public partial class MainWindow : Window
     {
         private static Semaphore _SEMAPHORE = new Semaphore(1, 1);
-        private const string _url = "http://localhost";
-        private const int _port = 9001;
+        private string _url = "localhost";
+        private int _port = 9001;
         private static NancyHost _nancy;
         private static AdeptAce adept_ace;
         private static Dispatcher gui_dispatcher;
+        private static HostConfiguration configuration;
         private static ObservableCollection<string> controllers;
         private static ObservableCollection<string> robots;
 
@@ -47,13 +48,12 @@ namespace CustomACEAPI
         public MainWindow()
         {
             gui_dispatcher = Dispatcher;
-            adept_ace = new AdeptAce();
             InitializeComponent();
             OutputText.Text = "";
             Console.SetOut(new MultiTextWriter(new TextBoxWriter(OutputText), Console.Out));
 
             // Create a URL reservation to allow the NancyFX server to start (i.e., prevent AutomaticUrlReservationCreationFailureException)
-            var configuration = new HostConfiguration()
+            configuration = new HostConfiguration()
             {
                 UrlReservations = new UrlReservations()
                 {
@@ -61,8 +61,6 @@ namespace CustomACEAPI
                 }
             };
 
-            // Prep the NancyFX server for use later on
-            _nancy = new NancyHost(configuration, new Uri($"{_url}:{_port}/"));
             WriteOutput("Application started successfully...\n-----------------------------------");
         }
 
@@ -73,22 +71,34 @@ namespace CustomACEAPI
         /// <returns><c>void</c></returns>
         void Start_APP(object sender, RoutedEventArgs e)
         {
-            // Only do all this once, when we have just started the application
-            if(!adept_ace.Connected)
-            {
-                ObservableCollection<string>[] controllers_and_robots;
+                try
+                {
+                    adept_ace = new AdeptAce("localhost", 43434);
+                    // Prep the NancyFX server for use
+                    _nancy = new NancyHost(configuration, new Uri($"{_url}:{_port}/"));
 
-                controllers_and_robots = adept_ace.ConnectToServer();
-                controllers = controllers_and_robots[0];
-                robots = controllers_and_robots[1];
+                    // Only do all this once, when we have just started the application
+                    if (!adept_ace.Connected)
+                    {
+                        ObservableCollection<string>[] controllers_and_robots;
 
-                ControllerPathComboBox.ItemsSource = controllers;
-                RobotPathComboBox.ItemsSource = robots;
-            }
+                        controllers_and_robots = adept_ace.ConnectToServer();
+                        controllers = controllers_and_robots[0];
+                        robots = controllers_and_robots[1];
 
-            // Start the HTTP server on localhost:9001
-            _nancy.Start();
-            WriteOutput($"Listening on: {_url}:{_port}/\n");
+                        ControllerPathComboBox.ItemsSource = controllers;
+                        RobotPathComboBox.ItemsSource = robots;
+                    }
+
+                    // Start the HTTP server on localhost:9001
+                    _nancy.Start();
+                    WriteOutput("Successfully started the HTTP server.\n------------------------------------\n");
+                    WriteOutput($"Listening on: {_url}:{_port}/\n");
+                }
+                catch(Exception ex)
+                {
+                    WriteOutput($"ERROR: Unable to connect to start the HTTP server.\n{ex.Message}\n");
+                }
         }
 
         /// <summary>Stops the NancyFX server</summary>
@@ -110,7 +120,7 @@ namespace CustomACEAPI
         /// <returns><c>void</c></returns>
         void Load_ControllerAndRobot(object sender, RoutedEventArgs e)
         {
-            adept_ace.LoadControllerAndRobot(ControllerPathComboBox.SelectedValue.ToString(), RobotPathComboBox.SelectedValue.ToString());
+            adept_ace.LoadControllerAndRobot(ControllerPathComboBox.Text, RobotPathComboBox.Text);
         }
 
         /// <summary>Writes to the console and the GUI text-box. Necessary to re-route calls from different threads onto the thread the GUI is running on.</summary>
@@ -643,9 +653,9 @@ namespace CustomACEAPI
     public class AdeptAce
     {
         private const string REMOTING_NAME = "ace";
-        private const string REMOTING_HOST = "localhost";
+        private static string REMOTING_HOST;
         private const int CALLBACK_PORT = 43431;
-        private const int REMOTING_PORT = 43434;
+        private static int REMOTING_PORT;
 
         private static bool ACE_SERVER_ON = false;
         private static IAceServer ace;
@@ -653,6 +663,13 @@ namespace CustomACEAPI
         private static IAdeptController controller = null;
         private static ObservableCollection<string> controllers = new ObservableCollection<string>();
         private static ObservableCollection<string> robots = new ObservableCollection<string>();
+
+
+        public AdeptAce(String host_url, int host_port)
+        {
+            REMOTING_HOST = host_url;
+            REMOTING_PORT = host_port;
+        }
 
         /// <summary>Method that allows a user to check whether the connection to the ACE server has been started</summary>
         /// <author>Damian Jimenez</author>
@@ -718,7 +735,7 @@ namespace CustomACEAPI
                     }
 
                     // We don't use WriteOutput, because that method definition isn't available to this class and it isn't required for things to work.
-                    Console.WriteLine($"Connected to the Adept ACE server successfully on: {REMOTING_HOST}:{REMOTING_PORT}/");
+                    Console.WriteLine($"Connected to the Adept ACE server successfully on: {REMOTING_HOST}:{REMOTING_PORT}/\n");
                     ACE_SERVER_ON = true;
                 }
                 catch(Exception e)
@@ -783,7 +800,7 @@ namespace CustomACEAPI
                     // If we loaded the robot successfully then let the user know
                     if(robot != null)
                     {
-                        Console.WriteLine($"Successfully loaded:\n{controllerPath}\n{robotPath}\n");
+                        Console.WriteLine($"Successfully loaded:\n\tController: {controllerPath}\n\tRobot: {robotPath}\n");
                     }
                     // Else the robot wasn't found and the user should know that there is an issue
                     else

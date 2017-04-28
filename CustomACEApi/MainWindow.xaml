@@ -10,7 +10,13 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="33*" />
             <RowDefinition Height="29*"/>
-            <RowDefinition Height="281*"/>
+            <RowDefinition Height="31*"/>
+            <RowDefinition Height="30*"/>
+            <RowDefinition Height="29*"/>
+            <RowDefinition Height="32*"/>
+            <RowDefinition Height="29*"/>
+            <RowDefinition Height="30*"/>
+            <RowDefinition Height="101*"/>
             <RowDefinition Height="26*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -18,15 +24,22 @@
             <ColumnDefinition Width="125*"/>
             <ColumnDefinition Width="125*"/>
             <ColumnDefinition Width="125*"/>
-            <ColumnDefinition Width="287*"/>
+            <ColumnDefinition Width="136*"/>
+            <ColumnDefinition Width="151*"/>
             <ColumnDefinition Width="15*"/>
         </Grid.ColumnDefinitions>
-        <Button Content="START" Margin="2,2,2,0" FontWeight="Bold" Background="#FF007ACC" Foreground="White" BorderBrush="#FF414144" Click="Start_APP" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="1" FontSize="14" Grid.RowSpan="2"/>
+        <Button Content="START" Margin="2,2,3,0" FontWeight="Bold" Background="#FF007ACC" Foreground="White" BorderBrush="#FF414144" Click="Start_APP" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="1" FontSize="14" Grid.RowSpan="2"/>
         <Button Content="STOP" Margin="2,2,3,0" FontWeight="Bold" FontSize="14" Background="#FF007ACC" Foreground="White" BorderBrush="#FF414144" Click="Stop_APP" Grid.Column="2" VerticalContentAlignment="Center" Grid.RowSpan="2"/>
-        <StatusBar Margin="2,6,0,0" Background="#FF007ACC" BorderBrush="#FF414144" Foreground="White" Grid.Row="3" Grid.ColumnSpan="4" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Grid.Column="1"/>
-        <TextBox x:Name="OutputText" Margin="2,5,0,0" TextWrapping="Wrap" Text="" BorderBrush="#FF414144" Foreground="#FF007ACC" FontFamily="Consolas" FontWeight="Bold" SelectionBrush="#FF9DAFB4" Grid.ColumnSpan="4" Grid.Row="2" Grid.Column="1" IsReadOnly="True" ScrollViewer.VerticalScrollBarVisibility="Auto" IsReadOnlyCaretVisible="True"/>
-        <ComboBox x:Name="ControllerPathComboBox" Grid.Column="4" SelectedValuePath="Content" VerticalContentAlignment="Center" Margin="0,0,2,4"/>
-        <ComboBox x:Name="RobotPathComboBox" Grid.Column="4" SelectedValuePath="Content" VerticalContentAlignment="Center" Margin="0,0,2,0" Grid.Row="1"/>
-        <Button Content="Load" Background="#FF007ACC" Foreground="White" BorderBrush="#FF414144" Grid.RowSpan="2" Margin="0,0,2,0" Grid.Column="3" FontSize="14" FontWeight="Bold" Click="Load_ControllerAndRobot"/>
+        <StatusBar Margin="2,6,0,0" Background="#FF007ACC" BorderBrush="#FF414144" Foreground="White" Grid.Row="9" Grid.ColumnSpan="5" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Grid.Column="1"/>
+        <TextBox x:Name="OutputText" Margin="2,5,5,0" TextWrapping="Wrap" Text="" BorderBrush="#FF414144" Foreground="#FF007ACC" FontFamily="Consolas" FontWeight="Bold" SelectionBrush="#FF9DAFB4" Grid.ColumnSpan="4" Grid.Row="2" Grid.Column="1" IsReadOnly="True" ScrollViewer.VerticalScrollBarVisibility="Auto" IsReadOnlyCaretVisible="True" Grid.RowSpan="7"/>
+        <ComboBox x:Name="ControllerPathComboBox" Grid.Column="4" SelectedValuePath="Content" VerticalContentAlignment="Center" Margin="0,2" FontSize="11" FontWeight="Bold" Grid.ColumnSpan="2"/>
+        <ComboBox x:Name="RobotPathComboBox" Grid.Column="4" SelectedValuePath="Content" VerticalContentAlignment="Center" Grid.Row="1" FontSize="11" FontWeight="Bold" Grid.ColumnSpan="2"/>
+        <Button Content="Load" Background="#FF007ACC" Foreground="White" BorderBrush="#FF414144" Grid.RowSpan="2" Margin="2,2,3,0" Grid.Column="3" FontSize="14" FontWeight="Bold" Click="Load_ControllerAndRobot"/>
+        <TextBox x:Name="ACEServerURL" Grid.Column="5" Grid.Row="3" TextWrapping="Wrap" Text="localhost" VerticalContentAlignment="Center"/>
+        <TextBox x:Name="ACEServerPort" Grid.Column="5" Grid.Row="4" TextWrapping="Wrap" Text="43434" VerticalContentAlignment="Center"/>
+        <Label Content="ACE Server Settings" Grid.Column="5" Grid.Row="2" Foreground="White" FontWeight="Bold" Background="{DynamicResource {x:Static SystemColors.HotTrackBrushKey}}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+        <Label Content="API Server Settings" Grid.Column="5" Grid.Row="5" FontWeight="Bold" Foreground="White" Background="{DynamicResource {x:Static SystemColors.HotTrackBrushKey}}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+        <TextBox x:Name="APIServerURL" Grid.Column="5" Grid.Row="6" TextWrapping="Wrap" Text="localhost" VerticalContentAlignment="Center"/>
+        <TextBox x:Name="APIServerPort" Grid.Column="5" Grid.Row="7" TextWrapping="Wrap" Text="9001" VerticalContentAlignment="Center"/>
     </Grid>
 </Window>
