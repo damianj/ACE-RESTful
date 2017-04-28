@@ -33,8 +33,8 @@ namespace CustomACEAPI
     public partial class MainWindow : Window
     {
         private static Semaphore _SEMAPHORE = new Semaphore(1, 1);
-        private string _url = "localhost";
-        private int _port = 9001;
+        private const string _url = "http://localhost";
+        private const int _port = 9001;
         private static NancyHost _nancy;
         private static AdeptAce adept_ace;
         private static Dispatcher gui_dispatcher;
@@ -50,6 +50,7 @@ namespace CustomACEAPI
             gui_dispatcher = Dispatcher;
             InitializeComponent();
             OutputText.Text = "";
+            adept_ace = new AdeptAce();
             Console.SetOut(new MultiTextWriter(new TextBoxWriter(OutputText), Console.Out));
 
             // Create a URL reservation to allow the NancyFX server to start (i.e., prevent AutomaticUrlReservationCreationFailureException)
@@ -61,6 +62,7 @@ namespace CustomACEAPI
                 }
             };
 
+            _nancy = new NancyHost(configuration, new Uri($"{_url}:{_port}/"));
             WriteOutput("Application started successfully...\n-----------------------------------");
         }
 
@@ -71,34 +73,30 @@ namespace CustomACEAPI
         /// <returns><c>void</c></returns>
         void Start_APP(object sender, RoutedEventArgs e)
         {
-                try
+            try
+            {
+                // Only do all this once, when we have just started the application
+                if (!adept_ace.Connected)
                 {
-                    adept_ace = new AdeptAce("localhost", 43434);
-                    // Prep the NancyFX server for use
-                    _nancy = new NancyHost(configuration, new Uri($"{_url}:{_port}/"));
+                    ObservableCollection<string>[] controllers_and_robots;
 
-                    // Only do all this once, when we have just started the application
-                    if (!adept_ace.Connected)
-                    {
-                        ObservableCollection<string>[] controllers_and_robots;
+                    controllers_and_robots = adept_ace.ConnectToServer("localhost", 43434);
+                    controllers = controllers_and_robots[0];
+                    robots = controllers_and_robots[1];
 
-                        controllers_and_robots = adept_ace.ConnectToServer();
-                        controllers = controllers_and_robots[0];
-                        robots = controllers_and_robots[1];
-
-                        ControllerPathComboBox.ItemsSource = controllers;
-                        RobotPathComboBox.ItemsSource = robots;
-                    }
-
-                    // Start the HTTP server on localhost:9001
-                    _nancy.Start();
-                    WriteOutput("Successfully started the HTTP server.\n------------------------------------\n");
-                    WriteOutput($"Listening on: {_url}:{_port}/\n");
+                    ControllerPathComboBox.ItemsSource = controllers;
+                    RobotPathComboBox.ItemsSource = robots;
                 }
-                catch(Exception ex)
-                {
-                    WriteOutput($"ERROR: Unable to connect to start the HTTP server.\n{ex.Message}\n");
-                }
+
+                // Start the HTTP server on localhost:9001
+                _nancy.Start();
+                WriteOutput("Successfully started the HTTP server.\n------------------------------------\n");
+                WriteOutput($"Listening on: {_url}:{_port}/\n");
+            }
+            catch(Exception ex)
+            {
+                WriteOutput($"ERROR: Unable to connect to start the HTTP server.\n{ex.Message}\n");
+            }
         }
 
         /// <summary>Stops the NancyFX server</summary>
@@ -653,9 +651,7 @@ namespace CustomACEAPI
     public class AdeptAce
     {
         private const string REMOTING_NAME = "ace";
-        private static string REMOTING_HOST;
         private const int CALLBACK_PORT = 43431;
-        private static int REMOTING_PORT;
 
         private static bool ACE_SERVER_ON = false;
         private static IAceServer ace;
@@ -663,13 +659,6 @@ namespace CustomACEAPI
         private static IAdeptController controller = null;
         private static ObservableCollection<string> controllers = new ObservableCollection<string>();
         private static ObservableCollection<string> robots = new ObservableCollection<string>();
-
-
-        public AdeptAce(String host_url, int host_port)
-        {
-            REMOTING_HOST = host_url;
-            REMOTING_PORT = host_port;
-        }
 
         /// <summary>Method that allows a user to check whether the connection to the ACE server has been started</summary>
         /// <author>Damian Jimenez</author>
@@ -707,7 +696,7 @@ namespace CustomACEAPI
         /// <summary>Method that connects to the Adept ACE server and gets all the available controllers and robots</summary>
         /// <author>Damian Jimenez</author>
         /// <returns><c>ObservableCollection&lt;string&gt;[]</c> an array of length 2 containing the controllers and robots that were found. Index 0 is the controllers and index 1 is the robots.</returns>
-        public ObservableCollection<string>[] ConnectToServer()
+        public ObservableCollection<string>[] ConnectToServer(String remoting_host, int remoting_port)
         {
             // Only connect to the server once, at the beginning
             if(!ACE_SERVER_ON)
@@ -716,7 +705,7 @@ namespace CustomACEAPI
                 {
                     // Set up the server to allow remote connections and connect to the ACE server
                     RemotingUtil.InitializeRemotingSubsystem(true, CALLBACK_PORT);
-                    ace = (IAceServer)RemotingUtil.GetRemoteServerObject(typeof(IAceServer), REMOTING_NAME, REMOTING_HOST, REMOTING_PORT);
+                    ace = (IAceServer)RemotingUtil.GetRemoteServerObject(typeof(IAceServer), REMOTING_NAME, remoting_host, remoting_port);
 
                     // Print out all the controllers that are found and available
                     foreach (IAdeptController controller in ace.Root.Filter(new ObjectTypeFilter(typeof(IAdeptController)), true))
@@ -735,7 +724,7 @@ namespace CustomACEAPI
                     }
 
                     // We don't use WriteOutput, because that method definition isn't available to this class and it isn't required for things to work.
-                    Console.WriteLine($"Connected to the Adept ACE server successfully on: {REMOTING_HOST}:{REMOTING_PORT}/\n");
+                    Console.WriteLine($"Connected to the Adept ACE server successfully on: {remoting_host}:{remoting_port}/\n");
                     ACE_SERVER_ON = true;
                 }
                 catch(Exception e)

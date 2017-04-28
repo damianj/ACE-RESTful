@@ -1,0 +1,10 @@
+{
+  "ace": {
+    "server": "http://localhost",
+    "port": 43434
+  },
+  "api": {
+    "server": "http://localhost",
+    "port": 9001
+  }
+}
