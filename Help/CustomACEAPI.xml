@@ -34,7 +34,7 @@
     <member name="M:CustomACEAPI.AdeptAce.ConnectToServer">
       <summary>Method that connects to the Adept ACE server and gets all the available controllers and robots</summary>
       <returns>
-        <c>ObservableCollection\&lt;string&gt;&gt;[]</c> an array of length 2 containing the controllers and robots that were found. Index 0 is the controllers and index 1 is the robots.</returns>
+        <c>ObservableCollection&lt;string&gt;[]</c> an array of length 2 containing the controllers and robots that were found. Index 0 is the controllers and index 1 is the robots.</returns>
     </member>
     <member name="M:CustomACEAPI.AdeptAce.LoadControllerAndRobot(System.String,System.String)">
       <summary>Method that loads the controller and robot specified in the GUI combo-boxes</summary>

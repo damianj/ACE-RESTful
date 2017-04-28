@@ -639,7 +639,7 @@ namespace CustomACEAPI
 
         /// <summary>Method that connects to the Adept ACE server and gets all the available controllers and robots</summary>
         /// <author>Damian Jimenez</author>
-        /// <returns><c>ObservableCollection\&lt;string&gt;>[]</c> an array of length 2 containing the controllers and robots that were found. Index 0 is the controllers and index 1 is the robots.</returns>
+        /// <returns><c>ObservableCollection&lt;string&gt;[]</c> an array of length 2 containing the controllers and robots that were found. Index 0 is the controllers and index 1 is the robots.</returns>
         public ObservableCollection<string>[] ConnectToServer()
         {
             // Only connect to the server once, at the beginning
