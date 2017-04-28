@@ -1,44 +1,45 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <HelpTOC>
 
-  <HelpTOCNode Id="3e759626-00b5-4593-ae3b-e06383114523" Title="CustomACEAPI" Url="html/a52317b6-209a-9170-4cda-fa97ed230e02.htm">
-    <HelpTOCNode Id="c6a314a5-ab76-4d39-a896-0a2304d1c7d5" Title="AdeptAce Class" Url="html/642b3702-bcac-b0f0-e851-c67d4cf49f13.htm">
+  <HelpTOCNode Id="3ab86d64-cbdc-440d-8937-2b99a8c9cfcd" Title="CustomACEAPI" Url="html/a52317b6-209a-9170-4cda-fa97ed230e02.htm">
+    <HelpTOCNode Id="11b26f72-b8df-4499-85a6-c7fe7cdb8278" Title="AdeptAce Class" Url="html/642b3702-bcac-b0f0-e851-c67d4cf49f13.htm">
       <HelpTOCNode Title="AdeptAce Constructor " Url="html/bc67bce0-1988-c5de-bfe5-b2431056391c.htm" />
-      <HelpTOCNode Id="cbf7c21f-3e1c-4c55-8245-fd56f6d6913e" Title="AdeptAce Properties" Url="html/f0e4d888-495a-3689-699d-3386f5d22bc2.htm">
+      <HelpTOCNode Id="3c6b8316-9728-4626-aa72-388f2ae259be" Title="AdeptAce Properties" Url="html/f0e4d888-495a-3689-699d-3386f5d22bc2.htm">
         <HelpTOCNode Title="AceRobot Property " Url="html/69c8ab61-610e-037a-1bb6-5e0a6eff1ec2.htm" />
         <HelpTOCNode Title="AceServer Property " Url="html/f61ab1fd-c454-5fd5-6fbf-834ba2f91a51.htm" />
         <HelpTOCNode Title="Connected Property " Url="html/e9115c4e-02ba-7bb7-807b-91e80ed3f2ea.htm" />
       </HelpTOCNode>
-      <HelpTOCNode Id="bdf63ff7-7f79-4a01-a9c2-7a6e19007bd0" Title="AdeptAce Methods" Url="html/03330062-afe0-73b7-8c0c-569c498dab9b.htm">
-        <HelpTOCNode Title="ConnectToServer Method " Url="html/c74f01d7-d33a-8141-d7c6-f6d78708b3e9.htm" />
+      <HelpTOCNode Id="cd622de8-2ac7-4f4f-83d6-a6a7adbd46aa" Title="AdeptAce Methods" Url="html/03330062-afe0-73b7-8c0c-569c498dab9b.htm">
+        <HelpTOCNode Title="ConnectToServer Method " Url="html/0ffcadbe-48b6-8e3f-39ac-e4d52a90ecbf.htm" />
+        <HelpTOCNode Title="LoadControllerAndRobot Method " Url="html/840e777e-b9a1-c2eb-f013-d7cf8d8851aa.htm" />
       </HelpTOCNode>
     </HelpTOCNode>
-    <HelpTOCNode Id="1a1e552b-c3be-4a59-87be-0e6f30388471" Title="App Class" Url="html/dd7d4267-ab9d-e4ea-42c4-0b66e0924cbf.htm">
+    <HelpTOCNode Id="dd0ef002-4de0-4837-8e00-6c15e972096d" Title="App Class" Url="html/dd7d4267-ab9d-e4ea-42c4-0b66e0924cbf.htm">
       <HelpTOCNode Title="App Constructor " Url="html/78f1745b-8347-670e-27b2-41a158c94705.htm" />
       <HelpTOCNode Title="App Properties" Url="html/a1d2442c-17ae-4a19-1be6-dc91341c91a1.htm" />
-      <HelpTOCNode Id="66998b62-8d92-439b-be02-83a3f4f4baeb" Title="App Methods" Url="html/bef0d8fd-e839-693a-3bac-41e44fcdcf07.htm">
+      <HelpTOCNode Id="e566c53a-2aca-4d40-91f3-483f86443c80" Title="App Methods" Url="html/bef0d8fd-e839-693a-3bac-41e44fcdcf07.htm">
         <HelpTOCNode Title="InitializeComponent Method " Url="html/d2a5ae3c-1e01-73ac-cd03-4dbfea6ac68f.htm" />
         <HelpTOCNode Title="Main Method " Url="html/98d0cfcf-5fc5-1a49-bcd5-879ab26da124.htm" />
       </HelpTOCNode>
       <HelpTOCNode Title="App Events" Url="html/cd5f2a58-4c01-55f4-b1b4-604ac17807c1.htm" />
     </HelpTOCNode>
-    <HelpTOCNode Id="fa6c289e-7d17-43cd-a703-e30a2ebb1009" Title="MainWindow Class" Url="html/9b1bc35b-dc36-2687-19ec-701821ac4095.htm">
+    <HelpTOCNode Id="1b5e8b43-9f1e-4db8-8a2b-1ffa06bc8463" Title="MainWindow Class" Url="html/9b1bc35b-dc36-2687-19ec-701821ac4095.htm">
       <HelpTOCNode Title="MainWindow Constructor " Url="html/2bdf3aec-608f-8ec6-72c5-db8b60adbd0b.htm" />
       <HelpTOCNode Title="MainWindow Properties" Url="html/47a6f3fb-41ab-0c91-4919-4f1313d94ccb.htm" />
-      <HelpTOCNode Id="c6470acf-3924-4a62-b3ee-c8fdd1ccd2c6" Title="MainWindow Methods" Url="html/d266a1e2-7f37-cbb1-eee8-a14a15703ff3.htm">
+      <HelpTOCNode Id="d56ef1a3-bd60-4200-abcf-4b543b44951d" Title="MainWindow Methods" Url="html/d266a1e2-7f37-cbb1-eee8-a14a15703ff3.htm">
         <HelpTOCNode Title="InitializeComponent Method " Url="html/3453cfba-00a3-866f-5f08-a587b06f43c8.htm" />
         <HelpTOCNode Title="WriteOutput Method " Url="html/4ddccb57-ea51-9ac7-7947-b015b7f779d0.htm" />
       </HelpTOCNode>
       <HelpTOCNode Title="MainWindow Events" Url="html/3fd22258-fcc5-131d-ad61-9b6ce6f364ba.htm" />
     </HelpTOCNode>
-    <HelpTOCNode Id="1b6ad14b-c2f9-4cf4-9baa-8b51349762f7" Title="MainWindow.CartesianMoveAPI Class" Url="html/9c5cf50d-df38-8be7-3ad4-346139f9dde4.htm">
+    <HelpTOCNode Id="f21100cd-c0d1-4e55-be76-9293e77c8840" Title="MainWindow.CartesianMoveAPI Class" Url="html/9c5cf50d-df38-8be7-3ad4-346139f9dde4.htm">
       <HelpTOCNode Title="MainWindow.CartesianMoveAPI Constructor " Url="html/a7f5b0df-54cf-9431-de3a-1c5d4bcf216a.htm" />
       <HelpTOCNode Title="CartesianMoveAPI Properties" Url="html/ad2f3e4a-57f1-7c59-9687-4c0218247ef7.htm" />
       <HelpTOCNode Title="CartesianMoveAPI Methods" Url="html/012d5f7f-6240-a54a-09dd-7d93a8b0ca24.htm" />
     </HelpTOCNode>
-    <HelpTOCNode Id="b4d18d9e-adca-4dcf-bb0c-e02b00db77ee" Title="MainWindow.CartesianMoveCommand Class" Url="html/e0b89c97-553a-545e-bd81-414233f6b74e.htm">
+    <HelpTOCNode Id="7738fd8e-398a-48ff-a9ef-7c792ccd68a3" Title="MainWindow.CartesianMoveCommand Class" Url="html/e0b89c97-553a-545e-bd81-414233f6b74e.htm">
       <HelpTOCNode Title="MainWindow.CartesianMoveCommand Constructor " Url="html/d3921f6d-420f-9741-491c-b2c781b61964.htm" />
-      <HelpTOCNode Id="e00831b8-fcc0-41d7-9421-de80e83af512" Title="CartesianMoveCommand Properties" Url="html/7ff1e0e2-ba19-80e4-8f7a-bce6f8560177.htm">
+      <HelpTOCNode Id="28eb0830-4f43-418d-8898-0111559750b5" Title="CartesianMoveCommand Properties" Url="html/7ff1e0e2-ba19-80e4-8f7a-bce6f8560177.htm">
         <HelpTOCNode Title="Accel Property " Url="html/96631c77-55c1-fbfc-0bfd-f6cbe513d09a.htm" />
         <HelpTOCNode Title="Decel Property " Url="html/841a26b7-bf36-dfe9-8d2c-1cfc7ca22691.htm" />
         <HelpTOCNode Title="MotionEnd Property " Url="html/33989e23-9ed1-bc32-6996-81c5bc3fa38d.htm" />
@@ -52,21 +53,21 @@
         <HelpTOCNode Title="Yaw Property " Url="html/d01724f9-a8b6-4b17-1639-7230b57c417a.htm" />
         <HelpTOCNode Title="Z Property " Url="html/e8f70144-d2b2-4b0f-5d02-979e537b803f.htm" />
       </HelpTOCNode>
-      <HelpTOCNode Id="fd13f4b4-e1bf-4bfb-b2ec-ba05bf66fcbf" Title="CartesianMoveCommand Methods" Url="html/65693548-9783-4c24-91fc-7a91ce1aec85.htm">
+      <HelpTOCNode Id="887dc7df-36b6-41c8-9ec7-7f570f1be951" Title="CartesianMoveCommand Methods" Url="html/65693548-9783-4c24-91fc-7a91ce1aec85.htm">
         <HelpTOCNode Title="Execute Method " Url="html/0c610246-f7ec-3e34-5a53-237360fd1e13.htm" />
       </HelpTOCNode>
-      <HelpTOCNode Id="1e6fb0bf-289b-4408-bd2c-aa56a961a3de" Title="CartesianMoveCommand Fields" Url="html/7714fd70-f5ae-af59-8910-6e317360bfbd.htm">
+      <HelpTOCNode Id="ec101941-7417-4479-a16f-bc3a3bf1bd58" Title="CartesianMoveCommand Fields" Url="html/7714fd70-f5ae-af59-8910-6e317360bfbd.htm">
         <HelpTOCNode Title="Name Field" Url="html/a1e0b543-f53c-6a53-db47-8041a40a5ae7.htm" />
       </HelpTOCNode>
     </HelpTOCNode>
-    <HelpTOCNode Id="fdea3a5e-91a6-449e-bff2-262f9e38fca8" Title="MainWindow.JointMoveAPI Class" Url="html/f83ab55a-0949-d583-fd50-60c2723a6640.htm">
+    <HelpTOCNode Id="a1c23dcd-23d1-4887-bfd4-ed9e7fea9b33" Title="MainWindow.JointMoveAPI Class" Url="html/f83ab55a-0949-d583-fd50-60c2723a6640.htm">
       <HelpTOCNode Title="MainWindow.JointMoveAPI Constructor " Url="html/32b57d9a-fba0-b466-515c-e88c4eb91297.htm" />
       <HelpTOCNode Title="JointMoveAPI Properties" Url="html/77b1d929-95cd-353d-f6ff-e98ea5cc5ff6.htm" />
       <HelpTOCNode Title="JointMoveAPI Methods" Url="html/6d9c879d-e348-876b-2812-6e836e21ea60.htm" />
     </HelpTOCNode>
-    <HelpTOCNode Id="567254f5-3b56-4a50-a255-61717adeef80" Title="MainWindow.JointMoveCommand Class" Url="html/570bfdb3-50ac-047f-c6a4-5c841037d08d.htm">
+    <HelpTOCNode Id="2385afcb-8cc1-418a-b890-0d302ad50054" Title="MainWindow.JointMoveCommand Class" Url="html/570bfdb3-50ac-047f-c6a4-5c841037d08d.htm">
       <HelpTOCNode Title="MainWindow.JointMoveCommand Constructor " Url="html/2186cc17-bbc7-6d29-4164-aa6b7cc6433d.htm" />
-      <HelpTOCNode Id="fba33d54-5017-403f-8901-7e7de8b6e0a2" Title="JointMoveCommand Properties" Url="html/c1021881-3137-f92f-adc0-3237b95eb82e.htm">
+      <HelpTOCNode Id="74b78db2-f0b6-46f8-a761-cd320191e271" Title="JointMoveCommand Properties" Url="html/c1021881-3137-f92f-adc0-3237b95eb82e.htm">
         <HelpTOCNode Title="Accel Property " Url="html/4359c487-b490-5ec9-3e79-dddf0ee12f37.htm" />
         <HelpTOCNode Title="Decel Property " Url="html/bc2007ef-5b1f-384d-0d31-e176ff39cc86.htm" />
         <HelpTOCNode Title="JointPosition Property " Url="html/0ba30a19-9ed5-eaac-0777-9e43e2703cad.htm" />
@@ -75,38 +76,38 @@
         <HelpTOCNode Title="Speed Property " Url="html/a3df06c9-c010-ec3b-a6e8-209be15388b9.htm" />
         <HelpTOCNode Title="StraightMotion Property " Url="html/17279c6c-4b11-5145-538c-eeab570e75dd.htm" />
       </HelpTOCNode>
-      <HelpTOCNode Id="fe3d9533-7e5b-4c4a-9ea9-3dcb228c576e" Title="JointMoveCommand Methods" Url="html/024d2a78-599a-205a-29ce-8ded5be64c99.htm">
+      <HelpTOCNode Id="63fffa6c-e4de-4596-9eb3-752aea27db69" Title="JointMoveCommand Methods" Url="html/024d2a78-599a-205a-29ce-8ded5be64c99.htm">
         <HelpTOCNode Title="Execute Method " Url="html/362fee58-abfe-ace3-c0fd-5e7d686bc598.htm" />
       </HelpTOCNode>
-      <HelpTOCNode Id="54a1259e-29ea-45fe-be80-8897828f3ef9" Title="JointMoveCommand Fields" Url="html/798269d1-3bc3-81b3-d364-a95f88c5e9ba.htm">
+      <HelpTOCNode Id="f54adc11-7667-48f0-b09f-8f0af03f2d83" Title="JointMoveCommand Fields" Url="html/798269d1-3bc3-81b3-d364-a95f88c5e9ba.htm">
         <HelpTOCNode Title="Name Field" Url="html/b6e8540a-d155-a057-5024-e5a5c2cd9288.htm" />
       </HelpTOCNode>
     </HelpTOCNode>
-    <HelpTOCNode Id="684be86a-66bd-48f2-b3f4-935489b0c6e8" Title="MultiTextWriter Class" Url="html/91df1d2f-ee44-3758-d522-fae437444406.htm">
-      <HelpTOCNode Id="72194062-a866-41d4-9902-d72dff99c269" Title="MultiTextWriter Constructor " Url="html/f2e40436-588a-6bab-bf60-318c6677d9db.htm">
+    <HelpTOCNode Id="56d05331-57e8-4fbf-8526-e62df7a1dc7f" Title="MultiTextWriter Class" Url="html/91df1d2f-ee44-3758-d522-fae437444406.htm">
+      <HelpTOCNode Id="15f81104-9f08-4a25-814b-0de710197824" Title="MultiTextWriter Constructor " Url="html/f2e40436-588a-6bab-bf60-318c6677d9db.htm">
         <HelpTOCNode Title="MultiTextWriter Constructor (IEnumerable(TextWriter))" Url="html/54e56a34-105d-b1d7-d830-04c813bbc3cd.htm" />
         <HelpTOCNode Title="MultiTextWriter Constructor (TextWriter[])" Url="html/1fba4de4-f722-c530-42c7-2cf3388090ae.htm" />
       </HelpTOCNode>
-      <HelpTOCNode Id="63cbf292-6967-4738-81f8-9cabca8897c5" Title="MultiTextWriter Properties" Url="html/d853eb67-aa4b-1912-9e86-7e7388428816.htm">
+      <HelpTOCNode Id="eaf0cc3e-8bb7-4564-925b-e1cd426610b7" Title="MultiTextWriter Properties" Url="html/d853eb67-aa4b-1912-9e86-7e7388428816.htm">
         <HelpTOCNode Title="Encoding Property " Url="html/d88e35fe-46f1-5b2e-30cb-933889080f66.htm" />
       </HelpTOCNode>
-      <HelpTOCNode Id="de998586-9165-4f17-88e3-bcfe27ff2e6b" Title="MultiTextWriter Methods" Url="html/0069fb33-da05-4e3a-2afd-5a42f771df9c.htm">
+      <HelpTOCNode Id="15069a48-75d3-446c-a093-808c5e9dd5e9" Title="MultiTextWriter Methods" Url="html/0069fb33-da05-4e3a-2afd-5a42f771df9c.htm">
         <HelpTOCNode Title="Close Method " Url="html/f4339340-e28d-fbd0-31e9-aae702b9e619.htm" />
         <HelpTOCNode Title="Flush Method " Url="html/ceafe0b7-c3bc-4259-095c-1afdb0d5753f.htm" />
-        <HelpTOCNode Id="7e5024a8-4a6a-42e0-8d23-a33bff12f6a3" Title="Write Method " Url="html/f5158317-76fd-363b-0332-956e1df09b2e.htm">
+        <HelpTOCNode Id="95e16098-a381-4f7a-84a6-07f4bc86e1ff" Title="Write Method " Url="html/f5158317-76fd-363b-0332-956e1df09b2e.htm">
           <HelpTOCNode Title="Write Method (Char)" Url="html/d9ed5116-416d-bfbb-4179-b1f71791f1c3.htm" />
           <HelpTOCNode Title="Write Method (String)" Url="html/4d9dcb35-6cba-d483-3bcf-58e07125fa30.htm" />
         </HelpTOCNode>
       </HelpTOCNode>
       <HelpTOCNode Title="MultiTextWriter Fields" Url="html/c23547cb-9675-e9f7-68cf-59b65416dec8.htm" />
     </HelpTOCNode>
-    <HelpTOCNode Id="bce1ca08-4483-4eda-8784-0aa44630d9be" Title="TextBoxWriter Class" Url="html/43e6dec9-bab9-a356-0c17-303c0e3b629f.htm">
+    <HelpTOCNode Id="ab60b799-7801-468a-9027-72424f299cee" Title="TextBoxWriter Class" Url="html/43e6dec9-bab9-a356-0c17-303c0e3b629f.htm">
       <HelpTOCNode Title="TextBoxWriter Constructor " Url="html/6a1f7431-25fd-fc84-c0c5-8dc73fc10f0c.htm" />
-      <HelpTOCNode Id="2e952e9d-6754-426a-8502-1846ac0ed55d" Title="TextBoxWriter Properties" Url="html/8a0ea457-7dc0-7009-07ba-011f70a2c417.htm">
+      <HelpTOCNode Id="58f27d7a-6ec1-43cf-94a3-86289a301f2d" Title="TextBoxWriter Properties" Url="html/8a0ea457-7dc0-7009-07ba-011f70a2c417.htm">
         <HelpTOCNode Title="Encoding Property " Url="html/83264331-84e3-3254-caf6-a175706d5c2a.htm" />
       </HelpTOCNode>
-      <HelpTOCNode Id="94b46e1f-e39e-4141-8114-51a0dc1268ea" Title="TextBoxWriter Methods" Url="html/7bb468c5-fce2-06b6-4967-5910f95f0d64.htm">
-        <HelpTOCNode Id="5efce334-d7b2-4085-b069-58c90ffd5c69" Title="Write Method " Url="html/11dc74ba-35a4-de3a-1b1f-95c4f3c941dc.htm">
+      <HelpTOCNode Id="923688df-d1b6-4b55-bd6f-66708bb288fb" Title="TextBoxWriter Methods" Url="html/7bb468c5-fce2-06b6-4967-5910f95f0d64.htm">
+        <HelpTOCNode Id="80aa8e3b-cf57-4be7-81b5-434aa30934fb" Title="Write Method " Url="html/11dc74ba-35a4-de3a-1b1f-95c4f3c941dc.htm">
           <HelpTOCNode Title="Write Method (Char)" Url="html/4aeaee15-a7c3-ad16-722f-8469fa12943a.htm" />
           <HelpTOCNode Title="Write Method (String)" Url="html/6782ec74-0cc5-e268-38d5-1a51b346c834.htm" />
         </HelpTOCNode>

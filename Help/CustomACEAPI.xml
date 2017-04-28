@@ -31,8 +31,13 @@
       <returns>
         <c>bool</c> specifying whether the connection to the ACE server is active or not</returns>
     </member>
-    <member name="M:CustomACEAPI.AdeptAce.ConnectToServer(System.String,System.String)">
-      <summary>Method that connects to the Adept ACE server and sets up the robot for use</summary>
+    <member name="M:CustomACEAPI.AdeptAce.ConnectToServer">
+      <summary>Method that connects to the Adept ACE server and gets all the available controllers and robots</summary>
+      <returns>
+        <c>ObservableCollection\&lt;string&gt;&gt;[]</c> an array of length 2 containing the controllers and robots that were found. Index 0 is the controllers and index 1 is the robots.</returns>
+    </member>
+    <member name="M:CustomACEAPI.AdeptAce.LoadControllerAndRobot(System.String,System.String)">
+      <summary>Method that loads the controller and robot specified in the GUI combo-boxes</summary>
       <param name="controllerPath">Specifies where the server should search for the controller, can be found by opening up a default workspace in Adept ACE and connecting to a desired robot.</param>
       <param name="robotPath">Specifies where the server should search for the robot, can be found by opening up a default workspace in Adept ACE and connecting to a desired robot.</param>
       <returns>

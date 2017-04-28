@@ -17,7 +17,8 @@
   <HelpKINode Title="AdeptAce.AceServer property" Url="html/f61ab1fd-c454-5fd5-6fbf-834ba2f91a51.htm" />
   <HelpKINode Title="AdeptAce.AdeptAce constructor" Url="html/bc67bce0-1988-c5de-bfe5-b2431056391c.htm" />
   <HelpKINode Title="AdeptAce.Connected property" Url="html/e9115c4e-02ba-7bb7-807b-91e80ed3f2ea.htm" />
-  <HelpKINode Title="AdeptAce.ConnectToServer method" Url="html/c74f01d7-d33a-8141-d7c6-f6d78708b3e9.htm" />
+  <HelpKINode Title="AdeptAce.ConnectToServer method" Url="html/0ffcadbe-48b6-8e3f-39ac-e4d52a90ecbf.htm" />
+  <HelpKINode Title="AdeptAce.LoadControllerAndRobot method" Url="html/840e777e-b9a1-c2eb-f013-d7cf8d8851aa.htm" />
   <HelpKINode Title="App class">
     <HelpKINode Title="App Class" Url="html/dd7d4267-ab9d-e4ea-42c4-0b66e0924cbf.htm" />
     <HelpKINode Title="about App class" Url="html/dd7d4267-ab9d-e4ea-42c4-0b66e0924cbf.htm" />
@@ -40,7 +41,7 @@
   </HelpKINode>
   <HelpKINode Title="Close method" Url="html/f4339340-e28d-fbd0-31e9-aae702b9e619.htm" />
   <HelpKINode Title="Connected property" Url="html/e9115c4e-02ba-7bb7-807b-91e80ed3f2ea.htm" />
-  <HelpKINode Title="ConnectToServer method" Url="html/c74f01d7-d33a-8141-d7c6-f6d78708b3e9.htm" />
+  <HelpKINode Title="ConnectToServer method" Url="html/0ffcadbe-48b6-8e3f-39ac-e4d52a90ecbf.htm" />
   <HelpKINode Title="CustomACEAPI namespace" Url="html/a52317b6-209a-9170-4cda-fa97ed230e02.htm" />
   <HelpKINode Title="CustomACEAPI.AdeptAce class" Url="html/642b3702-bcac-b0f0-e851-c67d4cf49f13.htm" />
   <HelpKINode Title="CustomACEAPI.App class" Url="html/dd7d4267-ab9d-e4ea-42c4-0b66e0924cbf.htm" />
@@ -78,6 +79,7 @@
     <HelpKINode Title="properties" Url="html/c1021881-3137-f92f-adc0-3237b95eb82e.htm" />
   </HelpKINode>
   <HelpKINode Title="JointPosition property" Url="html/0ba30a19-9ed5-eaac-0777-9e43e2703cad.htm" />
+  <HelpKINode Title="LoadControllerAndRobot method" Url="html/840e777e-b9a1-c2eb-f013-d7cf8d8851aa.htm" />
   <HelpKINode Title="Main method" Url="html/98d0cfcf-5fc5-1a49-bcd5-879ab26da124.htm" />
   <HelpKINode Title="MainWindow class">
     <HelpKINode Title="MainWindow Class" Url="html/9b1bc35b-dc36-2687-19ec-701821ac4095.htm" />
