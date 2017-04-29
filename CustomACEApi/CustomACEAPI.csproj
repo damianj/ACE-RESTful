@@ -159,6 +159,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AdeptAce.cs" />
+    <Compile Include="APPConfig.cs" />
+    <Compile Include="MultiTextWriter.cs" />
+    <Compile Include="NamespaceDoc.cs" />
+    <Compile Include="TextBoxWriter.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

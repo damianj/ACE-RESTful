@@ -3,12 +3,9 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using Ace.Adept.Server.Controls;
 using Ace.Adept.Server.Motion;
 using Ace.Core.Server;
 using Ace.Core.Server.Motion;
-using Ace.Core.Util;
 using Nancy;
 using Nancy.Hosting.Self;
 using Newtonsoft.Json;
@@ -19,29 +16,11 @@ using System.Collections.ObjectModel;
 
 namespace CustomACEAPI
 {
-    /// <summary>The <see cref="CustomACEAPI"/> project implements a C# RESTful API for the Adept ACE server. 
-    /// It allows robots to be controlled via a local HTTP server that is run on NancyFX (a light-weight 
-    /// web framework), and allows Adept robots to be easily controlled via other mediums (e.g., LabView, 
-    /// Python, or anything that can issue HTTP POST/GET requests).
-    /// </summary>
-    [System.Runtime.CompilerServices.CompilerGenerated]
-    class NamespaceDoc
-    {
-    }
-
-    public class APPConfig
-    {
-        public string ACEServer { get; set; }
-        public int ACEPort { get; set; }
-        public string APIServer { get; set; }
-        public int APIPort { get; set; }
-        public bool ThreadingEnabled { get; set; }
-    }
-
     /// <summary>Class that handles creating and maintaining an instance of the GUI as well as setting up the application for use.</summary>
     public partial class MainWindow : Window
     {
         private static Semaphore _SEMAPHORE;
+        private static bool _API_SERVER_ON = false;
         private static bool _ROBOT_BUSY = false;
         private static string _CURRENT_CONTROLLER;
         private static string _CURRENT_ROBOT;
@@ -106,18 +85,31 @@ namespace CustomACEAPI
                 {
                     ObservableCollection<string>[] controllers_and_robots;
 
-                    controllers_and_robots = adept_ace.ConnectToServer(app_config.ACEServer, app_config.ACEPort);
+                    controllers_and_robots = adept_ace.ConnectToServer(app_config.ACEServer, app_config.ACEPort, app_config.ACEName, app_config.ACECallbackPort);
                     controllers = controllers_and_robots[0];
                     robots = controllers_and_robots[1];
 
                     ControllerPathComboBox.ItemsSource = controllers;
                     RobotPathComboBox.ItemsSource = robots;
                 }
+                else
+                {
+                    WriteOutput($"Already connected to the ACE server on: {app_config.ACEServer}:{app_config.ACEPort}/\n");
+                }
 
-                // Start the HTTP server on the host:port specified in config.json
-                _nancy.Start();
-                WriteOutput("Successfully started the HTTP server.\n------------------------------------\n");
-                WriteOutput($"Listening on: {app_config.APIServer}:{app_config.APIPort}/\n");
+                if (!_API_SERVER_ON)
+                {
+                    // Start the HTTP server on the host:port specified in config.json
+                    _nancy.Start();
+                    WriteOutput("Successfully started the HTTP server.\n------------------------------------\n");
+                    WriteOutput($"Listening on: {app_config.APIServer}:{app_config.APIPort}/\n");
+                    _API_SERVER_ON = true;
+                }
+                else
+                {
+                    WriteOutput($"The API server is already on and listening on: {app_config.APIServer}:{app_config.APIPort}/\n");
+                }
+
             }
             catch(Exception ex)
             {
@@ -134,9 +126,17 @@ namespace CustomACEAPI
         {
             try
             {
-                // Stop the HTTP Server
-                _nancy.Stop();
-                WriteOutput("Successfully stopped the HTTP server.\n------------------------------------\n");
+                if(_API_SERVER_ON)
+                {
+                    // Stop the HTTP Server
+                    _nancy.Stop();
+                    WriteOutput("Successfully stopped the HTTP server.\n------------------------------------\n");
+                    _API_SERVER_ON = false;
+                }
+                else
+                {
+                    WriteOutput("The API server is already turned off.\n");
+                }
             }
             catch(Exception ex)
             {
@@ -675,290 +675,6 @@ namespace CustomACEAPI
                 ################################################################################*/
                 _SEMAPHORE.Release();
             }
-        }
-    }
-
-    /// <summary>Class to assist in re-routing <c>stdout</c> to the GUI text-box that is displayed</summary>
-    /// <author>Damian Jimenez -- [http://stackoverflow.com/a/18727100]</author>
-    public class TextBoxWriter : TextWriter
-    {
-        private TextBox textbox;
-
-        /// <summary>Constructor method that instantiates the <c>TextBox</c> instance to the appropriate element in the GUI</summary>
-        /// <param name="textbox"><c>TextBox</c> instance that is to be used to write to.</param>
-        /// <author>Damian Jimenez</author>
-        public TextBoxWriter(TextBox textbox)
-        {
-            this.textbox = textbox;
-        }
-
-        /// <summary>Override of the <c>Write</c> method</summary>
-        /// <param name="value"><c>char</c> to be written</param>
-        /// <returns><c>void</c></returns>
-        /// <author>Damian Jimenez</author>
-        public override void Write(char value)
-        {
-            textbox.Text += value;
-        }
-
-        /// <summary>Override of the <c>Write</c> method, writes to each <c>TextWriter</c> in the list of <c>TextWriter</c>s</summary>
-        /// <param name="value"><c>string</c> to be written</param>
-        /// <returns><c>void</c></returns>
-        /// <author>Damian Jimenez</author>
-        public override void Write(string value)
-        {
-            textbox.Text += value;
-        }
-
-        /// <summary>Override of the <c>Encoding</c> method, returns the <c>Encoding</c> of the <c>TextBox</c></summary>
-        /// <returns><c>Encoding.ASCII</c></returns>
-        /// <author>Damian Jimenez</author>
-        public override Encoding Encoding
-        {
-            get { return Encoding.ASCII; }
-        }
-    }
-
-    /// <summary>Class to assist in re-routing <c>stdout</c> to multiple outputs. In our case to re-route it to the text-box that is displayed and also to the console as well.</summary>
-    /// <author>Damian Jimenez -- [http://stackoverflow.com/a/18727100]</author>
-    public class MultiTextWriter : TextWriter
-    {
-        private IEnumerable<TextWriter> writers;
-
-        /// <summary>Overload of the constructor method that takes an <c>IEnumerable</c> of type <c>TextWriter</c> to be converted to a list.</summary>
-        /// <param name="writers"><c>IEnumerable</c> of <c>TextWriter</c> objects that are to be converted to a list, to be used to route <c>stdout</c> to.</param>
-        /// <author>Damian Jimenez</author>
-        public MultiTextWriter(IEnumerable<TextWriter> writers)
-        {
-            this.writers = writers.ToList();
-        }
-
-        /// <summary>Overload of the constructor method that takes a list of <c>TextWriter</c> objects.</summary>
-        /// <param name="writers">List of <c>TextWriter</c> objects that are to be used to route <c>stdout</c> to.</param>
-        /// <author>Damian Jimenez</author>
-        public MultiTextWriter(params TextWriter[] writers)
-        {
-            this.writers = writers;
-        }
-
-        /// <summary>Override of the <c>Write</c> method</summary>
-        /// <param name="value"><c>char</c> to be written</param>
-        /// <returns><c>void</c></returns>
-        /// <author>Damian Jimenez</author>
-        public override void Write(char value)
-        {
-            foreach (var writer in writers)
-                writer.Write(value);
-        }
-
-        /// <summary>Override of the <c>Write</c> method, writes to each <c>TextWriter</c> in the list of <c>TextWriter</c>s</summary>
-        /// <param name="value"><c>string</c> to be written</param>
-        /// <returns><c>void</c></returns>
-        /// <author>Damian Jimenez</author>
-        public override void Write(string value)
-        {
-            foreach (var writer in writers)
-                writer.Write(value);
-        }
-
-        /// <summary>Override of the <c>Flush</c> method, flushes each <c>TextWriter</c> in the list of <c>TextWriter</c>s</summary>
-        /// <returns><c>void</c></returns>
-        /// <author>Damian Jimenez</author>
-        public override void Flush()
-        {
-            foreach (var writer in writers)
-                writer.Flush();
-        }
-
-        /// <summary>Override of the <c>Close</c> method, closes each <c>TextWriter</c> in the list of <c>TextWriter</c>s</summary>
-        /// <returns><c>void</c></returns>
-        /// <author>Damian Jimenez</author>
-        public override void Close()
-        {
-            foreach (var writer in writers)
-                writer.Close();
-        }
-
-        /// <summary>Override of the <c>Encoding</c> method, returns the <c>Encoding</c> of the <c>TextWriter</c>s</summary>
-        /// <returns><c>Encoding.ASCII</c></returns>
-        /// <author>Damian Jimenez</author>
-        public override Encoding Encoding
-        {
-            get { return Encoding.ASCII; }
-        }
-    }
-
-    /// <summary>Class that wraps the Custom ACE API server and all of its associated classes and methods</summary>
-    /// <author>Damian Jimenez</author>
-    public class AdeptAce
-    {
-        private const string REMOTING_NAME = "ace";
-        private const int CALLBACK_PORT = 43431;
-
-        private static bool ACE_SERVER_ON = false;
-        private static IAceServer ace;
-        private static IAdeptRobot robot = null;
-        private static IAdeptController controller = null;
-        private static ObservableCollection<string> controllers = new ObservableCollection<string>();
-        private static ObservableCollection<string> robots = new ObservableCollection<string>();
-
-        /// <summary>Method that allows a user to check whether the connection to the ACE server has been started</summary>
-        /// <author>Damian Jimenez</author>
-        /// <returns><c>bool</c> specifying whether the connection to the ACE server is active or not</returns>
-        public bool Connected
-        {
-            get
-            {
-                return ACE_SERVER_ON;
-            }
-        }
-
-        /// <summary>Method that returns the class instance of IAceServer</summary>
-        /// <author>Damian Jimenez</author>
-        /// <returns><c>IAceServer</c> the ace server used to communicate with ACE and the robot</returns>
-        public IAceServer AceServer
-        {
-            get
-            {
-                return ace;
-            }
-        }
-
-        /// <summary>Method that returns the class instance of IAdeptRobot</summary>
-        /// <author>Damian Jimenez</author>
-        /// <returns><c>IAdeptRobot</c> the robot that is to be controlled</returns>
-        public IAdeptRobot AceRobot
-        {
-            get
-            {
-                return robot;
-            }
-        }
-
-        /// <summary>Method that connects to the Adept ACE server and gets all the available controllers and robots</summary>
-        /// <author>Damian Jimenez</author>
-        /// <returns><c>ObservableCollection&lt;string&gt;[]</c> an array of length 2 containing the controllers and robots that were found. Index 0 is the controllers and index 1 is the robots.</returns>
-        public ObservableCollection<string>[] ConnectToServer(String remoting_host, int remoting_port)
-        {
-            // Only connect to the server once, at the beginning
-            if(!ACE_SERVER_ON)
-            {
-                try
-                {
-                    // Set up the server to allow remote connections and connect to the ACE server
-                    RemotingUtil.InitializeRemotingSubsystem(true, CALLBACK_PORT);
-                    ace = (IAceServer)RemotingUtil.GetRemoteServerObject(typeof(IAceServer), REMOTING_NAME, remoting_host, remoting_port);
-
-                    // Print out all the controllers that are found and available
-                    foreach (IAdeptController controller in ace.Root.Filter(new ObjectTypeFilter(typeof(IAdeptController)), true))
-                    {
-                        // We don't use WriteOutput, because that method definition isn't available to this class and it isn't required for things to work.
-                        Console.WriteLine($"Found controller: {controller.FullPath}");
-                        controllers.Add(controller.FullPath);
-                    }
-
-                    // Print out all the robots that are found connected to the workspace and available
-                    foreach (IAdeptRobot robot in ace.Root.Filter(new ObjectTypeFilter(typeof(IAdeptRobot)), true))
-                    {
-                        // We don't use WriteOutput, because that method definition isn't available to this class and it isn't required for things to work.
-                        Console.WriteLine($"Found robot: {robot.FullPath}");
-                        robots.Add(robot.FullPath);
-                    }
-
-                    // We don't use WriteOutput, because that method definition isn't available to this class and it isn't required for things to work.
-                    Console.WriteLine($"Connected to the Adept ACE server successfully on: {remoting_host}:{remoting_port}/\n");
-                    ACE_SERVER_ON = true;
-                }
-                catch(Exception e)
-                {
-                    Console.WriteLine($"Unable to connect to the Adept ACE server properly.\nERROR: {e.Message}\n");
-                }
-            }
-
-            ObservableCollection<string>[] res = {controllers, robots};
-            return res;
-        }
-
-        /// <summary>Method that loads the controller and robot specified in the GUI combo-boxes</summary>
-        /// <author>Damian Jimenez</author>
-        /// <param name="controllerPath">Specifies where the server should search for the controller, can be found by opening up a default workspace in Adept ACE and connecting to a desired robot.</param>
-        /// <param name="robotPath">Specifies where the server should search for the robot, can be found by opening up a default workspace in Adept ACE and connecting to a desired robot.</param>
-        /// <returns><c>void</c></returns>
-        public void LoadControllerAndRobot(String controllerPath, String robotPath)
-        {
-            // Trim any leading and trailing white-space from the input
-            controllerPath = controllerPath.Trim();
-            robotPath = robotPath.Trim();
-
-            // If either paths are empty, then let the user know
-            if(controllerPath == "" || robotPath == "")
-            {
-                Console.WriteLine("\nERROR: Unable to find a valid controller path and/or robot path to load.\n");
-            }
-            else
-            {
-                // If this is not the first time loading a controller, disable the current controller
-                if(controller != null)
-                {
-                    controller.HighPower = false;
-                    controller.Enabled = false;
-                    controller = null;
-                }
-
-                // Load the new controller
-                controller = ace.Root[controllerPath] as IAdeptController;
-
-                // If the new controller was successfully loaded do the following
-                if(controller != null)
-                {
-                    // Enable and calibrate the controller
-                    controller.Enabled = true;
-                    controller.HighPower = true;
-                    controller.Calibrate();
-                    if (!controller.IsEVPlus)
-                    {
-                        controller.DryRun = true;
-                        controller.DryRun = false;
-                    }
-                    // Add all available robots to the controller
-                    AdeptControllerUtil.AddAllRobots(ace, controller, ace.Root);
-
-                    // Reset the current robot to null
-                    robot = null;
-                    // Assign the new robot as our current robot
-                    robot = ace.Root[robotPath] as IAdeptRobot;
-
-                    // If we loaded the robot successfully then let the user know
-                    if(robot != null)
-                    {
-                        Console.WriteLine($"Successfully loaded:\n\tController: {controllerPath}\n\tRobot: {robotPath}\n");
-                    }
-                    // Else the robot wasn't found and the user should know that there is an issue
-                    else
-                    {
-                        Console.WriteLine("\nERROR: The specified robot was not found, please make sure the spelling is correct and that it exists.\n");
-                    }
-                }
-                // Else the controller wasn't found and the user should know that there is an issue
-                else
-                {
-                    Console.WriteLine("\nERROR: The specified controller was not found, please make sure the spelling is correct and that it exists.\n");
-                }
-            }
-        }
-
-        public double[] GetJointPositions()
-        {
-            try
-            {
-                return robot.JointPosition;
-            }
-            catch(Exception e)
-            {
-                Console.WriteLine($"ERROR: Unable to get the robot's joint position.\n{e.Message}\n");
-                return null;
-            }
-            
         }
     }
 }

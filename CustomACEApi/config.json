@@ -1,6 +1,8 @@
 {
   "ACEServer": "http://localhost",
   "ACEPort": 43434,
+  "ACEName": "ace",
+  "ACECallbackPort": 43431,
   "APIServer": "http://localhost",
   "APIPort": 9001,
   "ThreadingEnabled": true
