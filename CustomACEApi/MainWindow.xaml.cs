@@ -29,12 +29,24 @@ namespace CustomACEAPI
     {
     }
 
+    public class APPConfig
+    {
+        public string ACEServer { get; set; }
+        public int ACEPort { get; set; }
+        public string APIServer { get; set; }
+        public int APIPort { get; set; }
+        public bool ThreadingEnabled { get; set; }
+    }
+
     /// <summary>Class that handles creating and maintaining an instance of the GUI as well as setting up the application for use.</summary>
     public partial class MainWindow : Window
     {
-        private static Semaphore _SEMAPHORE = new Semaphore(1, 1);
-        private const string _url = "http://localhost";
-        private const int _port = 9001;
+        private static Semaphore _SEMAPHORE;
+        private static bool _ROBOT_BUSY = false;
+        private static string _CURRENT_CONTROLLER;
+        private static string _CURRENT_ROBOT;
+        private static double[] _ROBOT_JOINTS;
+        private static APPConfig app_config;
         private static NancyHost _nancy;
         private static AdeptAce adept_ace;
         private static Dispatcher gui_dispatcher;
@@ -47,6 +59,20 @@ namespace CustomACEAPI
         /// <returns><c>void</c></returns>
         public MainWindow()
         {
+            using (StreamReader reader = new StreamReader("../../../config.json"))
+            {
+                string json = reader.ReadToEnd();
+                app_config = JsonConvert.DeserializeObject<APPConfig>(json);
+            }
+
+            if(app_config.ThreadingEnabled)
+            {
+                _SEMAPHORE = new Semaphore(1, 1);
+            }
+            else
+            {
+                _SEMAPHORE = new Semaphore(1000, 1000);
+            }
             gui_dispatcher = Dispatcher;
             InitializeComponent();
             OutputText.Text = "";
@@ -62,11 +88,11 @@ namespace CustomACEAPI
                 }
             };
 
-            _nancy = new NancyHost(configuration, new Uri($"{_url}:{_port}/"));
+            _nancy = new NancyHost(configuration, new Uri($"{app_config.APIServer}:{app_config.APIPort}/"));
             WriteOutput("Application started successfully...\n-----------------------------------");
         }
 
-        /// <summary>Starts the NancyFX server to allow it to start listening for requests on localhost:9001</summary>
+        /// <summary>Starts the NancyFX server to allow it to start listening for requests on the host:port specified in config.json</summary>
         /// <author>Damian Jimenez</author>
         /// <param name="sender">Object that triggered the call to this method</param>
         /// <param name="e">Event information of the routed event</param>
@@ -80,7 +106,7 @@ namespace CustomACEAPI
                 {
                     ObservableCollection<string>[] controllers_and_robots;
 
-                    controllers_and_robots = adept_ace.ConnectToServer("localhost", 43434);
+                    controllers_and_robots = adept_ace.ConnectToServer(app_config.ACEServer, app_config.ACEPort);
                     controllers = controllers_and_robots[0];
                     robots = controllers_and_robots[1];
 
@@ -88,10 +114,10 @@ namespace CustomACEAPI
                     RobotPathComboBox.ItemsSource = robots;
                 }
 
-                // Start the HTTP server on localhost:9001
+                // Start the HTTP server on the host:port specified in config.json
                 _nancy.Start();
                 WriteOutput("Successfully started the HTTP server.\n------------------------------------\n");
-                WriteOutput($"Listening on: {_url}:{_port}/\n");
+                WriteOutput($"Listening on: {app_config.APIServer}:{app_config.APIPort}/\n");
             }
             catch(Exception ex)
             {
@@ -106,9 +132,17 @@ namespace CustomACEAPI
         /// <returns><c>void</c></returns>
         void Stop_APP(object sender, RoutedEventArgs e)
         {
-            // Stop the HTTP Server
-            _nancy.Stop();
-            WriteOutput("Successfully stopped the HTTP server.\n------------------------------------\n");
+            try
+            {
+                // Stop the HTTP Server
+                _nancy.Stop();
+                WriteOutput("Successfully stopped the HTTP server.\n------------------------------------\n");
+            }
+            catch(Exception ex)
+            {
+                WriteOutput($"ERROR: Unable to stop the HTTP server properly, or it has not been started.\n{ex.Message}\n");
+            }
+
         }
 
         /// <summary>Load the controller and robot currently selected in the combo-boxes</summary>
@@ -119,6 +153,16 @@ namespace CustomACEAPI
         void Load_ControllerAndRobot(object sender, RoutedEventArgs e)
         {
             adept_ace.LoadControllerAndRobot(ControllerPathComboBox.Text, RobotPathComboBox.Text);
+            _CURRENT_CONTROLLER = ControllerPathComboBox.Text;
+            _CURRENT_ROBOT = RobotPathComboBox.Text;
+        }
+
+        static void GetRobotJoints()
+        {
+            gui_dispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
+            {
+                _ROBOT_JOINTS = adept_ace.GetJointPositions();
+            }));
         }
 
         /// <summary>Writes to the console and the GUI text-box. Necessary to re-route calls from different threads onto the thread the GUI is running on.</summary>
@@ -145,6 +189,106 @@ namespace CustomACEAPI
                 Get["/"] = _ => View["index"];
 
                 Post["/"] = _ => View["index"];
+            }
+        }
+
+        /// <summary>Class to handle Camera API calls</summary>
+        /// <author>Damian Jimenez</author>
+        public class InfoAPI : NancyModule
+        {
+            /// <summary>API endpoint for the Camera commands</summary>
+            /// <author>Damian Jimenez</author>
+            /// <returns><c>void</c></returns>
+            public InfoAPI()
+            {
+                Get["/api/system/info"] = _ =>
+                {
+                    GetRobotJoints();
+                    string jsonString = $"{{ ace_server_url: \"{app_config.ACEServer}\", " +
+                                        $"ace_server_por: {app_config.ACEPort}, " +
+                                        $"api_server_url: \"{app_config.APIServer}\", " +
+                                        $"api_server_port: {app_config.APIPort}, " +
+                                        $"controller: \"{_CURRENT_CONTROLLER}\", " +
+                                        $"robot: \"{_CURRENT_ROBOT}\", " +
+                                        $"robot_busy: {_ROBOT_BUSY}, " +
+                                        $"robot_joints: {_ROBOT_JOINTS} }}";
+
+                    byte[] jsonBytes = Encoding.UTF8.GetBytes(jsonString);
+
+                    return new Response()
+                    {
+                        StatusCode = HttpStatusCode.OK,
+                        ContentType = "application/json",
+                        ReasonPhrase = "POST requests are not supported by this endpoint, use a GET request instead.",
+                        Headers = new Dictionary<string, string>()
+                        {
+                            {
+                                "Content-Type", "application/json"
+                            }
+                        },
+                        Contents = c => c.Write(jsonBytes, 0, jsonBytes.Length)
+                    };
+                };
+
+                Get["/api/system/robot/busy"] = _ =>
+                {
+                    string jsonString = $"{{ robot_busy: {_ROBOT_BUSY} }}";
+
+                    byte[] jsonBytes = Encoding.UTF8.GetBytes(jsonString);
+
+                    return new Response()
+                    {
+                        StatusCode = HttpStatusCode.OK,
+                        ContentType = "application/json",
+                        ReasonPhrase = "POST requests are not supported by this endpoint, use a GET request instead.",
+                        Headers = new Dictionary<string, string>()
+                        {
+                            {
+                                "Content-Type", "application/json"
+                            }
+                        },
+                        Contents = c => c.Write(jsonBytes, 0, jsonBytes.Length)
+                    };
+                };
+
+                Get["/api/system/robot/joints"] = _ =>
+                {
+                    GetRobotJoints();
+                    string jsonString = $"{{ robot_joints: {_ROBOT_JOINTS} }}";
+
+                    byte[] jsonBytes = Encoding.UTF8.GetBytes(jsonString);
+
+                    return new Response()
+                    {
+                        StatusCode = HttpStatusCode.OK,
+                        ContentType = "application/json",
+                        ReasonPhrase = "POST requests are not supported by this endpoint, use a GET request instead.",
+                        Headers = new Dictionary<string, string>()
+                        {
+                            {
+                                "Content-Type", "application/json"
+                            }
+                        },
+                        Contents = c => c.Write(jsonBytes, 0, jsonBytes.Length)
+                    };
+                };
+
+                Post[@"/api/system/.*"] = _ =>
+                {
+                    WriteOutput($"POST requests not supported by /api/info/\n");
+                    return new Response()
+                    {
+                        StatusCode = HttpStatusCode.BadRequest,
+                        ContentType = "application/json",
+                        ReasonPhrase = "POST requests are not supported by this endpoint, use a GET request instead.",
+                        Headers = new Dictionary<string, string>()
+                        {
+                            {
+                                "Content-Type", "application/json"
+                            }
+                        },
+                    };
+                };
             }
         }
 
@@ -301,11 +445,12 @@ namespace CustomACEAPI
             /// <returns><c>void</c></returns>
             public void Execute(IAdeptRobot robot, CartesianMove cartesianMove)
             {
-                _SEMAPHORE.WaitOne();
                 /*################################################################################
                 ########################## BEGINNING OF PROTECTED BLOCK ##########################
                 ################################################################################*/
+                _SEMAPHORE.WaitOne();
                 {
+                    _ROBOT_BUSY = true;
                     try
                     {
                         // Get the current joint positions of the robot
@@ -329,7 +474,7 @@ namespace CustomACEAPI
                         // Transform the current joint position to a world location
                         Transform3D loc = robot.JointToWorld(jointPositions);
 
-                        // Check if the current location is inrange           
+                        // Check if the current location is in-range           
                         Transform3D currentPosition = robot.WorldLocationWithTool;
                         bool inRange = robot.InRange(currentPosition) == 0 ? true: false;
                         WriteOutput($"[{currentPosition}]\nMotion in range: {inRange}\n");
@@ -358,11 +503,12 @@ namespace CustomACEAPI
                     {
                         WriteOutput($"Unable to move the robot.\nERROR: {e.Message}\n");
                     }
+                    _ROBOT_BUSY = false;
                 }
+                _SEMAPHORE.Release();
                 /*################################################################################
                 ############################# END OF PROTECTED BLOCK #############################
                 ################################################################################*/
-                _SEMAPHORE.Release();
             }
         }
 
@@ -405,7 +551,8 @@ namespace CustomACEAPI
                         var command = JsonConvert.DeserializeObject<JointMoveCommand>(body);
 
                         WriteOutput($"Received the following POST request:\n{body.ToString()}\n");
-                        command.Execute(adept_ace.AceRobot, adept_ace.AceServer.CreateObject(typeof(JointMove)) as JointMove);
+                        Thread command_thread = new Thread(() => command.Execute(adept_ace.AceRobot, adept_ace.AceServer.CreateObject(typeof(JointMove)) as JointMove));
+                        command_thread.Start();
 
                         return HttpStatusCode.OK;
                     }
@@ -474,60 +621,55 @@ namespace CustomACEAPI
             /// <returns><c>void</c></returns>
             public void Execute(IAdeptRobot robot, JointMove jointMove)
             {
-                _SEMAPHORE.WaitOne();
                 /*################################################################################
                 ########################## BEGINNING OF PROTECTED BLOCK ##########################
                 ################################################################################*/
+                _SEMAPHORE.WaitOne();
                 {
-                    if (JointPosition.Length != 6)
+
+                    try
                     {
-                        WriteOutput($"Invalid number of joints specified in the joint position array. The array should specify 6 floating point values.\nCurrently it is: {JointPosition.ToString()}\n");
+                        jointMove.Initialize();
+                        // Get the current joint positions of the robot
+                        double[] jointPositions = robot.JointPosition;
+
+                        // Print out joint information for the user to see
+                        WriteOutput("Current joint values:");
+                        foreach (var joint in jointPositions.Select((value, i) => new { i, value }))
+                        {
+                            WriteOutput($"joint[{joint.i}] = {joint.value}");
+                        }
+
+                        // Assign jointMove the parameters that were passed via the API call
+                        jointMove.Param.Accel = Accel;
+                        jointMove.Param.Decel = Decel;
+                        jointMove.Param.Speed = Speed;
+                        jointMove.Param.Straight = StraightMotion;
+                        jointMove.Param.MotionEnd = MOTION_END[MotionEnd];
+                        jointMove.Param.SCurveProfile = SCurveProfile;
+                        jointMove.JointPosition = JointPosition;
+
+                        // Assigning the robot that was passed as the one that will execute the move
+                        jointMove.Robot = robot;
+
+                        // Write out the JointMove that is to be executed to the console and GUI
+                        WriteOutput(jointMove.Description);
+
+                        // Execute the move
+                        robot.Move(jointMove);
+
+                        // Wait for the robot to finish moving
+                        robot.WaitMoveDone();
+
+                        // Force the robot to issue a DETACH
+                        robot.AutomaticControlActive = false;
                     }
-                    else
+                    catch(Exception e)
                     {
-                        try
-                        {
-                            jointMove.Initialize();
-                            // Get the current joint positions of the robot
-                            double[] jointPositions = robot.JointPosition;
-
-                            // Print out joint information for the user to see
-                            WriteOutput("Current joint values:");
-                            foreach (var joint in jointPositions.Select((value, i) => new { i, value }))
-                            {
-                                WriteOutput($"joint[{joint.i}] = {joint.value}");
-                            }
-
-                            // Assign jointMove the parameters that were passed via the API call
-                            jointMove.Param.Accel = Accel;
-                            jointMove.Param.Decel = Decel;
-                            jointMove.Param.Speed = Speed;
-                            jointMove.Param.Straight = StraightMotion;
-                            jointMove.Param.MotionEnd = MOTION_END[MotionEnd];
-                            jointMove.Param.SCurveProfile = SCurveProfile;
-                            jointMove.JointPosition = JointPosition;
-
-                            // Assigning the robot that was passed as the one that will execute the move
-                            jointMove.Robot = robot;
-
-                            // Write out the JointMove that is to be executed to the console and GUI
-                            WriteOutput(jointMove.Description);
-
-                            // Execute the move
-                            jointMove.Go();
-
-                            // Wait for the robot to finish moving
-                            robot.WaitMoveDone();
-
-                            // Force the robot to issue a DETACH
-                            robot.AutomaticControlActive = false;
-                        }
-                        catch(Exception e)
-                        {
-                            WriteOutput($"Unable to move the robot.\nERROR: {e.Message}\n");
-                        }
+                        WriteOutput($"Unable to move the robot.\nERROR: {e.Message}\n");
                     }
                 }
+                _ROBOT_BUSY = false;
                 /*################################################################################
                 ############################# END OF PROTECTED BLOCK #############################
                 ################################################################################*/
@@ -751,7 +893,7 @@ namespace CustomACEAPI
             // If either paths are empty, then let the user know
             if(controllerPath == "" || robotPath == "")
             {
-                Console.WriteLine("/nERROR: Unable to find a valid controller path and/or robot path to load.\n");
+                Console.WriteLine("\nERROR: Unable to find a valid controller path and/or robot path to load.\n");
             }
             else
             {
@@ -794,15 +936,29 @@ namespace CustomACEAPI
                     // Else the robot wasn't found and the user should know that there is an issue
                     else
                     {
-                        Console.WriteLine("/nERROR: The specified robot was not found, please make sure the spelling is correct and that it exists.\n");
+                        Console.WriteLine("\nERROR: The specified robot was not found, please make sure the spelling is correct and that it exists.\n");
                     }
                 }
                 // Else the controller wasn't found and the user should know that there is an issue
                 else
                 {
-                    Console.WriteLine("/nERROR: The specified controller was not found, please make sure the spelling is correct and that it exists.\n");
+                    Console.WriteLine("\nERROR: The specified controller was not found, please make sure the spelling is correct and that it exists.\n");
                 }
             }
+        }
+
+        public double[] GetJointPositions()
+        {
+            try
+            {
+                return robot.JointPosition;
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine($"ERROR: Unable to get the robot's joint position.\n{e.Message}\n");
+                return null;
+            }
+            
         }
     }
 }

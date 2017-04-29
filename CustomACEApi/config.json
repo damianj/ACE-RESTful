@@ -1,10 +1,7 @@
 {
-  "ace": {
-    "server": "http://localhost",
-    "port": 43434
-  },
-  "api": {
-    "server": "http://localhost",
-    "port": 9001
-  }
+  "ACEServer": "http://localhost",
+  "ACEPort": 43434,
+  "APIServer": "http://localhost",
+  "APIPort": 9001,
+  "ThreadingEnabled": true
 }
