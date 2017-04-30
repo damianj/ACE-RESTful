@@ -18,19 +18,60 @@
             <RowDefinition Height="21"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="15" />
+            <ColumnDefinition Width="10" />
             <ColumnDefinition Width="69"/>
             <ColumnDefinition Width="69"/>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition/>
-            <ColumnDefinition Width="15"/>
+            <ColumnDefinition Width="10"/>
         </Grid.ColumnDefinitions>
-        <Button Content="START" FontWeight="Bold" Background="#FF1E9628" Foreground="White" BorderBrush="#FF414144" Click="Start_APP" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="1" FontSize="22" Grid.Row="1" FontFamily="Calibri"/>
-        <Button Content="STOP" FontWeight="Bold" FontSize="22" Background="#FFC81428" Foreground="White" BorderBrush="#FF414144" Click="Stop_APP" Grid.Column="1" VerticalContentAlignment="Center" Grid.Row="2" Grid.ColumnSpan="2" FontFamily="Calibri" IsCancel="True" HorizontalContentAlignment="Center"/>
-        <StatusBar Margin="2,0,0,0" Background="{DynamicResource {x:Static SystemColors.HotTrackBrushKey}}" BorderBrush="#FF414144" Foreground="White" Grid.Row="7" Grid.ColumnSpan="4" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Grid.Column="1"/>
-        <TextBox x:Name="OutputText" Margin="0,5" TextWrapping="Wrap" Text="" BorderBrush="#FF414144" Foreground="{DynamicResource {x:Static SystemColors.HotTrackBrushKey}}" FontFamily="Consolas" FontWeight="Bold" SelectionBrush="#FF9DAFB4" Grid.ColumnSpan="4" Grid.Row="3" Grid.Column="1" IsReadOnly="True" ScrollViewer.VerticalScrollBarVisibility="Auto" IsReadOnlyCaretVisible="True" Grid.RowSpan="4"/>
-        <ComboBox x:Name="ControllerPathComboBox" Grid.Column="3" SelectedValuePath="Content" VerticalContentAlignment="Center" Margin="5,0,0,4" FontSize="11" FontWeight="Bold" Grid.ColumnSpan="2" Grid.Row="1" Foreground="{DynamicResource {x:Static SystemColors.HotTrackBrushKey}}" FontFamily="Consolas"/>
-        <ComboBox x:Name="RobotPathComboBox" Grid.Column="3" SelectedValuePath="Content" VerticalContentAlignment="Center" Grid.Row="2" FontSize="11" FontWeight="Bold" Margin="5,0,0,0" Grid.ColumnSpan="2" Foreground="{DynamicResource {x:Static SystemColors.HotTrackBrushKey}}" FontFamily="Consolas"/>
-        <Button Content="LOAD" Background="#FF0066CC" Foreground="White" BorderBrush="#FF414144" Grid.Column="2" FontSize="22" FontWeight="Bold" Click="Load_ControllerAndRobot" Grid.Row="1" FontFamily="Calibri"/>
+        <Button Content="START" FontWeight="Bold" Foreground="White" Click="Start_APP" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="1" FontSize="22" Grid.Row="1" FontFamily="Calibri" BorderBrush="{x:Null}">
+            <Button.Background>
+                <ImageBrush ImageSource="C:\Users\Damian\Dropbox\GitHub\MARSLab_ACEAPI\CustomACEAPI\greenBG.png"/>
+            </Button.Background>
+        </Button>
+        <Button Content="STOP" FontWeight="Bold" FontSize="22" Foreground="White" Click="Stop_APP" Grid.Column="1" VerticalContentAlignment="Center" Grid.Row="2" Grid.ColumnSpan="2" FontFamily="Calibri" IsCancel="True" HorizontalContentAlignment="Center" BorderBrush="{x:Null}">
+            <Button.Background>
+                <ImageBrush ImageSource="C:\Users\Damian\Dropbox\GitHub\MARSLab_ACEAPI\CustomACEAPI\redBG.png"/>
+            </Button.Background>
+        </Button>
+        <StatusBar x:Name="SystemStatusBar" Foreground="White" Grid.Row="7" Grid.ColumnSpan="4" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Grid.Column="1">
+            <TextBlock Name="SystemStatusBarText" VerticalAlignment="Center" FontFamily="Consolas" FontWeight="Bold" FontSize="11" />
+            <StatusBar.BorderBrush>
+                <ImageBrush ImageSource="C:\Users\Damian\Dropbox\GitHub\MARSLab_ACEAPI\CustomACEAPI\blueBG.png"/>
+            </StatusBar.BorderBrush>
+            <StatusBar.Background>
+                <ImageBrush ImageSource="C:\Users\Damian\Dropbox\GitHub\MARSLab_ACEAPI\CustomACEAPI\blueBG.png"/>
+            </StatusBar.Background>
+        </StatusBar>
+        <TextBox x:Name="OutputText" Margin="0,5" TextWrapping="Wrap" Text="" Foreground="{DynamicResource {x:Static SystemColors.HotTrackBrushKey}}" FontFamily="Consolas" FontWeight="Bold" SelectionBrush="#FF9DAFB4" Grid.ColumnSpan="4" Grid.Row="3" Grid.Column="1" IsReadOnly="True" ScrollViewer.VerticalScrollBarVisibility="Auto" IsReadOnlyCaretVisible="True" Grid.RowSpan="4">
+            <TextBox.BorderBrush>
+                <ImageBrush ImageSource="C:\Users\Damian\Dropbox\GitHub\MARSLab_ACEAPI\CustomACEAPI\whiteBG.png"/>
+            </TextBox.BorderBrush>
+            <TextBox.Background>
+                <ImageBrush ImageSource="C:\Users\Damian\Dropbox\GitHub\MARSLab_ACEAPI\CustomACEAPI\whiteBG.png"/>
+            </TextBox.Background>
+        </TextBox>
+        <ComboBox x:Name="ControllerPathComboBox" Grid.Column="3" SelectedValuePath="Content" VerticalContentAlignment="Center" Margin="5,0,0,4" FontSize="11" FontWeight="Bold" Grid.ColumnSpan="2" Grid.Row="1" Foreground="{DynamicResource {x:Static SystemColors.HotTrackBrushKey}}" FontFamily="Consolas">
+            <ComboBox.BorderBrush>
+                <ImageBrush ImageSource="C:\Users\Damian\Dropbox\GitHub\MARSLab_ACEAPI\CustomACEAPI\whiteBG.png"/>
+            </ComboBox.BorderBrush>
+            <ComboBox.Background>
+                <ImageBrush ImageSource="C:\Users\Damian\Dropbox\GitHub\MARSLab_ACEAPI\CustomACEAPI\whiteBG.png"/>
+            </ComboBox.Background>
+        </ComboBox>
+        <ComboBox x:Name="RobotPathComboBox" Grid.Column="3" SelectedValuePath="Content" VerticalContentAlignment="Center" Grid.Row="2" FontSize="11" FontWeight="Bold" Grid.ColumnSpan="2" Foreground="{DynamicResource {x:Static SystemColors.HotTrackBrushKey}}" FontFamily="Consolas" Margin="5,0,0,0">
+            <ComboBox.Background>
+                <ImageBrush ImageSource="C:\Users\Damian\Dropbox\GitHub\MARSLab_ACEAPI\CustomACEAPI\whiteBG.png"/>
+            </ComboBox.Background>
+            <ComboBox.BorderBrush>
+                <ImageBrush ImageSource="C:\Users\Damian\Dropbox\GitHub\MARSLab_ACEAPI\CustomACEAPI\whiteBG.png"/>
+            </ComboBox.BorderBrush>
+        </ComboBox>
+        <Button Content="LOAD" Foreground="White" Grid.Column="2" FontSize="22" FontWeight="Bold" Click="Load_ControllerAndRobot" Grid.Row="1" FontFamily="Calibri" BorderBrush="{x:Null}">
+            <Button.Background>
+                <ImageBrush ImageSource="C:\Users\Damian\Dropbox\GitHub\MARSLab_ACEAPI\CustomACEAPI\blueBG.png"/>
+            </Button.Background>
+        </Button>
     </Grid>
 </Window>

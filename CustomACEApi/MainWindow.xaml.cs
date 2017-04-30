@@ -13,6 +13,7 @@ using System.Threading;
 using System.IO;
 using System.Windows.Threading;
 using System.Collections.ObjectModel;
+using System.Windows.Controls;
 
 namespace CustomACEAPI
 {
@@ -20,11 +21,17 @@ namespace CustomACEAPI
     public partial class MainWindow : Window
     {
         private static Semaphore _SEMAPHORE;
+        private static TextBlock _SYSTEM_STATUS_TEXT;
         private static bool _API_SERVER_ON = false;
         private static bool _ROBOT_BUSY = false;
         private static string _CURRENT_CONTROLLER;
         private static string _CURRENT_ROBOT;
         private static double[] _ROBOT_JOINTS;
+        private static int _CARTESIAN_MOVES = 0;
+        private static int _JOINT_MOVES = 0;
+        private static int _GET_REQUESTS = 0;
+        private static int _POST_REQUESTS = 0;
+        private static int _CURRENT_MOVE_CMDS = 0;
         private static APPConfig app_config;
         private static NancyHost _nancy;
         private static AdeptAce adept_ace;
@@ -38,24 +45,34 @@ namespace CustomACEAPI
         /// <returns><c>void</c></returns>
         public MainWindow()
         {
+            // Read the settings in the config file and store these for later use in setting up and connecting to the servers
             using (StreamReader reader = new StreamReader("../../../config.json"))
             {
                 string json = reader.ReadToEnd();
                 app_config = JsonConvert.DeserializeObject<APPConfig>(json);
             }
 
+            // If threading is enabled limit the number of workers to 1
             if(app_config.ThreadingEnabled)
             {
                 _SEMAPHORE = new Semaphore(1, 1);
             }
+            // Else have a maximum of 1000 workers which would allow 1000 move requests to be issued per second MAX
             else
             {
                 _SEMAPHORE = new Semaphore(1000, 1000);
             }
+
+            // Initialize GUI elements and set up some things to get the interface ready
             gui_dispatcher = Dispatcher;
             InitializeComponent();
+            _SYSTEM_STATUS_TEXT = SystemStatusBarText;
             OutputText.Text = "";
+
+            // Instantiate an instance of AdeptAce which we will use to connect to the ACE server
             adept_ace = new AdeptAce();
+
+            // Re-route STDOUT to the GUI text-box and the console as well
             Console.SetOut(new MultiTextWriter(new TextBoxWriter(OutputText), Console.Out));
 
             // Create a URL reservation to allow the NancyFX server to start (i.e., prevent AutomaticUrlReservationCreationFailureException)
@@ -67,6 +84,10 @@ namespace CustomACEAPI
                 }
             };
 
+            // Update the status bar with the initial status
+            UpdateStatusBar();
+
+            // Configure the nancy server for later use
             _nancy = new NancyHost(configuration, new Uri($"{app_config.APIServer}:{app_config.APIPort}/"));
             WriteOutput("Application started successfully...\n-----------------------------------");
         }
@@ -83,6 +104,7 @@ namespace CustomACEAPI
                 // Only do all this once, when we have just started the application
                 if (!adept_ace.Connected)
                 {
+                    // Get the available Controllers and Robots by probing the server and list them in the GUI
                     ObservableCollection<string>[] controllers_and_robots;
 
                     controllers_and_robots = adept_ace.ConnectToServer(app_config.ACEServer, app_config.ACEPort, app_config.ACEName, app_config.ACECallbackPort);
@@ -92,11 +114,13 @@ namespace CustomACEAPI
                     ControllerPathComboBox.ItemsSource = controllers;
                     RobotPathComboBox.ItemsSource = robots;
                 }
+                // If we are already connected let the user know and skip the previous step
                 else
                 {
                     WriteOutput($"Already connected to the ACE server on: {app_config.ACEServer}:{app_config.ACEPort}/\n");
                 }
 
+                // If the API server isn't already on then start it
                 if (!_API_SERVER_ON)
                 {
                     // Start the HTTP server on the host:port specified in config.json
@@ -105,6 +129,7 @@ namespace CustomACEAPI
                     WriteOutput($"Listening on: {app_config.APIServer}:{app_config.APIPort}/\n");
                     _API_SERVER_ON = true;
                 }
+                // Else let the user know and skip trying to turn on the API server
                 else
                 {
                     WriteOutput($"The API server is already on and listening on: {app_config.APIServer}:{app_config.APIPort}/\n");
@@ -126,13 +151,21 @@ namespace CustomACEAPI
         {
             try
             {
+                // If the API server is on then turn it off
                 if(_API_SERVER_ON)
                 {
+                    _CARTESIAN_MOVES = 0;
+                    _JOINT_MOVES = 0;
+                    _GET_REQUESTS = 0;
+                    _POST_REQUESTS = 0;
+                    _CURRENT_MOVE_CMDS = 0;
+
                     // Stop the HTTP Server
                     _nancy.Stop();
                     WriteOutput("Successfully stopped the HTTP server.\n------------------------------------\n");
                     _API_SERVER_ON = false;
                 }
+                // Else if the API server is already off let the user know and skip doing so
                 else
                 {
                     WriteOutput("The API server is already turned off.\n");
@@ -152,6 +185,7 @@ namespace CustomACEAPI
         /// <returns><c>void</c></returns>
         void Load_ControllerAndRobot(object sender, RoutedEventArgs e)
         {
+            // Load the Controller and Robot that are currently selected in the drop down menus of the GUI
             adept_ace.LoadControllerAndRobot(ControllerPathComboBox.Text, RobotPathComboBox.Text);
             _CURRENT_CONTROLLER = ControllerPathComboBox.Text;
             _CURRENT_ROBOT = RobotPathComboBox.Text;
@@ -159,17 +193,26 @@ namespace CustomACEAPI
 
         static void GetRobotJoints()
         {
+            // Get the current joint positions of the robot
             gui_dispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
             {
                 _ROBOT_JOINTS = adept_ace.GetJointPositions();
             }));
         }
 
+        public static void UpdateStatusBar()
+        {
+            // Update the status bar with the current status
+            gui_dispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
+            {
+                _SYSTEM_STATUS_TEXT.Text = $"Cartesian Moves: {_CARTESIAN_MOVES} | Joint Moves: {_JOINT_MOVES} | GETs: {_GET_REQUESTS} | POSTs: {_POST_REQUESTS}";
+            }));
+        }
         /// <summary>Writes to the console and the GUI text-box. Necessary to re-route calls from different threads onto the thread the GUI is running on.</summary>
         /// <author>Damian Jimenez</author>
         /// <param name="output_text">String to be written to the console and GUI text-box</param>
         /// <returns><c>void</c></returns>
-        public static void WriteOutput(String output_text)
+        public static void WriteOutput(string output_text)
         {
             gui_dispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
             {
@@ -203,6 +246,9 @@ namespace CustomACEAPI
             {
                 Get["/api/system/info"] = _ =>
                 {
+                    _GET_REQUESTS += 1;
+                    UpdateStatusBar();
+
                     GetRobotJoints();
                     string jsonString = $"{{ ace_server_url: \"{app_config.ACEServer}\", " +
                                         $"ace_server_por: {app_config.ACEPort}, " +
@@ -232,8 +278,10 @@ namespace CustomACEAPI
 
                 Get["/api/system/robot/busy"] = _ =>
                 {
-                    string jsonString = $"{{ robot_busy: {_ROBOT_BUSY} }}";
+                    _GET_REQUESTS += 1;
+                    UpdateStatusBar();
 
+                    string jsonString = $"{{ robot_busy: {_ROBOT_BUSY} }}";
                     byte[] jsonBytes = Encoding.UTF8.GetBytes(jsonString);
 
                     return new Response()
@@ -253,6 +301,9 @@ namespace CustomACEAPI
 
                 Get["/api/system/robot/joints"] = _ =>
                 {
+                    _GET_REQUESTS += 1;
+                    UpdateStatusBar();
+
                     GetRobotJoints();
                     string jsonString = $"{{ robot_joints: {_ROBOT_JOINTS} }}";
 
@@ -275,6 +326,9 @@ namespace CustomACEAPI
 
                 Post[@"/api/system/.*"] = _ =>
                 {
+                    _POST_REQUESTS += 1;
+                    UpdateStatusBar();
+
                     WriteOutput($"POST requests not supported by /api/info/\n");
                     return new Response()
                     {
@@ -303,11 +357,17 @@ namespace CustomACEAPI
             {
                 Get["/api/camera/get/alldata"] = _ =>
                 {
+                    _GET_REQUESTS += 1;
+                    UpdateStatusBar();
+
                     return "Hello world.";
                 };
 
                 Post[@"/api/camera/.*"] = _ =>
                 {
+                    _POST_REQUESTS += 1;
+                    UpdateStatusBar();
+
                     WriteOutput($"POST requests not supported by /api/move/cartesian\n");
                     return new Response()
                     {
@@ -336,6 +396,9 @@ namespace CustomACEAPI
             {
                 Get["/api/move/cartesian"] = _ =>
                 {
+                    _GET_REQUESTS += 1;
+                    UpdateStatusBar();
+
                     WriteOutput($"GET requests not supported by /api/move/cartesian\n");
                     return new Response()
                     {
@@ -353,8 +416,13 @@ namespace CustomACEAPI
 
                 Post["/api/move/cartesian"] = _ =>
                 {
+                    _POST_REQUESTS += 1;
+
                     try
                     {
+                        _CARTESIAN_MOVES += 1;
+                        UpdateStatusBar();
+
                         var id = Request.Body;
                         var length = Request.Body.Length;
                         var data = new byte[length];
@@ -372,6 +440,8 @@ namespace CustomACEAPI
                     }
                     catch (Exception e)
                     {
+                        UpdateStatusBar();
+
                         WriteOutput($"POST request failed.\nERROR:\n{e.Message}\n");
                         string jsonString = $"{{ status: \"failure\", error: \"{e.Message}\" }}";
                         byte[] jsonBytes = Encoding.UTF8.GetBytes(jsonString);
@@ -451,6 +521,7 @@ namespace CustomACEAPI
                 _SEMAPHORE.WaitOne();
                 {
                     _ROBOT_BUSY = true;
+                    _CURRENT_MOVE_CMDS += 1;
                     try
                     {
                         // Get the current joint positions of the robot
@@ -503,7 +574,8 @@ namespace CustomACEAPI
                     {
                         WriteOutput($"Unable to move the robot.\nERROR: {e.Message}\n");
                     }
-                    _ROBOT_BUSY = false;
+                    _CURRENT_MOVE_CMDS -= 1;
+                    _ROBOT_BUSY = (_CURRENT_MOVE_CMDS == 0 ? true : false);
                 }
                 _SEMAPHORE.Release();
                 /*################################################################################
@@ -523,6 +595,9 @@ namespace CustomACEAPI
             {
                 Get["/api/move/joints"] = _ =>
                 {
+                    _GET_REQUESTS += 1;
+                    UpdateStatusBar();
+
                     WriteOutput($"GET requests not supported by /api/move/joints\n");
                     return new Response()
                     {
@@ -540,8 +615,13 @@ namespace CustomACEAPI
 
                 Post["/api/move/joints"] = _ =>
                 {
+                    _POST_REQUESTS += 1;
+
                     try
                     {
+                        _JOINT_MOVES += 1;
+                        UpdateStatusBar();
+
                         var id = Request.Body;
                         var length = Request.Body.Length;
                         var data = new byte[length];
@@ -558,6 +638,8 @@ namespace CustomACEAPI
                     }
                     catch (Exception e)
                     {
+                        UpdateStatusBar();
+
                         WriteOutput($"POST request failed.\nERROR:\n{e.Message}\n");
                         string jsonString = $"{{ status: \"failure\", error: \"{e.Message}\" }}";
                         byte[] jsonBytes = Encoding.UTF8.GetBytes(jsonString);
@@ -626,7 +708,8 @@ namespace CustomACEAPI
                 ################################################################################*/
                 _SEMAPHORE.WaitOne();
                 {
-
+                    _ROBOT_BUSY = true;
+                    _CURRENT_MOVE_CMDS += 1;
                     try
                     {
                         jointMove.Initialize();
@@ -668,12 +751,13 @@ namespace CustomACEAPI
                     {
                         WriteOutput($"Unable to move the robot.\nERROR: {e.Message}\n");
                     }
+                _CURRENT_MOVE_CMDS -= 1;
+                _ROBOT_BUSY = (_CURRENT_MOVE_CMDS == 0 ? true : false);
                 }
-                _ROBOT_BUSY = false;
+                _SEMAPHORE.Release();
                 /*################################################################################
                 ############################# END OF PROTECTED BLOCK #############################
                 ################################################################################*/
-                _SEMAPHORE.Release();
             }
         }
     }
