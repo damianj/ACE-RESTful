@@ -3,6 +3,8 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
+using System.Net.Http;
+using System.Threading.Tasks;
 using Ace.Adept.Server.Motion;
 using Ace.Core.Server;
 using Ace.Core.Server.Motion;
@@ -20,7 +22,7 @@ namespace CustomACEAPI
     /// <summary>Class that handles creating and maintaining an instance of the GUI as well as setting up the application for use.</summary>
     public partial class MainWindow : Window
     {
-        private static Semaphore _SEMAPHORE;
+        private static Semaphore _SEMAPHORE = new Semaphore(1, 1);
         private static TextBlock _SYSTEM_STATUS_TEXT;
         private static bool _API_SERVER_ON = false;
         private static bool _ROBOT_BUSY = false;
@@ -50,17 +52,6 @@ namespace CustomACEAPI
             {
                 string json = reader.ReadToEnd();
                 app_config = JsonConvert.DeserializeObject<APPConfig>(json);
-            }
-
-            // If threading is enabled limit the number of workers to 1
-            if(app_config.ThreadingEnabled)
-            {
-                _SEMAPHORE = new Semaphore(1, 1);
-            }
-            // Else have a maximum of 1000 workers which would allow 1000 move requests to be issued per second MAX
-            else
-            {
-                _SEMAPHORE = new Semaphore(1000, 1000);
             }
 
             // Initialize GUI elements and set up some things to get the interface ready
@@ -250,14 +241,16 @@ namespace CustomACEAPI
                     UpdateStatusBar();
 
                     GetRobotJoints();
-                    string jsonString = $"{{ ace_server_url: \"{app_config.ACEServer}\", " +
-                                        $"ace_server_por: {app_config.ACEPort}, " +
-                                        $"api_server_url: \"{app_config.APIServer}\", " +
-                                        $"api_server_port: {app_config.APIPort}, " +
-                                        $"controller: \"{_CURRENT_CONTROLLER}\", " +
-                                        $"robot: \"{_CURRENT_ROBOT}\", " +
-                                        $"robot_busy: {_ROBOT_BUSY}, " +
-                                        $"robot_joints: {_ROBOT_JOINTS} }}";
+                    string is_robot_busy = _ROBOT_BUSY.ToString().ToLower();
+                    string joint_string = String.Join(",", _ROBOT_JOINTS.Select(p => p.ToString()).ToArray());
+                    string jsonString = $"{{ ace_server_url\": \"{app_config.ACEServer}\", " +
+                                        $"\"ace_server_por\": {app_config.ACEPort}, " +
+                                        $"\"api_server_url\": \"{app_config.APIServer}\", " +
+                                        $"\"api_server_port\": {app_config.APIPort}, " +
+                                        $"\"controller\": \"{_CURRENT_CONTROLLER}\", " +
+                                        $"\"robot\": \"{_CURRENT_ROBOT}\", " +
+                                        $"\"robot_busy\": {is_robot_busy}, " +
+                                        $"\"robot_joints\": {joint_string} }}";
 
                     byte[] jsonBytes = Encoding.UTF8.GetBytes(jsonString);
 
@@ -281,7 +274,9 @@ namespace CustomACEAPI
                     _GET_REQUESTS += 1;
                     UpdateStatusBar();
 
-                    string jsonString = $"{{ robot_busy: {_ROBOT_BUSY} }}";
+                    string is_robot_busy = _ROBOT_BUSY.ToString().ToLower();
+                    //WriteOutput($"Robot busy?: {is_robot_busy}");
+                    string jsonString = $"{{ \"robot_busy\": {is_robot_busy} }}";
                     byte[] jsonBytes = Encoding.UTF8.GetBytes(jsonString);
 
                     return new Response()
@@ -305,7 +300,9 @@ namespace CustomACEAPI
                     UpdateStatusBar();
 
                     GetRobotJoints();
-                    string jsonString = $"{{ robot_joints: {_ROBOT_JOINTS} }}";
+                    string joint_string = String.Join(",", _ROBOT_JOINTS.Select(p => p.ToString()).ToArray());
+                    //WriteOutput($"Current joint positions: {joint_string}");
+                    string jsonString = $"{{ \"robot_joints\": [{joint_string}] }}";
 
                     byte[] jsonBytes = Encoding.UTF8.GetBytes(jsonString);
 
@@ -443,7 +440,7 @@ namespace CustomACEAPI
                         UpdateStatusBar();
 
                         WriteOutput($"POST request failed.\nERROR:\n{e.Message}\n");
-                        string jsonString = $"{{ status: \"failure\", error: \"{e.Message}\" }}";
+                        string jsonString = $"{{ \"status\": \"failure\", \"error\": \"{e.Message}\" }}";
                         byte[] jsonBytes = Encoding.UTF8.GetBytes(jsonString);
 
 
@@ -515,11 +512,14 @@ namespace CustomACEAPI
             /// <returns><c>void</c></returns>
             public void Execute(IAdeptRobot robot, CartesianMove cartesianMove)
             {
+                if (app_config.ThreadingEnabled)
+                {
+                    _SEMAPHORE.WaitOne();
+                }
                 /*################################################################################
                 ########################## BEGINNING OF PROTECTED BLOCK ##########################
                 ################################################################################*/
-                _SEMAPHORE.WaitOne();
-                {
+                { 
                     _ROBOT_BUSY = true;
                     _CURRENT_MOVE_CMDS += 1;
                     try
@@ -575,12 +575,15 @@ namespace CustomACEAPI
                         WriteOutput($"Unable to move the robot.\nERROR: {e.Message}\n");
                     }
                     _CURRENT_MOVE_CMDS -= 1;
-                    _ROBOT_BUSY = (_CURRENT_MOVE_CMDS == 0 ? true : false);
+                    _ROBOT_BUSY = (_CURRENT_MOVE_CMDS == 0 ? false : true);
                 }
-                _SEMAPHORE.Release();
                 /*################################################################################
                 ############################# END OF PROTECTED BLOCK #############################
                 ################################################################################*/
+                if (app_config.ThreadingEnabled)
+                {
+                    _SEMAPHORE.Release();
+                }
             }
         }
 
@@ -641,7 +644,7 @@ namespace CustomACEAPI
                         UpdateStatusBar();
 
                         WriteOutput($"POST request failed.\nERROR:\n{e.Message}\n");
-                        string jsonString = $"{{ status: \"failure\", error: \"{e.Message}\" }}";
+                        string jsonString = $"{{ \"status\": \"failure\", \"error\": \"{e.Message}\" }}";
                         byte[] jsonBytes = Encoding.UTF8.GetBytes(jsonString);
 
 
@@ -703,10 +706,13 @@ namespace CustomACEAPI
             /// <returns><c>void</c></returns>
             public void Execute(IAdeptRobot robot, JointMove jointMove)
             {
+                if (app_config.ThreadingEnabled)
+                {
+                    _SEMAPHORE.WaitOne();
+                }
                 /*################################################################################
                 ########################## BEGINNING OF PROTECTED BLOCK ##########################
                 ################################################################################*/
-                _SEMAPHORE.WaitOne();
                 {
                     _ROBOT_BUSY = true;
                     _CURRENT_MOVE_CMDS += 1;
@@ -752,12 +758,15 @@ namespace CustomACEAPI
                         WriteOutput($"Unable to move the robot.\nERROR: {e.Message}\n");
                     }
                 _CURRENT_MOVE_CMDS -= 1;
-                _ROBOT_BUSY = (_CURRENT_MOVE_CMDS == 0 ? true : false);
+                _ROBOT_BUSY = (_CURRENT_MOVE_CMDS == 0 ? false : true);
                 }
-                _SEMAPHORE.Release();
                 /*################################################################################
                 ############################# END OF PROTECTED BLOCK #############################
                 ################################################################################*/
+                if (app_config.ThreadingEnabled)
+                {
+                    _SEMAPHORE.Release();
+                }
             }
         }
     }

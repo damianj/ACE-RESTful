@@ -1,9 +1,26 @@
 {
-  "ACEServer": "http://localhost",
-  "ACEPort": 43434,
-  "ACEName": "ace",
-  "ACECallbackPort": 43431,
-  "APIServer": "http://localhost",
-  "APIPort": 9001,
-  "ThreadingEnabled": true
+	"____________________________ACE_SERVER_SETTINGS____________________________":
+	"Below are the settings for the ACE server, these are what the Adept ACE
+	program runs on by default. Do not make changes unless you changed the 
+	configuration for the Adept ACE program, or the application will not 
+	be able to establish a connection to the ACE server.",
+	"_____________________________BEGIN_ACE_SETTINGS____________________________": "",
+	"ACEServer": "localhost",
+	"ACEPort": 43434,
+	"ACEName": "ace",
+	"ACECallbackPort": 43431,
+	"______________________________END_ACE_SETTINGS_____________________________": "",
+
+	"____________________________API_SERVER_SETTINGS____________________________":
+	"These are the API server settings. It is unlikely that it won't be 
+	running on localhost, but you can change the port number if it conflicts 
+	with another application. Just remember to change your API calls 
+	accordingly. The ThreadingEnabled, option specifies whether the application 
+	should use protected threads to issue move commands or just rely on the 
+	user to make sure that commands are sent at appropriate intervals.",
+	"_____________________________BEGIN_API_SETTINGS____________________________": "",
+	"APIServer": "http://localhost",
+	"APIPort": 9001,
+	"ThreadingEnabled": true,
+	"______________________________END_API_SETTINGS_____________________________": "",
 }
