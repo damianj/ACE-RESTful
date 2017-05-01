@@ -19,11 +19,11 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Shadows.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBlock.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBox.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-    <Grid Background="#FF2D2D30">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="2.24" />
             <RowDefinition Height="40"/>
@@ -38,54 +38,15 @@
             <ColumnDefinition/>
             <ColumnDefinition Width="10"/>
         </Grid.ColumnDefinitions>
-        <Button Content="START" FontWeight="Bold" Foreground="White" Click="Start_APP" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="1" FontSize="14" Grid.Row="1" FontFamily="Calibri" BorderBrush="{x:Null}" Height="Auto" Margin="0,4">
-            <Button.Background>
-                <ImageBrush ImageSource="C:\Users\Damian\Dropbox\GitHub\MARSLab_ACEAPI\CustomACEAPI\greenBG.png"/>
-            </Button.Background>
-        </Button>
-        <Button Content="STOP" FontWeight="Bold" FontSize="20" Foreground="White" Click="Stop_APP" Grid.Column="1" VerticalContentAlignment="Center" Grid.Row="2" Grid.ColumnSpan="2" FontFamily="Calibri" IsCancel="True" HorizontalContentAlignment="Center" BorderBrush="{x:Null}" Height="Auto">
-            <Button.Background>
-                <ImageBrush ImageSource="C:\Users\Damian\Dropbox\GitHub\MARSLab_ACEAPI\CustomACEAPI\redBG.png"/>
-            </Button.Background>
-        </Button>
-        <StatusBar x:Name="SystemStatusBar" Foreground="White" Grid.Row="4" Grid.ColumnSpan="3" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Grid.Column="1">
+        <Button Style="{StaticResource MaterialDesignRaisedButton}" Content="START" FontWeight="Bold" Foreground="White" Click="Start_APP" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="1" FontSize="14" Grid.Row="1" FontFamily="Calibri" BorderBrush="{x:Null}" Height="Auto" Margin="0,4"/>
+        <Button Style="{StaticResource MaterialDesignRaisedButton}" Content="STOP" FontWeight="Bold" FontSize="20" Foreground="White" Click="Stop_APP" Grid.Column="1" VerticalContentAlignment="Center" Grid.Row="2" Grid.ColumnSpan="2" FontFamily="Calibri" IsCancel="True" HorizontalContentAlignment="Center" BorderBrush="{x:Null}" Height="Auto"/>
+        <StatusBar x:Name="SystemStatusBar" Foreground="White" Grid.Row="4" Grid.ColumnSpan="3" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Grid.Column="1" Background="#FF607D8B">
             <TextBlock Name="SystemStatusBarText" VerticalAlignment="Center" FontFamily="Consolas" FontWeight="Bold" FontSize="11" />
-            <StatusBar.BorderBrush>
-                <ImageBrush ImageSource="C:\Users\Damian\Dropbox\GitHub\MARSLab_ACEAPI\CustomACEAPI\blueBG.png"/>
-            </StatusBar.BorderBrush>
-            <StatusBar.Background>
-                <ImageBrush ImageSource="C:\Users\Damian\Dropbox\GitHub\MARSLab_ACEAPI\CustomACEAPI\blueBG.png"/>
-            </StatusBar.Background>
         </StatusBar>
-        <TextBox x:Name="OutputText" Margin="0,5" TextWrapping="Wrap" Text="" Foreground="{DynamicResource {x:Static SystemColors.HotTrackBrushKey}}" FontFamily="Consolas" FontWeight="Bold" SelectionBrush="#FF9DAFB4" Grid.ColumnSpan="3" Grid.Row="3" Grid.Column="1" IsReadOnly="True" ScrollViewer.VerticalScrollBarVisibility="Auto" IsReadOnlyCaretVisible="True">
-            <TextBox.BorderBrush>
-                <ImageBrush ImageSource="C:\Users\Damian\Dropbox\GitHub\MARSLab_ACEAPI\CustomACEAPI\whiteBG.png"/>
-            </TextBox.BorderBrush>
-            <TextBox.Background>
-                <ImageBrush ImageSource="C:\Users\Damian\Dropbox\GitHub\MARSLab_ACEAPI\CustomACEAPI\whiteBG.png"/>
-            </TextBox.Background>
-        </TextBox>
-        <ComboBox x:Name="ControllerPathComboBox" Grid.Column="3" SelectedValuePath="Content" VerticalContentAlignment="Center" Margin="25,6,10,10" FontSize="11" FontWeight="Bold" Foreground="{DynamicResource {x:Static SystemColors.HotTrackBrushKey}}" FontFamily="Consolas" Grid.Row="1" Height="24">
-            <ComboBox.BorderBrush>
-                <ImageBrush ImageSource="C:\Users\Damian\Dropbox\GitHub\MARSLab_ACEAPI\CustomACEAPI\whiteBG.png"/>
-            </ComboBox.BorderBrush>
-            <ComboBox.Background>
-                <ImageBrush ImageSource="C:\Users\Damian\Dropbox\GitHub\MARSLab_ACEAPI\CustomACEAPI\whiteBG.png"/>
-            </ComboBox.Background>
-        </ComboBox>
-        <ComboBox x:Name="RobotPathComboBox" Grid.Column="3" SelectedValuePath="Content" VerticalContentAlignment="Center" Grid.Row="2" FontSize="11" FontWeight="Bold" Foreground="{DynamicResource {x:Static SystemColors.HotTrackBrushKey}}" FontFamily="Consolas" Margin="25,6,10,10" Height="24">
-            <ComboBox.Background>
-                <ImageBrush ImageSource="C:\Users\Damian\Dropbox\GitHub\MARSLab_ACEAPI\CustomACEAPI\whiteBG.png"/>
-            </ComboBox.Background>
-            <ComboBox.BorderBrush>
-                <ImageBrush ImageSource="C:\Users\Damian\Dropbox\GitHub\MARSLab_ACEAPI\CustomACEAPI\whiteBG.png"/>
-            </ComboBox.BorderBrush>
-        </ComboBox>
-        <Button Content="LOAD" Foreground="White" Grid.Column="2" FontSize="14" FontWeight="Bold" Click="Load_ControllerAndRobot" Grid.Row="1" FontFamily="Calibri" BorderBrush="{x:Null}" Height="Auto" Margin="0,4">
-            <Button.Background>
-                <ImageBrush ImageSource="C:\Users\Damian\Dropbox\GitHub\MARSLab_ACEAPI\CustomACEAPI\blueBG.png"/>
-            </Button.Background>
-        </Button>
+        <TextBox x:Name="OutputText" Margin="0,5" TextWrapping="Wrap" Text="" FontFamily="Consolas" FontWeight="Bold" Grid.ColumnSpan="3" Grid.Row="3" Grid.Column="1" IsReadOnly="True" ScrollViewer.VerticalScrollBarVisibility="Auto" IsReadOnlyCaretVisible="True" Foreground="#FF607D8B"/>
+        <ComboBox Style="{StaticResource MaterialDesignComboBox}" x:Name="ControllerPathComboBox" Grid.Column="3" SelectedValuePath="Content" VerticalContentAlignment="Center" Margin="25,6,10,10" FontSize="11" FontWeight="Bold" FontFamily="Consolas" Grid.Row="1" Height="24"/>
+        <ComboBox Style="{StaticResource MaterialDesignComboBox}" x:Name="RobotPathComboBox" Grid.Column="3" SelectedValuePath="Content" VerticalContentAlignment="Center" Grid.Row="2" FontSize="11" FontWeight="Bold" FontFamily="Consolas" Margin="25,6,10,10" Height="24"/>
+        <Button Style="{StaticResource MaterialDesignRaisedButton}" Content="LOAD" Foreground="White" Grid.Column="2" FontSize="14" FontWeight="Bold" Click="Load_ControllerAndRobot" Grid.Row="1" FontFamily="Calibri" BorderBrush="{x:Null}" Height="Auto" Margin="0,4"/>
         <Separator Margin="57,37,0,35" Width="78" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2" Grid.Column="2" Grid.RowSpan="2" HorizontalAlignment="Left" VerticalContentAlignment="Center" HorizontalContentAlignment="Stretch" Grid.Row="1" Panel.ZIndex="5">
             <Separator.RenderTransform>
                 <TransformGroup>
