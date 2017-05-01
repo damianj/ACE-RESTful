@@ -22,6 +22,7 @@ PS > Invoke-WebRequest -UseBasicParsing http://localhost:9001/api/move/cartesian
 * [Nancy] - Light-weight web framework for C#
 * [Newtonsoft] - Popular high-performance JSON framework for .NET
 * [Volkanpaksoy] - Tutorial to get started developing with Nancy
+* [Material Design XAML] - Library to create responsive and clean GUI's 
 
 ### Continuing Development
 You will need to install some packages via the Package Manager Console in Visual Studio
@@ -45,6 +46,7 @@ Alternatively, you can enable the Package Restore function of NuGet within Visua
 [//]: # (Reference Links - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)
 
    [Adept ACE Custom API]: <https://damianj.github.io/MARSLab_ACEAPI/>
+   [Material Design XAML]: <http://materialdesigninxaml.net/>
    [Volkanpaksoy]: <http://volkanpaksoy.com/archive/2015/11/11/building-a-simple-http-server-with-nancy/>
    [Nancy]: <http://nancyfx.org/>
    [Newtonsoft]: <http://www.newtonsoft.com/json>
