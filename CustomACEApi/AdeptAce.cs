@@ -53,6 +53,10 @@ namespace CustomACEAPI
 
         /// <summary>Method that connects to the Adept ACE server and gets all the available controllers and robots</summary>
         /// <author>Damian Jimenez</author>
+        /// <param name="remotingHost">URL on which the Adept ACE server is hosted on.</param>
+        /// <param name="remotingPort">Port on which the Adept ACE server is listening on.</param>
+        /// <param name="remotingName">Name of the Adept ACE server (typically just "ace").</param>
+        /// <param name="callbackPort">Callback port for the Adept ACE server.</param>
         /// <returns><c>ObservableCollection&lt;string&gt;[]</c> an array of length 2 containing the controllers and robots that were found. Index 0 is the controllers and index 1 is the robots.</returns>
         public ObservableCollection<string>[] ConnectToServer(string remotingHost, int remotingPort, string remotingName, int callbackPort)
         {
@@ -163,6 +167,10 @@ namespace CustomACEAPI
             }
         }
 
+
+        /// <summary>Method that get's the current robot's joint positions at the time of the method call.</summary>
+        /// <author>Damian Jimenez</author>
+        /// <returns><c>double[]</c> An array containing the current joint positions of the robot.</returns>
         public double[] GetJointPositions()
         {
             try

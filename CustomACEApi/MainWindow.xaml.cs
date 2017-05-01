@@ -182,6 +182,9 @@ namespace CustomACEAPI
             _CURRENT_ROBOT = RobotPathComboBox.Text;
         }
 
+        /// <summary>Get's the robot's current joint positions and assigns it to the class variable _ROBOT_JOINTS</summary>
+        /// <author>Damian Jimenez</author>
+        /// <returns><c>void</c></returns>
         static void GetRobotJoints()
         {
             // Get the current joint positions of the robot
@@ -191,6 +194,9 @@ namespace CustomACEAPI
             }));
         }
 
+        /// <summary>Updates the application status bar with how many cartesian moves, joint moves, GET requests, and POST requests have been issued to the server. This only includes requests to the API endpoints.</summary>
+        /// <author>Damian Jimenez</author>
+        /// <returns><c>void</c></returns>
         public static void UpdateStatusBar()
         {
             // Update the status bar with the current status
@@ -226,11 +232,11 @@ namespace CustomACEAPI
             }
         }
 
-        /// <summary>Class to handle Camera API calls</summary>
+        /// <summary>Class to handle System info GET requests</summary>
         /// <author>Damian Jimenez</author>
         public class InfoAPI : NancyModule
         {
-            /// <summary>API endpoint for the Camera commands</summary>
+            /// <summary>API endpoint to handle all GET requests aimed at getting information regarding the current status of the system.</summary>
             /// <author>Damian Jimenez</author>
             /// <returns><c>void</c></returns>
             public InfoAPI()
