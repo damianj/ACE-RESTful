@@ -31,10 +31,19 @@
       <returns>
         <c>bool</c> specifying whether the connection to the ACE server is active or not</returns>
     </member>
-    <member name="M:CustomACEAPI.AdeptAce.ConnectToServer">
+    <member name="M:CustomACEAPI.AdeptAce.ConnectToServer(System.String,System.Int32,System.String,System.Int32)">
       <summary>Method that connects to the Adept ACE server and gets all the available controllers and robots</summary>
+      <param name="remotingHost">URL on which the Adept ACE server is hosted on.</param>
+      <param name="remotingPort">Port on which the Adept ACE server is listening on.</param>
+      <param name="remotingName">Name of the Adept ACE server (typically just "ace").</param>
+      <param name="callbackPort">Callback port for the Adept ACE server.</param>
       <returns>
         <c>ObservableCollection&lt;string&gt;[]</c> an array of length 2 containing the controllers and robots that were found. Index 0 is the controllers and index 1 is the robots.</returns>
+    </member>
+    <member name="M:CustomACEAPI.AdeptAce.GetJointPositions">
+      <summary>Method that get's the current robot's joint positions at the time of the method call.</summary>
+      <returns>
+        <c>double[]</c> An array containing the current joint positions of the robot.</returns>
     </member>
     <member name="M:CustomACEAPI.AdeptAce.LoadControllerAndRobot(System.String,System.String)">
       <summary>Method that loads the controller and robot specified in the GUI combo-boxes</summary>
@@ -68,6 +77,39 @@
             Application Entry Point.
             </summary>
     </member>
+    <member name="T:CustomACEAPI.APPConfig">
+      <summary>Class used to used to house the information parsed from config.json</summary>
+    </member>
+    <member name="M:CustomACEAPI.APPConfig.#ctor">
+      <summary>
+        <markup>
+          <include item="SMCAutoDocConstructor">
+            <parameter>CustomACEAPI.APPConfig</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:CustomACEAPI.APPConfig.ACECallbackPort">
+      <summary>Callback port for the ACE server.</summary>
+    </member>
+    <member name="P:CustomACEAPI.APPConfig.ACEName">
+      <summary>Name of the ACE server.</summary>
+    </member>
+    <member name="P:CustomACEAPI.APPConfig.ACEPort">
+      <summary>Port on which the ACE server is listening on.</summary>
+    </member>
+    <member name="P:CustomACEAPI.APPConfig.ACEServer">
+      <summary>URL where the ACE server is hosted at.</summary>
+    </member>
+    <member name="P:CustomACEAPI.APPConfig.APIPort">
+      <summary>Port on which the API server should listen on.</summary>
+    </member>
+    <member name="P:CustomACEAPI.APPConfig.APIServer">
+      <summary>URL where the API server is to be hosted at.</summary>
+    </member>
+    <member name="P:CustomACEAPI.APPConfig.ThreadingEnabled">
+      <summary>Determines whether threading protected threading is enabled for the endpoints that issue move commands to the robot.</summary>
+    </member>
     <member name="T:CustomACEAPI.MainWindow">
       <summary>Class that handles creating and maintaining an instance of the GUI as well as setting up the application for use.</summary>
     </member>
@@ -82,9 +124,24 @@
             InitializeComponent
             </summary>
     </member>
+    <member name="M:CustomACEAPI.MainWindow.UpdateStatusBar">
+      <summary>Updates the application status bar with how many Cartesian Moves, Joint Moves, GET requests, and POST requests have been issued to the server. This only includes requests to the API endpoints.</summary>
+      <returns>
+        <c>void</c>
+      </returns>
+    </member>
     <member name="M:CustomACEAPI.MainWindow.WriteOutput(System.String)">
       <summary>Writes to the console and the GUI text-box. Necessary to re-route calls from different threads onto the thread the GUI is running on.</summary>
       <param name="output_text">String to be written to the console and GUI text-box</param>
+      <returns>
+        <c>void</c>
+      </returns>
+    </member>
+    <member name="T:CustomACEAPI.MainWindow.CameraAPI">
+      <summary>Class to handle Camera API calls</summary>
+    </member>
+    <member name="M:CustomACEAPI.MainWindow.CameraAPI.#ctor">
+      <summary>API endpoint for the Camera commands</summary>
       <returns>
         <c>void</c>
       </returns>
@@ -156,6 +213,24 @@
     </member>
     <member name="P:CustomACEAPI.MainWindow.CartesianMoveCommand.Z">
       <summary>Specifies the Z coordinate of the motion</summary>
+    </member>
+    <member name="T:CustomACEAPI.MainWindow.IndexPage">
+      <summary>Class to handle landing page of the application serer</summary>
+    </member>
+    <member name="M:CustomACEAPI.MainWindow.IndexPage.#ctor">
+      <summary>Endpoint for the landing page</summary>
+      <returns>
+        <c>void</c>
+      </returns>
+    </member>
+    <member name="T:CustomACEAPI.MainWindow.InfoAPI">
+      <summary>Class to handle System info GET requests</summary>
+    </member>
+    <member name="M:CustomACEAPI.MainWindow.InfoAPI.#ctor">
+      <summary>API endpoint to handle all GET requests aimed at getting information regarding the current status of the system.</summary>
+      <returns>
+        <c>void</c>
+      </returns>
     </member>
     <member name="T:CustomACEAPI.MainWindow.JointMoveAPI">
       <summary>Class to handle JointMove API calls</summary>

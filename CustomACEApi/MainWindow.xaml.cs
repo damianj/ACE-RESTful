@@ -78,7 +78,7 @@ namespace CustomACEAPI
             // Update the status bar with the initial status
             UpdateStatusBar();
 
-            // Configure the nancy server for later use
+            // Configure the NancyFX server for later use
             _nancy = new NancyHost(configuration, new Uri($"{app_config.APIServer}:{app_config.APIPort}/"));
             WriteOutput("Application started successfully...\n-----------------------------------");
         }
@@ -194,7 +194,7 @@ namespace CustomACEAPI
             }));
         }
 
-        /// <summary>Updates the application status bar with how many cartesian moves, joint moves, GET requests, and POST requests have been issued to the server. This only includes requests to the API endpoints.</summary>
+        /// <summary>Updates the application status bar with how many Cartesian Moves, Joint Moves, GET requests, and POST requests have been issued to the server. This only includes requests to the API endpoints.</summary>
         /// <author>Damian Jimenez</author>
         /// <returns><c>void</c></returns>
         public static void UpdateStatusBar()

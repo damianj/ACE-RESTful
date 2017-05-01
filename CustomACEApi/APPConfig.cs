@@ -1,6 +1,6 @@
 ﻿namespace CustomACEAPI
 {
-    /// <summary>Class used to used to house the inromation parsed from config.json</summary>
+    /// <summary>Class used to used to house the information parsed from config.json</summary>
     /// <author>Damian Jimenez</author>
     public class APPConfig
     {
