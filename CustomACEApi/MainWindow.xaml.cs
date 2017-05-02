@@ -3,8 +3,6 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
-using System.Net.Http;
-using System.Threading.Tasks;
 using Ace.Adept.Server.Motion;
 using Ace.Core.Server;
 using Ace.Core.Server.Motion;

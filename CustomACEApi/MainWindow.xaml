@@ -42,9 +42,10 @@
         <StatusBar x:Name="SystemStatusBar" Foreground="White" Grid.Row="3" Grid.ColumnSpan="3" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Grid.Column="1" Background="#FF607D8B">
             <TextBlock Name="SystemStatusBarText" VerticalAlignment="Center" FontFamily="Consolas" FontWeight="Bold" FontSize="11" />
         </StatusBar>
-        <TextBox x:Name="OutputText" Margin="0,10,0,0" TextWrapping="Wrap" Text="" FontFamily="Consolas" FontWeight="Bold" Grid.ColumnSpan="3" Grid.Row="2" Grid.Column="1" IsReadOnly="True" ScrollViewer.VerticalScrollBarVisibility="Auto" IsReadOnlyCaretVisible="True" Foreground="#FF607D8B"/>
+        <TextBox x:Name="OutputText" Margin="0,10,0,5" TextWrapping="Wrap" Text="" FontFamily="Consolas" FontWeight="Bold" Grid.ColumnSpan="3" Grid.Row="2" Grid.Column="1" IsReadOnly="True" ScrollViewer.VerticalScrollBarVisibility="Auto" IsReadOnlyCaretVisible="True" Foreground="#FF607D8B"/>
         <ComboBox Style="{StaticResource MaterialDesignComboBox}" x:Name="ControllerPathComboBox" Grid.Column="3" VerticalContentAlignment="Center" Margin="25,16,19,14" FontSize="11" FontWeight="Bold" FontFamily="Calibri" Height="24"/>
         <ComboBox Style="{StaticResource MaterialDesignComboBox}" x:Name="RobotPathComboBox" Grid.Column="3" VerticalContentAlignment="Center" Grid.Row="1" FontSize="11" FontWeight="Bold" FontFamily="Calibri" Margin="25,18,19,15" Height="24"/>
         <Button Style="{StaticResource MaterialDesignRaisedButton}" Content="LOAD" Foreground="White" FontSize="22" FontWeight="Bold" Click="Load_ControllerAndRobot" FontFamily="Calibri" BorderBrush="{x:Null}" Height="Auto" Margin="4,4,0,0" Grid.Column="2"/>
+        <Separator Grid.Column="1" Height="1" Margin="0,7,0,0" Grid.Row="2" VerticalAlignment="Top" Grid.ColumnSpan="3" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
     </Grid>
 </Window>
