@@ -13,11 +13,11 @@ This is a C# RESTful API for the Adept ACE environment. This API was developed s
 
 You can quickly test out API endpoints via the PowerShell by starting up Adept ACE, connecting to the robot, and starting the application and clicking 'START'. After these steps you can use the PowerShell command below as a template to test out your API endpoints.
 
- - The command below calls a `CartesianMove` on the robot, other endpoints may take different JSON payloads or none at all. Edit the X, Y, Z, Yaw, Pitch, and Roll with the desired values for the move to be executed.
+ - The command below calls a `CartesianMove` on the robot, other endpoints may take different JSON payloads or none at all. Edit the `X`, `Y`, `Z`, `Yaw`, `Pitch`, and `Roll` with the desired values for the move to be executed.
 ```powershell
 PS > Invoke-WebRequest -UseBasicParsing http://localhost:9001/api/move/cartesian -ContentType "application/json" -Method POST -Body "{ 'Accel': 100, 'Decel': 100, 'Speed': 10, 'StraightMotion': true, 'MotionEnd': 'Blend', 'SCurveProfile': 0, 'X': 0, 'Y': 0, 'Z': 0, 'Yaw': 0, 'Pitch': 0, 'Roll': 0}"
 ```
- - The command below calls a `JointMove` on the robot, other endpoints may take different JSON payloads or none at all. Edit the JointPosition array in the JSON payload with the desired joint positions of the robot after the move.
+ - The command below calls a `JointMove` on the robot, other endpoints may take different JSON payloads or none at all. Edit the `JointPosition` array in the JSON payload with the desired joint positions of the robot after the move.
 ```powershell
 PS > Invoke-WebRequest -UseBasicParsing http://localhost:9001/api/move/joints -ContentType "application/json" -Method POST -Body "{ 'Accel': 100, 'Decel': 100, 'Speed': 10, 'StraightMotion': true, 'MotionEnd': 'Blend', 'SCurveProfile': 0, 'JointPosition': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]}"
 ```
