@@ -124,11 +124,11 @@ namespace CustomACEAPI
                         if (val > range)
                         {
 
-                            color = 0;
+                            color = 255;
                         }
                         else if (val == 0)
                         {
-                            color = 200;
+                            color = 0;
                         }
                         else if (val < -range)
                         {
@@ -150,7 +150,7 @@ namespace CustomACEAPI
                     }
                 }
                 Console.WriteLine("Number of negtive values: {0}", negCount);
-                bitmap.Save("c:\\Users\\Senior Design\\Documents\\test1.bmp", ImageFormat.Bmp);
+                bitmap.Save("test1.bmp", ImageFormat.Bmp);
                 Console.WriteLine("Image Aquired");
             }
         }

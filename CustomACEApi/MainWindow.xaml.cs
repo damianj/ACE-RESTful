@@ -45,6 +45,11 @@ namespace CustomACEAPI
         /// <returns><c>void</c></returns>
         public MainWindow()
         {
+            cameraInst camera = new cameraInst();
+            camera.start_camera(100);
+            camera.config_reader();
+            camera.process_frame();
+            camera.end_camera();
             // Read the settings in the config file and store these for later use in setting up and connecting to the servers
             using (StreamReader reader = new StreamReader("../../../config.json"))
             {
