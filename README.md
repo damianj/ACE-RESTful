@@ -11,7 +11,7 @@ This is a C# RESTful API for the Adept ACE environment. This API was developed s
 
 ### Testing
 
-You can quickly test out API endpoints via the PowerShell by starting up Adept ACE, connecting to the robot, and starting the application and clicking 'START'. After these steps you can use the PowerShell command below as a template to test out your API endpoints.
+You can quickly test out API endpoints via the PowerShell by starting up Adept ACE, connecting to the robot, and starting the application and clicking `START`. After these steps you can use the PowerShell command below as a template to test out your API endpoints.
 
  - The command below calls a `CartesianMove` on the robot, other endpoints may take different JSON payloads or none at all. Edit the `X`, `Y`, `Z`, `Yaw`, `Pitch`, and `Roll` with the desired values for the move to be executed.
 ```powershell
