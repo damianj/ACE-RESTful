@@ -253,7 +253,7 @@ namespace CustomACEAPI
                     string is_robot_busy = _ROBOT_BUSY.ToString().ToLower();
                     string joint_string = String.Join(",", _ROBOT_JOINTS.Select(p => p.ToString()).ToArray());
                     string jsonString = $"{{ ace_server_url\": \"{app_config.ACEServer}\", " +
-                                        $"\"ace_server_por\": {app_config.ACEPort}, " +
+                                        $"\"ace_server_port\": {app_config.ACEPort}, " +
                                         $"\"api_server_url\": \"{app_config.APIServer}\", " +
                                         $"\"api_server_port\": {app_config.APIPort}, " +
                                         $"\"controller\": \"{_CURRENT_CONTROLLER}\", " +
