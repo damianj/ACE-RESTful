@@ -2,7 +2,7 @@
 
 This is a C# RESTful API for the Adept ACE environment. This API was developed specifically to control a ViperS650 robot, but could be easily extended to control other robots.
 
-  - Install a licensed version of Adept ACE 3.7 and start up Adept ACE
+  - Install [Adept ACE 4.X](https://robotics.omron.com/browse-documents/?dir_id=8) and start up Adept ACE
   - Connect to the robot within Adept ACE and make sure the robot is powered on
   - Build the project in Visual Studio and run the application
   - The application gui will pop-up and once you click `START` it will start listening on `localhost:9001`
