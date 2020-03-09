@@ -12,6 +12,10 @@ This is a C# RESTful API for the Adept ACE environment. This API was developed s
   - See the usage documentation for available API endpoints and how to use them
   - Aside from being well-commented the code has HTML documentation available (more technical than the usage documentation), it is accessible by navigating to the `Help` folder of this repo and opening `index.html` in your browser of choice.
 
+### GUI
+
+![Adept-ACE-Web-API-GUI](./gui.png)
+
 ### Testing
 
 You can quickly test out API endpoints via the PowerShell by starting up Adept ACE, connecting to the robot, and starting the application and clicking `START`. After these steps you can use the PowerShell command below as a template to test out your API endpoints.
