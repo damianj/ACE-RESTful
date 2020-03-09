@@ -1,6 +1,6 @@
 # [Adept ACE Custom API]
 
-This is a C# RESTful API for the Adept ACE environment. This API was developed specifically to control a ViperS650 robot, but could be easily extended to control other robots. The goal of this project was to create a web API that would provide easy access to command and move the robot arm via standards HTTP requests to enable programming via a LabView program.
+This is a C# RESTful API for the Adept ACE environment. This API was developed specifically to control a ViperS650 robot, but could be easily extended to control other robots. The goal of this project was to create a web API that would provide easy access to command and move the robot arm via standard HTTP requests. The initial purpose was to enable programming via a LabView program, but extends to anything that can issue standards HTTP GET and POST requests (e.g., JavaScript, Python, etc.).
 
   - Install [Adept ACE 3.8.100](https://robotics.omron.com/browse-documents/?dir_id=8) and start up Adept ACE
   - Connect to the robot within Adept ACE and make sure the robot is powered on
