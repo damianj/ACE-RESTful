@@ -5,7 +5,7 @@ This is a C# RESTful API for the Adept ACE environment. This API was developed s
   - Install [Adept ACE 3.8.100](https://robotics.omron.com/browse-documents/?dir_id=8)
   - Start Adept Ace in as a server ([video guide](https://youtu.be/j9YGoNODSwQ?t=124))
     - Use `server=ace@43434` as show in the video.
-    - If you are trying to test it out without a robot, you can start a client only instance of Adept Ace by following the same steps for starting it as a server except that the string that is appeneded to the end is `client` not `server=ace@43434`. Then you can check `Open in Emulation Mode` and create a workspace of load the one provided in this repo (`ACE_Workspace.awp`).
+    - If you are trying to test it out without a robot, you can start a client only instance of Adept Ace by following the same steps for starting it as a server except that the string that is appeneded to the end is `client` not `server=ace@43434`. Then you can check `Open in Emulation Mode` and create a workspace or load the one provided in this repo (`ACE_Workspace.awp`).
   - Connect to the robot within Adept ACE and make sure the robot is powered on
   - Download the latest [release](https://github.com/damianj/Adept-ACE-Web-API/releases) or build the project in Visual Studio, and run the application
   - The application gui will pop-up and once you click `START` it will start listening on `localhost:9001`
