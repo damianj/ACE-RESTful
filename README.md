@@ -1,4 +1,4 @@
-# [Adept ACE Custom API]
+# [Adept ACE Web API]
 
 This is a C# RESTful API for the Adept ACE environment. This API was developed specifically to control a ViperS650 robot, but could be easily extended to control other robots. The goal of this project was to create a web API that would provide easy access to command and move the robot arm via standard HTTP requests. The initial purpose was to enable programming via a LabView program, but extends to anything that can issue standards HTTP GET and POST requests (e.g., JavaScript, Python, etc.).
 
