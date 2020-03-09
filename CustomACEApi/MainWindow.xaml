@@ -13,7 +13,7 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         mc:Ignorable="d"
-        Title="Adept ACE API Server" Height="400" Width="700" MinHeight="200" MinWidth="350">
+        Title="Adept ACE - Web API Server Manager" Height="400" Width="700" MinHeight="200" MinWidth="350">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -23,29 +23,32 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-    <Grid>
+    <Grid Background="#FF002B36">
         <Grid.RowDefinitions>
             <RowDefinition Height="54"/>
-            <RowDefinition Height="57"/>
+            <RowDefinition Height="54"/>
+            <RowDefinition Height="54"/>
             <RowDefinition/>
             <RowDefinition Height="17"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10" />
-            <ColumnDefinition Width="94"/>
-            <ColumnDefinition Width="94"/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
             <ColumnDefinition/>
             <ColumnDefinition Width="10"/>
         </Grid.ColumnDefinitions>
-        <Button Style="{StaticResource MaterialDesignRaisedButton}" Content="START" FontWeight="Bold" Foreground="White" Click="Start_APP" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="22" FontFamily="Calibri" BorderBrush="{x:Null}" Height="Auto" Margin="0,4,4,0" Grid.Column="1"/>
-        <Button Style="{StaticResource MaterialDesignRaisedButton}" Content="STOP" FontWeight="Bold" FontSize="36" Foreground="White" Click="Stop_APP" VerticalContentAlignment="Center" Grid.Row="1" FontFamily="Calibri" IsCancel="True" HorizontalContentAlignment="Center" BorderBrush="{x:Null}" Height="Auto" Margin="0,6,0,1" Grid.ColumnSpan="2" Grid.Column="1"/>
-        <StatusBar x:Name="SystemStatusBar" Foreground="White" Grid.Row="3" Grid.ColumnSpan="3" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Grid.Column="1" Background="#FF607D8B">
+        <Button Style="{StaticResource MaterialDesignRaisedButton}" Content="START SERVER" FontWeight="Bold" Foreground="White" Click="Start_APP" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" FontFamily="Segoe UI Black" BorderBrush="#FF0C2D3E" Height="Auto" Grid.Column="2" Background="#FF586E75" Grid.Row="2" Margin="2,4"/>
+        <Button Style="{StaticResource MaterialDesignRaisedButton}" Content="STOP SERVER" FontWeight="Bold" FontSize="16" Foreground="White" Click="Stop_APP" VerticalContentAlignment="Center" Grid.Row="2" FontFamily="Segoe UI Black" IsCancel="True" HorizontalContentAlignment="Center" BorderBrush="#FF0C2D3E" Height="Auto" Margin="4,4,0,4" Grid.Column="3" Background="#FF586E75"/>
+        <StatusBar x:Name="SystemStatusBar" Foreground="#FF002B36" Grid.Row="4" Grid.ColumnSpan="5" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Background="#FFFDF6E3" Margin="0,1,0,0">
             <TextBlock Name="SystemStatusBarText" VerticalAlignment="Center" FontFamily="Consolas" FontWeight="Bold" FontSize="11" />
         </StatusBar>
-        <TextBox x:Name="OutputText" Margin="0,10,0,5" TextWrapping="Wrap" Text="" FontFamily="Consolas" FontWeight="Bold" Grid.ColumnSpan="3" Grid.Row="2" Grid.Column="1" IsReadOnly="True" ScrollViewer.VerticalScrollBarVisibility="Auto" IsReadOnlyCaretVisible="True" Foreground="#FF607D8B"/>
-        <ComboBox Style="{StaticResource MaterialDesignComboBox}" x:Name="ControllerPathComboBox" Grid.Column="3" VerticalContentAlignment="Center" Margin="25,15,19,15" FontSize="11" FontWeight="Bold" FontFamily="Calibri" Height="24"/>
-        <ComboBox Style="{StaticResource MaterialDesignComboBox}" x:Name="RobotPathComboBox" Grid.Column="3" VerticalContentAlignment="Center" Grid.Row="1" FontSize="11" FontWeight="Bold" FontFamily="Calibri" Margin="25,18,19,15" Height="24"/>
-        <Button Style="{StaticResource MaterialDesignRaisedButton}" Content="LOAD" Foreground="White" FontSize="22" FontWeight="Bold" Click="Load_ControllerAndRobot" FontFamily="Calibri" BorderBrush="{x:Null}" Height="Auto" Margin="4,4,0,0" Grid.Column="2"/>
-        <Separator Grid.Column="1" Height="1" Margin="0,7,0,0" Grid.Row="2" VerticalAlignment="Top" Grid.ColumnSpan="3" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+        <TextBox x:Name="OutputText" Margin="0" TextWrapping="Wrap" Text="" FontFamily="Consolas" FontWeight="Bold" Grid.ColumnSpan="3" Grid.Row="3" Grid.Column="1" IsReadOnly="True" ScrollViewer.VerticalScrollBarVisibility="Auto" IsReadOnlyCaretVisible="True" Foreground="#FFFDF6E3" Background="#00000000"/>
+        <ComboBox Style="{StaticResource MaterialDesignComboBox}" x:Name="ControllerPathComboBox" Grid.Column="1" VerticalContentAlignment="Center" FontSize="11" FontWeight="Bold" FontFamily="Calibri" Grid.ColumnSpan="3" Margin="0,0,0,4" Padding="95,0,0,0" VerticalAlignment="Stretch" BorderBrush="#FFFDF6E3" Foreground="#FFFDF6E3"/>
+        <ComboBox Style="{StaticResource MaterialDesignComboBox}" x:Name="RobotPathComboBox" VerticalContentAlignment="Center" FontSize="11" FontWeight="Bold" FontFamily="Calibri" Grid.ColumnSpan="3" Grid.Row="1" Grid.Column="1" Margin="0,4,0,0" Padding="95,0,0,0" VerticalAlignment="Stretch" BorderBrush="#FFFDF6E3" Foreground="#FFFDF6E3"/>
+        <Label Style="{StaticResource MaterialDesignLabel}" Content="CONTROLLERS" Foreground="#FF002B36" Background="#FFFDF6E3" Grid.Column="1" Margin="0" FontFamily="Segoe UI Black" VerticalAlignment="Center" HorizontalAlignment="Left" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="10" Width="85"/>
+        <Label Style="{StaticResource MaterialDesignLabel}" Content="Robots" Foreground="#FF002B36" Background="#FFFDF6E3" Grid.Column="1" Margin="0" FontFamily="Segoe UI Black" VerticalAlignment="Center" HorizontalAlignment="Left" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="10" Grid.Row="1" Width="85"/>
+        <Button Style="{StaticResource MaterialDesignRaisedButton}" Content="LOAD CONTROLLER" Foreground="White" FontSize="16" FontWeight="Bold" Click="Load_ControllerAndRobot" FontFamily="Segoe UI Black" BorderBrush="#FF0C2D3E" Height="Auto" Margin="0,4,4,4" Grid.Column="1" Background="#FF586E75" Grid.Row="2"/>
+        <Separator Height="4" Margin="0" Grid.Row="3" VerticalAlignment="Top" Grid.ColumnSpan="5" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Background="#FFFDF6E3"/>
     </Grid>
 </Window>

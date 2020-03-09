@@ -51,7 +51,7 @@ namespace CustomACEAPI
             //camera.process_frame();
             //camera.StopCamera();
             // Read the settings in the config file and store these for later use in setting up and connecting to the servers
-            using (StreamReader reader = new StreamReader("../../../config.json"))
+            using (StreamReader reader = new StreamReader("config.json"))
             {
                 string json = reader.ReadToEnd();
                 app_config = JsonConvert.DeserializeObject<APPConfig>(json);
@@ -83,7 +83,21 @@ namespace CustomACEAPI
 
             // Configure the NancyFX server for later use
             _nancy = new NancyHost(configuration, new Uri($"{app_config.APIServer}:{app_config.APIPort}/"));
-            WriteOutput("Application started successfully...\n-----------------------------------");
+            WriteOutput("Application started successfully...\n-----------------------------------\n");
+
+            // Only do all this once, when we have just started the application
+            if (!adept_ace.Connected)
+            {
+                // Get the available Controllers and Robots by probing the server and list them in the GUI
+                ObservableCollection<string>[] controllers_and_robots;
+
+                controllers_and_robots = adept_ace.ConnectToServer(app_config.ACEServer, app_config.ACEPort, app_config.ACEName, app_config.ACECallbackPort);
+                controllers = controllers_and_robots[0];
+                robots = controllers_and_robots[1];
+
+                ControllerPathComboBox.ItemsSource = controllers;
+                RobotPathComboBox.ItemsSource = robots;
+            }
         }
 
         /// <summary>Starts the NancyFX server to allow it to start listening for requests on the host:port specified in config.json</summary>
@@ -95,44 +109,25 @@ namespace CustomACEAPI
         {
             try
             {
-                // Only do all this once, when we have just started the application
-                if (!adept_ace.Connected)
-                {
-                    // Get the available Controllers and Robots by probing the server and list them in the GUI
-                    ObservableCollection<string>[] controllers_and_robots;
-
-                    controllers_and_robots = adept_ace.ConnectToServer(app_config.ACEServer, app_config.ACEPort, app_config.ACEName, app_config.ACECallbackPort);
-                    controllers = controllers_and_robots[0];
-                    robots = controllers_and_robots[1];
-
-                    ControllerPathComboBox.ItemsSource = controllers;
-                    RobotPathComboBox.ItemsSource = robots;
-                }
-                // If we are already connected let the user know and skip the previous step
-                else
-                {
-                    WriteOutput($"Already connected to the ACE server on: {app_config.ACEServer}:{app_config.ACEPort}/\n");
-                }
-
                 // If the API server isn't already on then start it
                 if (!_API_SERVER_ON)
                 {
                     // Start the HTTP server on the host:port specified in config.json
                     _nancy.Start();
-                    WriteOutput("Successfully started the HTTP server.\n------------------------------------\n");
-                    WriteOutput($"Listening on: {app_config.APIServer}:{app_config.APIPort}/\n");
+                    WriteOutput($"Successfully started the HTTP server. Listening on:\n\thttp://{app_config.APIServer}:{ app_config.APIPort}/\n");
+
                     _API_SERVER_ON = true;
                 }
                 // Else let the user know and skip trying to turn on the API server
                 else
                 {
-                    WriteOutput($"The API server is already on and listening on: {app_config.APIServer}:{app_config.APIPort}/\n");
+                    WriteOutput($"The API server is already on and listening on:\n\t{app_config.APIServer}:{app_config.APIPort}/\n");
                 }
 
             }
             catch(Exception ex)
             {
-                WriteOutput($"ERROR: Unable to connect to start the HTTP server.\n{ex.Message}\n");
+                WriteOutput($"ERROR: Unable to connect to start the HTTP server.\n\t{ex.Message}\n");
             }
         }
 
@@ -156,7 +151,7 @@ namespace CustomACEAPI
 
                     // Stop the HTTP Server
                     _nancy.Stop();
-                    WriteOutput("Successfully stopped the HTTP server.\n------------------------------------\n");
+                    WriteOutput("Successfully stopped the HTTP server.\n");
                     _API_SERVER_ON = false;
                 }
                 // Else if the API server is already off let the user know and skip doing so
@@ -167,7 +162,7 @@ namespace CustomACEAPI
             }
             catch(Exception ex)
             {
-                WriteOutput($"ERROR: Unable to stop the HTTP server properly, or it has not been started.\n{ex.Message}\n");
+                WriteOutput($"ERROR: Unable to stop the HTTP server properly, or it has not been started.\n\t{ex.Message}\n");
             }
 
         }
@@ -248,8 +243,8 @@ namespace CustomACEAPI
                 {
                     _GET_REQUESTS += 1;
                     UpdateStatusBar();
-
                     GetRobotJoints();
+
                     string is_robot_busy = _ROBOT_BUSY.ToString().ToLower();
                     string joint_string = String.Join(",", _ROBOT_JOINTS.Select(p => p.ToString()).ToArray());
                     string jsonString = $"{{ ace_server_url\": \"{app_config.ACEServer}\", " +
@@ -260,14 +255,14 @@ namespace CustomACEAPI
                                         $"\"robot\": \"{_CURRENT_ROBOT}\", " +
                                         $"\"robot_busy\": {is_robot_busy}, " +
                                         $"\"robot_joints\": {joint_string} }}";
-
                     byte[] jsonBytes = Encoding.UTF8.GetBytes(jsonString);
+                    WriteOutput($"System Info:\n\t{jsonString}\n");
 
                     return new Response()
                     {
                         StatusCode = HttpStatusCode.OK,
                         ContentType = "application/json",
-                        ReasonPhrase = "POST requests are not supported by this endpoint, use a GET request instead.",
+                        ReasonPhrase = "GET request accepted for endpoint [/api/system/info].",
                         Headers = new Dictionary<string, string>()
                         {
                             {
@@ -284,15 +279,15 @@ namespace CustomACEAPI
                     UpdateStatusBar();
 
                     string is_robot_busy = _ROBOT_BUSY.ToString().ToLower();
-                    //WriteOutput($"Robot busy?: {is_robot_busy}");
                     string jsonString = $"{{ \"robot_busy\": {is_robot_busy} }}";
                     byte[] jsonBytes = Encoding.UTF8.GetBytes(jsonString);
+                    WriteOutput($"Is Robot busy?:\n\t{is_robot_busy}\n");
 
                     return new Response()
                     {
                         StatusCode = HttpStatusCode.OK,
                         ContentType = "application/json",
-                        ReasonPhrase = "POST requests are not supported by this endpoint, use a GET request instead.",
+                        ReasonPhrase = "GET request accepted for endpoint [/api/system/robot/busy].",
                         Headers = new Dictionary<string, string>()
                         {
                             {
@@ -307,19 +302,18 @@ namespace CustomACEAPI
                 {
                     _GET_REQUESTS += 1;
                     UpdateStatusBar();
-
                     GetRobotJoints();
-                    string joint_string = String.Join(",", _ROBOT_JOINTS.Select(p => p.ToString()).ToArray());
-                    //WriteOutput($"Current joint positions: {joint_string}");
-                    string jsonString = $"{{ \"robot_joints\": [{joint_string}] }}";
 
+                    string joint_string = String.Join(",", _ROBOT_JOINTS.Select(p => p.ToString()).ToArray());
+                    string jsonString = $"{{ \"robot_joints\": [{joint_string}] }}";
                     byte[] jsonBytes = Encoding.UTF8.GetBytes(jsonString);
+                    WriteOutput($"Current joint positions:\n\t{joint_string}\n");
 
                     return new Response()
                     {
                         StatusCode = HttpStatusCode.OK,
                         ContentType = "application/json",
-                        ReasonPhrase = "POST requests are not supported by this endpoint, use a GET request instead.",
+                        ReasonPhrase = "GET request accepted for endpoint [/api/system/robot/joints].",
                         Headers = new Dictionary<string, string>()
                         {
                             {
@@ -334,13 +328,13 @@ namespace CustomACEAPI
                 {
                     _POST_REQUESTS += 1;
                     UpdateStatusBar();
-
                     WriteOutput($"POST requests not supported by /api/info/\n");
+
                     return new Response()
                     {
                         StatusCode = HttpStatusCode.BadRequest,
                         ContentType = "application/json",
-                        ReasonPhrase = "POST requests are not supported by this endpoint, use a GET request instead.",
+                        ReasonPhrase = "POST requests are not supported by this endpoint, please use a GET request instead.",
                         Headers = new Dictionary<string, string>()
                         {
                             {
@@ -410,7 +404,7 @@ namespace CustomACEAPI
                     {
                         StatusCode = HttpStatusCode.BadRequest,
                         ContentType = "application/json",
-                        ReasonPhrase = "GET requests are not supported by this endpoint, use a POST request instead.",
+                        ReasonPhrase = "GET requests are not supported by this endpoint, please use a POST request instead.",
                         Headers = new Dictionary<string, string>()
                         {
                             {
@@ -615,7 +609,7 @@ namespace CustomACEAPI
                     {
                         StatusCode = HttpStatusCode.BadRequest,
                         ContentType = "application/json",
-                        ReasonPhrase = "GET requests are not supported by this endpoint, use a POST request instead.",
+                        ReasonPhrase = "GET requests are not supported by this endpoint, please use a POST request instead.",
                         Headers = new Dictionary<string, string>()
                         {
                             {

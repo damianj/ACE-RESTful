@@ -55,14 +55,6 @@
     <dependentAssembly>
 	<assemblyIdentity
 	    type="win32"
-	    name="ActiveV\Activev2.sxs"
-	    version="1.0.0.0" />
-    </dependentAssembly>
-  </dependency>
-  <dependency>
-    <dependentAssembly>
-	<assemblyIdentity
-	    type="win32"
 	    name="HexSight\Controls\HSDisplay.sxs"
 	    version="1.0.0.0" />
     </dependentAssembly>

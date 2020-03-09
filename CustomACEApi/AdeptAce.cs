@@ -65,28 +65,44 @@ namespace CustomACEAPI
             {
                 try
                 {
+                    bool noMatches = true;
                     // Set up the server to allow remote connections and connect to the ACE server
                     RemotingUtil.InitializeRemotingSubsystem(true, callbackPort);
                     ace = (IAceServer)RemotingUtil.GetRemoteServerObject(typeof(IAceServer), remotingName, remotingHost, remotingPort);
 
+                    // We don't use WriteOutput, because that method definition isn't available to this class and it isn't required for things to work.
+                    Console.WriteLine($"Connected to the Adept ACE server ({remotingName}) successfully on:\n\t{remotingHost}:{remotingPort}\n");
+
                     // Print out all the controllers that are found and available
+                    Console.Write($"Controllers found:");
                     foreach (IAdeptController controller in ace.Root.Filter(new ObjectTypeFilter(typeof(IAdeptController)), true))
                     {
                         // We don't use WriteOutput, because that method definition isn't available to this class and it isn't required for things to work.
-                        Console.WriteLine($"Found controller: {controller.FullPath}");
+                        Console.WriteLine($"\n\t{controller.FullPath}");
                         controllers.Add(controller.FullPath);
+                        noMatches = false;
                     }
+                    if (noMatches)
+                    {
+                        Console.WriteLine($"\n\tNone");
+                    }
+                    Console.Write($"\n");
 
                     // Print out all the robots that are found connected to the workspace and available
+                    Console.Write($"Robots found:");
                     foreach (IAdeptRobot robot in ace.Root.Filter(new ObjectTypeFilter(typeof(IAdeptRobot)), true))
                     {
                         // We don't use WriteOutput, because that method definition isn't available to this class and it isn't required for things to work.
-                        Console.WriteLine($"Found robot: {robot.FullPath}");
+                        Console.WriteLine($"\n\t{robot.FullPath}");
                         robots.Add(robot.FullPath);
+                        noMatches = false;
                     }
+                    if (noMatches)
+                    {
+                        Console.WriteLine($"\n\tNone");
+                    }
+                    Console.Write($"\n");
 
-                    // We don't use WriteOutput, because that method definition isn't available to this class and it isn't required for things to work.
-                    Console.WriteLine($"Connected to the Adept ACE server successfully on: {remotingHost}:{remotingPort}/\n");
                     ACE_SERVER_ON = true;
                 }
                 catch(Exception e)
@@ -113,7 +129,7 @@ namespace CustomACEAPI
             // If either paths are empty, then let the user know
             if(controllerPath == "" || robotPath == "")
             {
-                Console.WriteLine("\nERROR: Unable to find a valid controller path and/or robot path to load.\n");
+                Console.WriteLine("\nERROR: A valid controller and/or robot path was not selected. Please select them from the dropdown menus and try again.\n");
             }
             else
             {
