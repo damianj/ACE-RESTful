@@ -246,6 +246,23 @@ namespace CustomACEAPI
             }
         }
 
+        /// <summary>Class to handle rending the online Docs</summary>
+        /// <author>Damian Jimenez</author>
+        public class APIDocs : NancyModule
+        {
+            /// <summary>API endpoint to handle all documentation related requests.</summary>
+            /// <author>Damian Jimenez</author>
+            /// <returns><c>void</c></returns>
+            public APIDocs()
+            {
+                StaticConfiguration.DisableErrorTraces = false;
+
+                Get["/api/docs"] = _ => {
+                    return View["docs"];
+                };
+            }
+        }
+
         /// <summary>Class to handle System info GET requests</summary>
         /// <author>Damian Jimenez</author>
         public class InfoAPI : NancyModule
