@@ -83,7 +83,7 @@ namespace CustomACEAPI
 
             // Configure the NancyFX server for later use
             _nancy = new NancyHost(configuration, new Uri($"{app_config.APIServer}:{app_config.APIPort}/"));
-            WriteOutput("\n\n\nApplication started successfully...\n-----------------------------------\n");
+            WriteOutput("\n\nApplication started successfully...\n-----------------------------------\n");
 
             if (!adept_ace.Connected)
             {
@@ -113,7 +113,7 @@ namespace CustomACEAPI
 
         void Clear_Output(object sender, RoutedEventArgs e)
         {
-            OutputText.Text = "\n\n\n";
+            OutputText.Text = "\n\n";
         }
 
         /// <summary>Starts the NancyFX server to allow it to start listening for requests on the host:port specified in config.json</summary>
@@ -130,7 +130,7 @@ namespace CustomACEAPI
                 {
                     // Start the HTTP server on the host:port specified in config.json
                     _nancy.Start();
-                    WriteOutput($"Successfully started the HTTP server. Listening on:\n\thttp://{app_config.APIServer}:{ app_config.APIPort}/\n");
+                    WriteOutput($"Successfully started the HTTP server. Listening on:\n\t{app_config.APIServer}:{ app_config.APIPort}/\n");
 
                     _API_SERVER_ON = true;
                 }
@@ -216,7 +216,7 @@ namespace CustomACEAPI
             // Update the status bar with the current status
             gui_dispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
             {
-                _SYSTEM_STATUS_TEXT.Text = $"Cartesian Moves: {_CARTESIAN_MOVES} | Joint Moves: {_JOINT_MOVES} | GETs: {_GET_REQUESTS} | POSTs: {_POST_REQUESTS}";
+                _SYSTEM_STATUS_TEXT.Text = $"Cartesian Moves: {_CARTESIAN_MOVES,0:D10} | Joint Moves: {_JOINT_MOVES,0:D10} | GETs: {_GET_REQUESTS,0:D10} | POSTs: {_POST_REQUESTS,0:D10}";
             }));
         }
         /// <summary>Writes to the console and the GUI text-box. Necessary to re-route calls from different threads onto the thread the GUI is running on.</summary>
