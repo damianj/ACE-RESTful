@@ -85,19 +85,35 @@ namespace CustomACEAPI
             _nancy = new NancyHost(configuration, new Uri($"{app_config.APIServer}:{app_config.APIPort}/"));
             WriteOutput("Application started successfully...\n-----------------------------------\n");
 
-            // Only do all this once, when we have just started the application
             if (!adept_ace.Connected)
             {
                 // Get the available Controllers and Robots by probing the server and list them in the GUI
                 ObservableCollection<string>[] controllers_and_robots;
 
                 controllers_and_robots = adept_ace.ConnectToServer(app_config.ACEServer, app_config.ACEPort, app_config.ACEName, app_config.ACECallbackPort);
+
                 controllers = controllers_and_robots[0];
                 robots = controllers_and_robots[1];
-
                 ControllerPathComboBox.ItemsSource = controllers;
                 RobotPathComboBox.ItemsSource = robots;
             }
+        }
+
+        void Refresh_CR(object sender, RoutedEventArgs e)
+        {
+            ObservableCollection<string>[] controllers_and_robots;
+
+            controllers_and_robots = adept_ace.ConnectToServer(app_config.ACEServer, app_config.ACEPort, app_config.ACEName, app_config.ACECallbackPort);
+
+            controllers = controllers_and_robots[0];
+            robots = controllers_and_robots[1];
+            ControllerPathComboBox.ItemsSource = controllers;
+            RobotPathComboBox.ItemsSource = robots;
+        }
+
+        void Clear_Output(object sender, RoutedEventArgs e)
+        {
+            OutputText.Text = "";
         }
 
         /// <summary>Starts the NancyFX server to allow it to start listening for requests on the host:port specified in config.json</summary>

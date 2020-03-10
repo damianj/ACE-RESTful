@@ -60,55 +60,53 @@ namespace CustomACEAPI
         /// <returns><c>ObservableCollection&lt;string&gt;[]</c> an array of length 2 containing the controllers and robots that were found. Index 0 is the controllers and index 1 is the robots.</returns>
         public ObservableCollection<string>[] ConnectToServer(string remotingHost, int remotingPort, string remotingName, int callbackPort)
         {
-            // Only connect to the server once, at the beginning
-            if(!ACE_SERVER_ON)
+            bool noMatches = true;
+
+            try
             {
-                try
-                {
-                    bool noMatches = true;
-                    // Set up the server to allow remote connections and connect to the ACE server
-                    RemotingUtil.InitializeRemotingSubsystem(true, callbackPort);
-                    ace = (IAceServer)RemotingUtil.GetRemoteServerObject(typeof(IAceServer), remotingName, remotingHost, remotingPort);
+                controllers.Clear();
+                robots.Clear();
 
+                // Set up the server to allow remote connections and connect to the ACE server
+                RemotingUtil.InitializeRemotingSubsystem(true, callbackPort);
+                ace = (IAceServer)RemotingUtil.GetRemoteServerObject(typeof(IAceServer), remotingName, remotingHost, remotingPort);
+
+                // We don't use WriteOutput, because that method definition isn't available to this class and it isn't required for things to work.
+                Console.WriteLine($"Connecting to the Adept ACE server ({remotingName}) on:\n\t{remotingHost}:{remotingPort}\n");
+
+                // Print out all the controllers that are found and available
+                Console.Write($"Controllers found:");
+                foreach (IAdeptController controller in ace.Root.Filter(new ObjectTypeFilter(typeof(IAdeptController)), true))
+                {
                     // We don't use WriteOutput, because that method definition isn't available to this class and it isn't required for things to work.
-                    Console.WriteLine($"Connected to the Adept ACE server ({remotingName}) successfully on:\n\t{remotingHost}:{remotingPort}\n");
-
-                    // Print out all the controllers that are found and available
-                    Console.Write($"Controllers found:");
-                    foreach (IAdeptController controller in ace.Root.Filter(new ObjectTypeFilter(typeof(IAdeptController)), true))
-                    {
-                        // We don't use WriteOutput, because that method definition isn't available to this class and it isn't required for things to work.
-                        Console.WriteLine($"\n\t{controller.FullPath}");
-                        controllers.Add(controller.FullPath);
-                        noMatches = false;
-                    }
-                    if (noMatches)
-                    {
-                        Console.WriteLine($"\n\tNone");
-                    }
-                    Console.Write($"\n");
-
-                    // Print out all the robots that are found connected to the workspace and available
-                    Console.Write($"Robots found:");
-                    foreach (IAdeptRobot robot in ace.Root.Filter(new ObjectTypeFilter(typeof(IAdeptRobot)), true))
-                    {
-                        // We don't use WriteOutput, because that method definition isn't available to this class and it isn't required for things to work.
-                        Console.WriteLine($"\n\t{robot.FullPath}");
-                        robots.Add(robot.FullPath);
-                        noMatches = false;
-                    }
-                    if (noMatches)
-                    {
-                        Console.WriteLine($"\n\tNone");
-                    }
-                    Console.Write($"\n");
-
-                    ACE_SERVER_ON = true;
+                    Console.WriteLine($"\n\t{controller.FullPath}");
+                    controllers.Add(controller.FullPath);
+                    noMatches = false;
                 }
-                catch(Exception e)
+                if (noMatches)
                 {
-                    Console.WriteLine($"Unable to connect to the Adept ACE server properly.\nERROR: {e.Message}\n");
+                    Console.WriteLine($"\n\tNone");
                 }
+                Console.Write($"\n");
+
+                // Print out all the robots that are found connected to the workspace and available
+                Console.Write($"Robots found:");
+                foreach (IAdeptRobot robot in ace.Root.Filter(new ObjectTypeFilter(typeof(IAdeptRobot)), true))
+                {
+                    // We don't use WriteOutput, because that method definition isn't available to this class and it isn't required for things to work.
+                    Console.WriteLine($"\n\t{robot.FullPath}");
+                    robots.Add(robot.FullPath);
+                    noMatches = false;
+                }
+                if (noMatches)
+                {
+                    Console.WriteLine($"\n\tNone");
+                }
+                Console.Write($"\n");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Unable to connect to the Adept ACE server properly.\nERROR: {e.Message}\n");
             }
 
             ObservableCollection<string>[] res = {controllers, robots};
