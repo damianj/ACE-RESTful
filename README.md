@@ -14,7 +14,7 @@ This is a C# RESTful API for the Adept ACE environment. This API was developed s
 
 ### GUI
 
-![Adept-ACE-Web-API-GUI](./gui.png)
+![Adept-ACE-Web-API-GUI](./gui.gif)
 
 ### Testing
 
