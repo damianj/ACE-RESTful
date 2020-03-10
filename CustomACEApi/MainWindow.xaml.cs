@@ -83,7 +83,7 @@ namespace CustomACEAPI
 
             // Configure the NancyFX server for later use
             _nancy = new NancyHost(configuration, new Uri($"{app_config.APIServer}:{app_config.APIPort}/"));
-            WriteOutput("Application started successfully...\n-----------------------------------\n");
+            WriteOutput("\n\n\nApplication started successfully...\n-----------------------------------\n");
 
             if (!adept_ace.Connected)
             {
@@ -113,7 +113,7 @@ namespace CustomACEAPI
 
         void Clear_Output(object sender, RoutedEventArgs e)
         {
-            OutputText.Text = "";
+            OutputText.Text = "\n\n\n";
         }
 
         /// <summary>Starts the NancyFX server to allow it to start listening for requests on the host:port specified in config.json</summary>

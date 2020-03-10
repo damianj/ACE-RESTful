@@ -50,7 +50,22 @@
         <StatusBar x:Name="SystemStatusBar" Foreground="#FF002B36" Grid.Row="4" Grid.ColumnSpan="6" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Background="#FFFDF6E3" Margin="0,1,0,0">
             <TextBlock Name="SystemStatusBarText" VerticalAlignment="Center" FontFamily="Consolas" FontWeight="Bold" FontSize="11" />
         </StatusBar>
-        <TextBox x:Name="OutputText" Margin="0" TextWrapping="Wrap" Text="" FontFamily="Consolas" FontWeight="Bold" Grid.ColumnSpan="4" Grid.Row="3" Grid.Column="1" IsReadOnly="True" ScrollViewer.VerticalScrollBarVisibility="Auto" IsReadOnlyCaretVisible="True" Foreground="#FFFDF6E3" Background="#00000000"/>
+        <Border BorderThickness="0,3,0,0" CornerRadius="0" Grid.ColumnSpan="6" Grid.Row="3" Background="#FFFDF6E3">
+            <Border.BorderBrush>
+                <VisualBrush>
+                    <VisualBrush.Visual>
+                        <Rectangle StrokeDashArray="1 0" Stroke="#FFFDF6E3" StrokeThickness="5" Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=ActualWidth}" Height="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=ActualHeight}"/>
+                    </VisualBrush.Visual>
+                </VisualBrush>
+            </Border.BorderBrush>
+            <TextBox x:Name="OutputText" Margin="0" TextWrapping="Wrap" Text="" FontFamily="Consolas" FontWeight="Bold" Grid.ColumnSpan="6" Grid.Row="3" Padding="5,0" IsReadOnly="True" ScrollViewer.VerticalScrollBarVisibility="Auto" IsReadOnlyCaretVisible="True" Foreground="#FFFDF6E3" Background="#FF002B36" SelectionBrush="#000078D7" BorderBrush="#FFFDF6E3">
+                <TextBox.Resources>
+                    <SolidColorBrush x:Key="MaterialDesignDivider" Color="#FFFDF6E3" />
+                </TextBox.Resources>
+            </TextBox>
+        </Border>
+        <Label Style="{StaticResource MaterialDesignLabel}" Content="{materialDesign:PackIcon Console}" Foreground="#FF002B36" Background="#FFFDF6E3" Margin="0" FontFamily="Segoe UI Black" VerticalAlignment="Top" HorizontalAlignment="Left" VerticalContentAlignment="Center" FontSize="10" Grid.Row="3" Width="20" Grid.ColumnSpan="6" Padding="0,2" Grid.IsSharedSizeScope="True" HorizontalContentAlignment="Right"/>
+        <Label Style="{StaticResource MaterialDesignLabel}" Content="OUTPUT TEXT" Foreground="#FF002B36" Background="#FFFDF6E3" Margin="10,0,0,0" FontFamily="Segoe UI Black" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10" Grid.Row="3" Width="80" Padding="0" Height="20" VerticalContentAlignment="Center" Grid.Column="1" Grid.ColumnSpan="2" HorizontalContentAlignment="Center"/>
         <ComboBox Style="{StaticResource MaterialDesignComboBox}" x:Name="ControllerPathComboBox" Grid.Column="1" VerticalContentAlignment="Center" FontSize="11" FontWeight="Bold" FontFamily="Calibri" Grid.ColumnSpan="4" Margin="0,0,0,4" Padding="95,0,0,0" VerticalAlignment="Stretch" BorderBrush="#FFFDF6E3" Foreground="#FFFDF6E3"/>
         <ComboBox Style="{StaticResource MaterialDesignComboBox}" x:Name="RobotPathComboBox" VerticalContentAlignment="Center" FontSize="11" FontWeight="Bold" FontFamily="Calibri" Grid.ColumnSpan="4" Grid.Row="1" Grid.Column="1" Margin="0,4,0,0" Padding="95,0,0,0" VerticalAlignment="Stretch" BorderBrush="#FFFDF6E3" Foreground="#FFFDF6E3"/>
         <Border BorderBrush="#FFFDF6E3" BorderThickness="0" CornerRadius="11" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Background="#FFFDF6E3">
@@ -60,6 +75,5 @@
             <Label Style="{StaticResource MaterialDesignLabel}" Content="ROBOT" Foreground="#FF002B36" Background="#00FDF6E3" Grid.Column="1" Margin="0" FontFamily="Segoe UI Black" VerticalAlignment="Center" HorizontalAlignment="Left" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="10" Grid.Row="1" Width="85"/>
         </Border>
         <Button Style="{StaticResource MaterialDesignRaisedButton}" Content="LOAD CONTROLLER" Foreground="White" FontSize="16" FontWeight="Bold" Click="Load_ControllerAndRobot" FontFamily="Segoe UI Black" BorderBrush="#FF0C2D3E" Height="Auto" Margin="2,4" Grid.Column="2" Background="#FF586E75" Grid.Row="2"/>
-        <Separator Height="4" Margin="0" Grid.Row="3" VerticalAlignment="Top" Grid.ColumnSpan="5" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Background="#FFFDF6E3"/>
     </Grid>
 </Window>
