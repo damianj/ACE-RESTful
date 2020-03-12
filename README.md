@@ -10,7 +10,8 @@ This is a C# RESTful API for the Adept ACE environment. This API was developed s
   - Download the latest [release](https://github.com/damianj/Adept-ACE-Web-API/releases) or build the project in Visual Studio, and run the application
   - The application gui will pop-up and once you click `START` it will start listening on `localhost:9001`
   - See the usage documentation for available API endpoints and how to use them
-  - Aside from being well-commented the code has HTML documentation available (more technical than the usage documentation), it is accessible by navigating to the `Help` folder of this repo and opening `index.html` in your browser of choice.
+  - Aside from being well-commented the code has live documentation available which enables testing of the API endpoints. To access it, simply start the api server and navigate to `http://localhost:9001/api/docs/` on a browser of your choice.
+    - To update the docs you'll need to edit `dcos.json` and then run `generate_docs.py` with `python`. It requires you have the `jinja2` package installed. To install it you can simply run `pip install jinja2`.
 
 ### GUI
 
