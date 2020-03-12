@@ -1,0 +1,431 @@
+@Master['base.sshtml']
+
+@Section['PageTitle']
+ACE API Docs
+@EndSection
+
+@Section['Content']
+<div class="ui one column centered grid">
+    <div class="row">
+        <h1 class="api-header">
+            Adept ACE API Docs
+        </h1>
+    </div>
+    <div class="row">
+        <div class="ui styled accordion api">
+            
+            <div class="title active">
+                <i class="dropdown icon"></i>
+                API - v1
+            </div>
+            <div class="content active">
+                <div class="fluid accordion">
+                    
+                    <div class="title">
+                        <i class="dropdown icon"></i>
+                        /api/system/status
+                    </div>
+                    <div class="content">
+                        <p class="transition hidden">
+                            <strong>Methods: </strong>
+                            
+                            <a class="ui tiny orange label">GET</a>
+                            
+                        </p>
+                        <p class="transition hidden">
+                            This endpoint returns relevant information regarding the system status for the user to evaluate.
+                        </p>
+                        
+                        <form class="ui form api-test" action="#">
+                            <div class="field">
+                                <label>Endpoint</label>
+                                <input class="disabled-doc-item endpoint-path" type="text" value="api/system/status" demo-method="GET" disabled>
+                            </div>
+                            
+                            <div class="field">
+                                <label>Response</label>
+                                <textarea class="disabled-doc-item api-response"></textarea>
+                            </div>
+                            <button class="ui button" type="submit">TRY IT</button>
+                        </form>
+                    </div>
+                    
+                    <div class="title">
+                        <i class="dropdown icon"></i>
+                        /api/system/robot/status
+                    </div>
+                    <div class="content">
+                        <p class="transition hidden">
+                            <strong>Methods: </strong>
+                            
+                            <a class="ui tiny orange label">GET</a>
+                            
+                        </p>
+                        <p class="transition hidden">
+                            This endpoint returns the current status of the robot (i.e., whether it's currently busy executing a move or has moves queued up).
+                        </p>
+                        
+                        <form class="ui form api-test" action="#">
+                            <div class="field">
+                                <label>Endpoint</label>
+                                <input class="disabled-doc-item endpoint-path" type="text" value="api/system/robot/status" demo-method="GET" disabled>
+                            </div>
+                            
+                            <div class="field">
+                                <label>Response</label>
+                                <textarea class="disabled-doc-item api-response"></textarea>
+                            </div>
+                            <button class="ui button" type="submit">TRY IT</button>
+                        </form>
+                    </div>
+                    
+                    <div class="title">
+                        <i class="dropdown icon"></i>
+                        /api/system/robot/joints
+                    </div>
+                    <div class="content">
+                        <p class="transition hidden">
+                            <strong>Methods: </strong>
+                            
+                            <a class="ui tiny orange label">GET</a>
+                            
+                        </p>
+                        <p class="transition hidden">
+                            This endpoint returns the current robot's joint values.
+                        </p>
+                        
+                        <form class="ui form api-test" action="#">
+                            <div class="field">
+                                <label>Endpoint</label>
+                                <input class="disabled-doc-item endpoint-path" type="text" value="api/system/robot/joints" demo-method="GET" disabled>
+                            </div>
+                            
+                            <div class="field">
+                                <label>Response</label>
+                                <textarea class="disabled-doc-item api-response"></textarea>
+                            </div>
+                            <button class="ui button" type="submit">TRY IT</button>
+                        </form>
+                    </div>
+                    
+                    <div class="title">
+                        <i class="dropdown icon"></i>
+                        /api/move/cartesian
+                    </div>
+                    <div class="content">
+                        <p class="transition hidden">
+                            <strong>Methods: </strong>
+                            
+                            <a class="ui tiny blue label">POST</a>
+                            
+                        </p>
+                        <p class="transition hidden">
+                            This endpoint executes a cartesian move on a given robot based on user given parameters.
+                        </p>
+                        
+                        <table class="ui very basic unstackable table">
+                            <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Required</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            
+                                <tr>
+                                    <td><a class="ui violet basic label">&lt;Accel&gt;</a></td>
+                                    <td><a class="ui green label">true</a></td>
+                                    <td><a class="ui purple label">integer</a></td>
+                                    <td>Maximum acceleration of the robot when the move is executed.</td>
+                                </tr>
+                            
+                                <tr>
+                                    <td><a class="ui violet basic label">&lt;Decel&gt;</a></td>
+                                    <td><a class="ui green label">true</a></td>
+                                    <td><a class="ui purple label">integer</a></td>
+                                    <td>Maximum deceleration of the robot when the move is executed.</td>
+                                </tr>
+                            
+                                <tr>
+                                    <td><a class="ui violet basic label">&lt;Speed&gt;</a></td>
+                                    <td><a class="ui green label">true</a></td>
+                                    <td><a class="ui purple label">integer</a></td>
+                                    <td>Maximum speed of the robot when the move is executed.</td>
+                                </tr>
+                            
+                                <tr>
+                                    <td><a class="ui violet basic label">&lt;StraightMotion&gt;</a></td>
+                                    <td><a class="ui green label">true</a></td>
+                                    <td><a class="ui purple label">boolean</a></td>
+                                    <td>Determines whether the robot&#39;s motion should be straight or not (i.e., true: straight-line, false: motion will be joint-interpolated).</td>
+                                </tr>
+                            
+                                <tr>
+                                    <td><a class="ui violet basic label">&lt;MotionEnd&gt;</a></td>
+                                    <td><a class="ui green label">true</a></td>
+                                    <td><a class="ui purple label">string</a></td>
+                                    <td>Determines how the motion should finish (i.e., Blend, NoNull, SettleCoarse, or SettleFine).</td>
+                                </tr>
+                            
+                                <tr>
+                                    <td><a class="ui violet basic label">&lt;SCurveProfile&gt;</a></td>
+                                    <td><a class="ui green label">true</a></td>
+                                    <td><a class="ui purple label">integer</a></td>
+                                    <td>Specifies the S-curve trajectory profile index (0-8). An S-curve can smooth the trajectory into an &#34;S&#34; shape by limiting the rate of change of acceleration. Robots with flexible links or drive trains can benefit from S-curves to reduce oscillation.</td>
+                                </tr>
+                            
+                                <tr>
+                                    <td><a class="ui violet basic label">&lt;X&gt;</a></td>
+                                    <td><a class="ui green label">true</a></td>
+                                    <td><a class="ui purple label">double</a></td>
+                                    <td>Specifies the x coordinate of the motion.</td>
+                                </tr>
+                            
+                                <tr>
+                                    <td><a class="ui violet basic label">&lt;Y&gt;</a></td>
+                                    <td><a class="ui green label">true</a></td>
+                                    <td><a class="ui purple label">double</a></td>
+                                    <td>Specifies the y coordinate of the motion.</td>
+                                </tr>
+                            
+                                <tr>
+                                    <td><a class="ui violet basic label">&lt;Z&gt;</a></td>
+                                    <td><a class="ui green label">true</a></td>
+                                    <td><a class="ui purple label">double</a></td>
+                                    <td>Specifies the z coordinate of the motion.</td>
+                                </tr>
+                            
+                                <tr>
+                                    <td><a class="ui violet basic label">&lt;Yaw&gt;</a></td>
+                                    <td><a class="ui green label">true</a></td>
+                                    <td><a class="ui purple label">double</a></td>
+                                    <td>Specifies the yaw coordinate of the motion.</td>
+                                </tr>
+                            
+                                <tr>
+                                    <td><a class="ui violet basic label">&lt;Pitch&gt;</a></td>
+                                    <td><a class="ui green label">true</a></td>
+                                    <td><a class="ui purple label">double</a></td>
+                                    <td>Specifies the pitch coordinate of the motion.</td>
+                                </tr>
+                            
+                                <tr>
+                                    <td><a class="ui violet basic label">&lt;Roll&gt;</a></td>
+                                    <td><a class="ui green label">true</a></td>
+                                    <td><a class="ui purple label">double</a></td>
+                                    <td>Specifies the roll coordinate of the motion.</td>
+                                </tr>
+                            
+                            </tbody>
+                        </table>
+                        
+                        <form class="ui form api-test" action="#">
+                            <div class="field">
+                                <label>Endpoint</label>
+                                <input class="disabled-doc-item endpoint-path" type="text" value="api/move/cartesian" demo-method="POST" disabled>
+                            </div>
+                            
+                            <div class="field">
+                                <label>&lt;Accel&gt;</label>
+                                <input type="text" class="param" name="Accel" placeholder="Max Acceleration" required>
+                            </div>
+                            
+                            <div class="field">
+                                <label>&lt;Decel&gt;</label>
+                                <input type="text" class="param" name="Decel" placeholder="Max Deceleration" required>
+                            </div>
+                            
+                            <div class="field">
+                                <label>&lt;Speed&gt;</label>
+                                <input type="text" class="param" name="Speed" placeholder="Max Speed" required>
+                            </div>
+                            
+                            <div class="field">
+                                <label>&lt;StraightMotion&gt;</label>
+                                <input type="text" class="param" name="StraightMotion" placeholder="Straight Motion" required>
+                            </div>
+                            
+                            <div class="field">
+                                <label>&lt;MotionEnd&gt;</label>
+                                <input type="text" class="param" name="MotionEnd" placeholder="Motion End Type" required>
+                            </div>
+                            
+                            <div class="field">
+                                <label>&lt;SCurveProfile&gt;</label>
+                                <input type="text" class="param" name="SCurveProfile" placeholder="S-Curve Type" required>
+                            </div>
+                            
+                            <div class="field">
+                                <label>&lt;X&gt;</label>
+                                <input type="text" class="param" name="X" placeholder="X Coordinate" required>
+                            </div>
+                            
+                            <div class="field">
+                                <label>&lt;Y&gt;</label>
+                                <input type="text" class="param" name="Y" placeholder="Y Coordinate" required>
+                            </div>
+                            
+                            <div class="field">
+                                <label>&lt;Z&gt;</label>
+                                <input type="text" class="param" name="Z" placeholder="Z Coordinate" required>
+                            </div>
+                            
+                            <div class="field">
+                                <label>&lt;Yaw&gt;</label>
+                                <input type="text" class="param" name="Yaw" placeholder="Yaw Coordinate" required>
+                            </div>
+                            
+                            <div class="field">
+                                <label>&lt;Pitch&gt;</label>
+                                <input type="text" class="param" name="Pitch" placeholder="Pitch Coordinate" required>
+                            </div>
+                            
+                            <div class="field">
+                                <label>&lt;Roll&gt;</label>
+                                <input type="text" class="param" name="Roll" placeholder="Roll Coordinate" required>
+                            </div>
+                            
+                            <div class="field">
+                                <label>Response</label>
+                                <textarea class="disabled-doc-item api-response"></textarea>
+                            </div>
+                            <button class="ui button" type="submit">TRY IT</button>
+                        </form>
+                    </div>
+                    
+                    <div class="title">
+                        <i class="dropdown icon"></i>
+                        /api/move/joints
+                    </div>
+                    <div class="content">
+                        <p class="transition hidden">
+                            <strong>Methods: </strong>
+                            
+                            <a class="ui tiny blue label">POST</a>
+                            
+                        </p>
+                        <p class="transition hidden">
+                            This endpoint executes a joint move on a given robot based on user given parameters.
+                        </p>
+                        
+                        <table class="ui very basic unstackable table">
+                            <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Required</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            
+                                <tr>
+                                    <td><a class="ui violet basic label">&lt;Accel&gt;</a></td>
+                                    <td><a class="ui green label">true</a></td>
+                                    <td><a class="ui purple label">integer</a></td>
+                                    <td>Maximum acceleration of the robot when the move is executed.</td>
+                                </tr>
+                            
+                                <tr>
+                                    <td><a class="ui violet basic label">&lt;Decel&gt;</a></td>
+                                    <td><a class="ui green label">true</a></td>
+                                    <td><a class="ui purple label">integer</a></td>
+                                    <td>Maximum deceleration of the robot when the move is executed.</td>
+                                </tr>
+                            
+                                <tr>
+                                    <td><a class="ui violet basic label">&lt;Speed&gt;</a></td>
+                                    <td><a class="ui green label">true</a></td>
+                                    <td><a class="ui purple label">integer</a></td>
+                                    <td>Maximum speed of the robot when the move is executed.</td>
+                                </tr>
+                            
+                                <tr>
+                                    <td><a class="ui violet basic label">&lt;StraightMotion&gt;</a></td>
+                                    <td><a class="ui green label">true</a></td>
+                                    <td><a class="ui purple label">boolean</a></td>
+                                    <td>Determines whether the robot&#39;s motion should be straight or not (i.e., true: straight-line, false: motion will be joint-interpolated).</td>
+                                </tr>
+                            
+                                <tr>
+                                    <td><a class="ui violet basic label">&lt;MotionEnd&gt;</a></td>
+                                    <td><a class="ui green label">true</a></td>
+                                    <td><a class="ui purple label">string</a></td>
+                                    <td>Determines how the motion should finish (i.e., Blend, NoNull, SettleCoarse, or SettleFine).</td>
+                                </tr>
+                            
+                                <tr>
+                                    <td><a class="ui violet basic label">&lt;SCurveProfile&gt;</a></td>
+                                    <td><a class="ui green label">true</a></td>
+                                    <td><a class="ui purple label">integer</a></td>
+                                    <td>Specifies the S-curve trajectory profile index (0-8). An S-curve can smooth the trajectory into an &#34;S&#34; shape by limiting the rate of change of acceleration. Robots with flexible links or drive trains can benefit from S-curves to reduce oscillation.</td>
+                                </tr>
+                            
+                                <tr>
+                                    <td><a class="ui violet basic label">&lt;JointPosition&gt;</a></td>
+                                    <td><a class="ui green label">true</a></td>
+                                    <td><a class="ui purple label">double array</a></td>
+                                    <td>Specifies the joint values for the move to be executed. The length of the given array depends on how many joints the robot being manipulated has.</td>
+                                </tr>
+                            
+                            </tbody>
+                        </table>
+                        
+                        <form class="ui form api-test" action="#">
+                            <div class="field">
+                                <label>Endpoint</label>
+                                <input class="disabled-doc-item endpoint-path" type="text" value="api/move/joints" demo-method="POST" disabled>
+                            </div>
+                            
+                            <div class="field">
+                                <label>&lt;Accel&gt;</label>
+                                <input type="text" class="param" name="Accel" placeholder="Max Acceleration" required>
+                            </div>
+                            
+                            <div class="field">
+                                <label>&lt;Decel&gt;</label>
+                                <input type="text" class="param" name="Decel" placeholder="Max Deceleration" required>
+                            </div>
+                            
+                            <div class="field">
+                                <label>&lt;Speed&gt;</label>
+                                <input type="text" class="param" name="Speed" placeholder="Max Speed" required>
+                            </div>
+                            
+                            <div class="field">
+                                <label>&lt;StraightMotion&gt;</label>
+                                <input type="text" class="param" name="StraightMotion" placeholder="Straight Motion" required>
+                            </div>
+                            
+                            <div class="field">
+                                <label>&lt;MotionEnd&gt;</label>
+                                <input type="text" class="param" name="MotionEnd" placeholder="Motion End Type" required>
+                            </div>
+                            
+                            <div class="field">
+                                <label>&lt;SCurveProfile&gt;</label>
+                                <input type="text" class="param" name="SCurveProfile" placeholder="S-Curve Type" required>
+                            </div>
+                            
+                            <div class="field">
+                                <label>&lt;JointPosition&gt;</label>
+                                <input type="text" class="param" name="JointPosition" placeholder="Joint Position Array" required>
+                            </div>
+                            
+                            <div class="field">
+                                <label>Response</label>
+                                <textarea class="disabled-doc-item api-response"></textarea>
+                            </div>
+                            <button class="ui button" type="submit">TRY IT</button>
+                        </form>
+                    </div>
+                    
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+@EndSection

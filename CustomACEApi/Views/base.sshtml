@@ -1,0 +1,198 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>@Section['PageTitle'];</title>
+    <link href="https://fonts.googleapis.com/css?family=Fira+Mono:400,500,700|Major+Mono+Display" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastr@2.1.4/build/toastr.min.css">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.rawgit.com/mdehoog/Semantic-UI/6e6d051d47b598ebab05857545f242caf2b4b48c/dist/semantic.min.css" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+    .p-0 {
+        padding: 0 !important;
+    }
+
+    .px-0 {
+        padding-right: 0 !important;
+        padding-left: 0 !important;
+    }
+
+    .py-0 {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+    }
+
+    .m-0 {
+        margin: 0 !important;
+    }
+
+    .mx-0 {
+        margin-right: 0 !important;
+        margin-left: 0 !important;
+    }
+
+    .my-0 {
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+    }
+
+    body {
+        min-width: 820px !important;
+    }
+
+    .base-spacer {
+        margin: 1rem 0 1rem 0;
+    }
+
+    h1.api-header {
+        font-family: 'Fira Mono', monospace;
+        font-size: 4rem;
+        text-align: center;
+        line-height: 64px;
+    }
+
+    h1.api-header a.label {
+        font-size: 0.75em !important;
+        width: 800px !important;
+        padding: 0.2em 0.2em;
+        margin: 0;
+    }
+
+    div.api.accordion {
+        text-align: left;
+        min-width: 800px !important;
+    }
+
+    div.api.accordion input, div.api.accordion textarea {
+        font-weight: 500 !important;
+        font-family: 'Fira Mono', monospace !important;
+    }
+
+    form.api-test button {
+        width: 100%;
+        font-family: 'Major Mono Display', monospace !important;
+        font-size: 1.2rem !important;
+        text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.67) !important;
+        border: 1px dashed #222 !important;
+        transition: all 0.25s ease-in !important;
+    }
+
+    form.api-test button:hover {
+        color: rgb(245, 128, 38) !important;
+        background-color: rgb(0, 68, 124) !important;
+        border-color: rgb(245, 128, 38) !important;
+        transition: all 0.25s ease-out !important;
+    }
+
+    input.disabled-doc-item, textarea.disabled-doc-item {
+        color: rgb(0, 68, 124) !important;
+        border-color: rgb(245, 128, 38) !important;
+        opacity: 100 !important;
+    }
+
+    textarea {
+        cursor: auto;
+    }
+    </style>
+</head>
+<body>
+    <main class="content centered">
+        <div class="base-spacer"></div>
+        @Section['Content'];
+        <div class="base-spacer"></div>
+    </main>
+    <script defer src="https://use.fontawesome.com/releases/v5.8.1/js/all.js" integrity="sha384-g5uSoOSBd7KkhAMlnQILrecXvzst9TdC09/VM+pjDTCM+1il8RHz5fKANTFFb+gQ" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/toastr@2.1.4/build/toastr.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+    <script src="https://cdn.rawgit.com/mdehoog/Semantic-UI/6e6d051d47b598ebab05857545f242caf2b4b48c/dist/semantic.min.js"></script>
+    <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
+    <script type="text/javascript">
+    function preventInput(input_field, input_actions=null) {
+        input_actions = input_actions ? input_actions : "keydown paste cut dragenter dragover drop";
+
+        input_field.on(input_actions, function(e) {
+            e.preventDefault();
+        });
+    }
+
+    $(document).ready(function () {
+        $('.ui.accordion').accordion({exclusive: false});
+        preventInput($("textarea.api-response"));
+
+        $("form.api-test").submit(function(e) {
+            e.preventDefault();
+            let form = $(this);
+            let endpoint_path_input = form.find(".endpoint-path");
+            let endpoint_path = endpoint_path_input.val();
+
+            if (endpoint_path_input.attr("demo-method") === "GET") {
+                form.find(".param").each(function(index, value) {
+                    let current_param = $(value);
+                    
+                    endpoint_path = endpoint_path.replace("<" + current_param.attr("name") + ">", encodeURI(current_param.val()));
+                });
+
+                $.ajax({
+                    type: endpoint_path_input.attr("demo-method"),
+                    url: "../../" + endpoint_path,
+                    dataType: "json",
+                    statusCode: {
+                        401: function(data) {
+                            form.find("textarea.api-response").val(JSON.stringify(data, null, 2));
+                        }
+                    },
+                    success: function (data, status, jqxhr) {
+                        data.url = endpoint_path;
+                        form.find("textarea.api-response").val(JSON.stringify(data, null, 2));
+                    },
+                    error: function (jqxhr, status, err) {
+                        console.log(jqxhr);
+                        console.log(status);
+                        console.log(err);
+                    }
+                });
+            }
+            else {
+                let payload = {}
+
+                form.find(".param").each(function(index, value) {
+                    let current_param = $(value);
+
+                    if(current_param.attr("name") === "JointPosition") {
+                        payload[current_param.attr("name")] = current_param.val().replace(/^\(|\{|\[|\]|\}|\)$/gm,'').split`,`.map(x=>parseFloat(x));
+                    }
+                    else {
+                        payload[current_param.attr("name")] = current_param.val();
+                    }
+                });
+
+                $.ajax({
+                    type: endpoint_path_input.attr("demo-method"),
+                    contentType: 'application/json;charset=UTF-8',
+                    data: JSON.stringify(payload, null, "\t"),
+                    url: "../../" + endpoint_path,
+                    dataType: "json",
+                    statusCode: {
+                        401: function(data) {
+                            form.find("textarea.api-response").val(JSON.stringify(data, null, 2));
+                        }
+                    },
+                    success: function (data, status, jqxhr) {
+                        data.url = endpoint_path;
+                        form.find("textarea.api-response").val(JSON.stringify(data, null, 2));
+                    },
+                    error: function (jqxhr, status, err) {
+                        console.log(jqxhr);
+                        console.log(status);
+                        console.log(err);
+                    }
+                });
+            }
+        });
+    });
+    </script>
+</body>
+</html>

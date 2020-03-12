@@ -10,6 +10,7 @@ using Nancy;
 using Nancy.Hosting.Self;
 using Newtonsoft.Json;
 using System.Threading;
+using System.Threading.Tasks;
 using System.IO;
 using System.Windows.Threading;
 using System.Collections.ObjectModel;
@@ -53,8 +54,8 @@ namespace CustomACEAPI
             // Read the settings in the config file and store these for later use in setting up and connecting to the servers
             using (StreamReader reader = new StreamReader("config.json"))
             {
-                string json = reader.ReadToEnd();
-                app_config = JsonConvert.DeserializeObject<APPConfig>(json);
+                string config_json = reader.ReadToEnd();
+                app_config = JsonConvert.DeserializeObject<APPConfig>(config_json);
             }
 
             // Initialize GUI elements and set up some things to get the interface ready
@@ -240,9 +241,10 @@ namespace CustomACEAPI
             /// <returns><c>void</c></returns>
             public IndexPage()
             {
-                Get["/"] = _ => View["index"];
-
-                Post["/"] = _ => View["index"];
+                Get["/", true] = async (x, ct) =>
+                {
+                    return await Task.Run(() => View["index"]);
+                };
             }
         }
 
@@ -256,23 +258,24 @@ namespace CustomACEAPI
             public APIDocs()
             {
                 StaticConfiguration.DisableErrorTraces = false;
-
-                Get["/api/docs"] = _ => {
-                    return View["docs"];
+                
+                Get["/api/docs", true] = async (x, ct) =>
+                {
+                    return await Task.Run(() => View["docs"]);
                 };
             }
         }
 
         /// <summary>Class to handle System info GET requests</summary>
         /// <author>Damian Jimenez</author>
-        public class InfoAPI : NancyModule
+        public class SystemStatusAPI : NancyModule
         {
             /// <summary>API endpoint to handle all GET requests aimed at getting information regarding the current status of the system.</summary>
             /// <author>Damian Jimenez</author>
             /// <returns><c>void</c></returns>
-            public InfoAPI()
+            public SystemStatusAPI()
             {
-                Get["/api/system/info"] = _ =>
+                Get["/api/system/status", true] = async (x, ct) =>
                 {
                     _GET_REQUESTS += 1;
                     UpdateStatusBar();
@@ -280,22 +283,22 @@ namespace CustomACEAPI
 
                     string is_robot_busy = _ROBOT_BUSY.ToString().ToLower();
                     string joint_string = String.Join(",", _ROBOT_JOINTS.Select(p => p.ToString()).ToArray());
-                    string jsonString = $"{{ ace_server_url\": \"{app_config.ACEServer}\", " +
+                    string jsonString = $"{{\"ace_server_url\": \"{app_config.ACEServer}\", " +
                                         $"\"ace_server_port\": {app_config.ACEPort}, " +
                                         $"\"api_server_url\": \"{app_config.APIServer}\", " +
                                         $"\"api_server_port\": {app_config.APIPort}, " +
                                         $"\"controller\": \"{_CURRENT_CONTROLLER}\", " +
                                         $"\"robot\": \"{_CURRENT_ROBOT}\", " +
                                         $"\"robot_busy\": {is_robot_busy}, " +
-                                        $"\"robot_joints\": {joint_string} }}";
+                                        $"\"robot_joints\": [{joint_string}]}}";
                     byte[] jsonBytes = Encoding.UTF8.GetBytes(jsonString);
                     WriteOutput($"System Info:\n\t{jsonString}\n");
 
-                    return new Response()
+                    return await Task.Run(() => new Response()
                     {
                         StatusCode = HttpStatusCode.OK,
                         ContentType = "application/json",
-                        ReasonPhrase = "GET request accepted for endpoint [/api/system/info].",
+                        ReasonPhrase = "GET request accepted for endpoint [/api/system/status].",
                         Headers = new Dictionary<string, string>()
                         {
                             {
@@ -303,20 +306,20 @@ namespace CustomACEAPI
                             }
                         },
                         Contents = c => c.Write(jsonBytes, 0, jsonBytes.Length)
-                    };
+                    });
                 };
 
-                Get["/api/system/robot/busy"] = _ =>
+                Get["/api/system/robot/status", true] = async (x, ct) =>
                 {
                     _GET_REQUESTS += 1;
                     UpdateStatusBar();
 
                     string is_robot_busy = _ROBOT_BUSY.ToString().ToLower();
-                    string jsonString = $"{{ \"robot_busy\": {is_robot_busy} }}";
+                    string jsonString = $"{{\"robot_busy\": {is_robot_busy}}}";
                     byte[] jsonBytes = Encoding.UTF8.GetBytes(jsonString);
                     WriteOutput($"Is Robot busy?:\n\t{is_robot_busy}\n");
 
-                    return new Response()
+                    return await Task.Run(() => new Response()
                     {
                         StatusCode = HttpStatusCode.OK,
                         ContentType = "application/json",
@@ -328,21 +331,21 @@ namespace CustomACEAPI
                             }
                         },
                         Contents = c => c.Write(jsonBytes, 0, jsonBytes.Length)
-                    };
+                    });
                 };
 
-                Get["/api/system/robot/joints"] = _ =>
+                Get["/api/system/robot/joints", true] = async (x, ct) =>
                 {
                     _GET_REQUESTS += 1;
                     UpdateStatusBar();
                     GetRobotJoints();
 
                     string joint_string = String.Join(",", _ROBOT_JOINTS.Select(p => p.ToString()).ToArray());
-                    string jsonString = $"{{ \"robot_joints\": [{joint_string}] }}";
+                    string jsonString = $"{{\"robot_joints\": [{joint_string}]}}";
                     byte[] jsonBytes = Encoding.UTF8.GetBytes(jsonString);
                     WriteOutput($"Current joint positions:\n\t{joint_string}\n");
 
-                    return new Response()
+                    return await Task.Run(() => new Response()
                     {
                         StatusCode = HttpStatusCode.OK,
                         ContentType = "application/json",
@@ -354,16 +357,16 @@ namespace CustomACEAPI
                             }
                         },
                         Contents = c => c.Write(jsonBytes, 0, jsonBytes.Length)
-                    };
+                    });
                 };
 
-                Post[@"/api/system/.*"] = _ =>
+                Post[@"/api/system/.*", true] = async (x, ct) =>
                 {
                     _POST_REQUESTS += 1;
                     UpdateStatusBar();
                     WriteOutput($"POST requests not supported by /api/info/\n");
 
-                    return new Response()
+                    return await Task.Run(() => new Response()
                     {
                         StatusCode = HttpStatusCode.BadRequest,
                         ContentType = "application/json",
@@ -374,7 +377,7 @@ namespace CustomACEAPI
                                 "Content-Type", "application/json"
                             }
                         },
-                    };
+                    });
                 };
             }
         }
@@ -427,13 +430,13 @@ namespace CustomACEAPI
             /// <returns><c>void</c></returns>
             public CartesianMoveAPI()
             {
-                Get["/api/move/cartesian"] = _ =>
+                Get["/api/move/cartesian", true] = async (x, ct) =>
                 {
                     _GET_REQUESTS += 1;
                     UpdateStatusBar();
 
                     WriteOutput($"GET requests not supported by /api/move/cartesian\n");
-                    return new Response()
+                    return await Task.Run(() => new Response()
                     {
                         StatusCode = HttpStatusCode.BadRequest,
                         ContentType = "application/json",
@@ -444,10 +447,10 @@ namespace CustomACEAPI
                                 "Content-Type", "application/json"
                             }
                         },
-                    };
+                    });
                 };
 
-                Post["/api/move/cartesian"] = _ =>
+                Post["/api/move/cartesian", true] = async (x, ct) =>
                 {
                     _POST_REQUESTS += 1;
 
@@ -466,10 +469,10 @@ namespace CustomACEAPI
 
                         WriteOutput($"Received the following POST request:\n{body.ToString()}\n");
 
-                        Thread command_thread = new Thread(() => command.Execute(adept_ace.AceRobot, adept_ace.AceServer.CreateObject(typeof(CartesianMove)) as CartesianMove));
-                        command_thread.Start();
+                        // Thread command_thread = new Thread(() => command.Execute(adept_ace.AceRobot, adept_ace.AceServer.CreateObject(typeof(CartesianMove)) as CartesianMove));
+                        // command_thread.Start();
 
-                        return HttpStatusCode.OK;
+                        return await Task.Run(() => command.Execute(adept_ace.AceRobot, adept_ace.AceServer.CreateObject(typeof(CartesianMove)) as CartesianMove));
                     }
                     catch (Exception e)
                     {
@@ -480,11 +483,11 @@ namespace CustomACEAPI
                         byte[] jsonBytes = Encoding.UTF8.GetBytes(jsonString);
 
 
-                        return new Response()
+                        return await Task.Run(() => new Response()
                         {
                             StatusCode = HttpStatusCode.BadRequest,
                             ContentType = "application/json",
-                            ReasonPhrase = "Unable to successfully interpret the request.",
+                            ReasonPhrase = "Unable to successfully interpret the request. Please verify the JSON payload and request are being properly issued.",
                             Headers = new Dictionary<string, string>()
                             {
                                 {
@@ -495,7 +498,7 @@ namespace CustomACEAPI
                                 }
                             },
                             Contents = c => c.Write(jsonBytes, 0, jsonBytes.Length)
-                        };
+                        });
                     }
                 };
             }
@@ -515,7 +518,7 @@ namespace CustomACEAPI
             };
 
             /// <summary>The name of this type of motion, derived from the ACE command name.</summary>
-            public string Name = "Cartesian Move";
+            public static string Name = "Cartesian Move";
             /// <summary>Maximum acceleration of the robot when it moves.</summary>
             public int Accel { get; set; }
             /// <summary>Maximum deceleration of the robot when it moves.</summary>
@@ -546,8 +549,13 @@ namespace CustomACEAPI
             /// <param name="robot">The robot that is to be controlled via the API call</param>
             /// <param name="cartesianMove">Cartesian move object to handle calculating the motion of the robot</param>
             /// <returns><c>void</c></returns>
-            public void Execute(IAdeptRobot robot, CartesianMove cartesianMove)
+            public Response Execute(IAdeptRobot robot, CartesianMove cartesianMove)
             {
+                string joint_string;
+                string jsonString;
+                string locationString;
+                byte[] jsonBytes;
+
                 if (app_config.ThreadingEnabled)
                 {
                     _SEMAPHORE.WaitOne();
@@ -605,9 +613,18 @@ namespace CustomACEAPI
 
                         // Force the robot to issue a DETACH
                         robot.AutomaticControlActive = false;
+
+                        joint_string = String.Join(",", robot.JointPosition.Select(p => p.ToString()).ToArray());
+                        locationString = String.Join(",", ($"{robot.WorldLocationWithTool}".Split(' ')).Select(p => p.ToString()).ToArray());
+                        jsonString = $"{{\"robot_joints\": [{joint_string}]," +
+                                     $"\"robot_with_tool_world_location\": [{locationString}]}}";
+                        jsonBytes = Encoding.UTF8.GetBytes(jsonString);
                     }
                     catch(Exception e)
                     {
+                        jsonString = $"{{\"error\": \"{e.Message}\"}}";
+                        jsonBytes = Encoding.UTF8.GetBytes(jsonString);
+
                         WriteOutput($"Unable to move the robot.\nERROR: {e.Message}\n");
                     }
                     _CURRENT_MOVE_CMDS -= 1;
@@ -620,6 +637,20 @@ namespace CustomACEAPI
                 {
                     _SEMAPHORE.Release();
                 }
+
+                return new Response()
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    ContentType = "application/json",
+                    ReasonPhrase = "POST request received for endpoint [/api/move/cartesian].",
+                    Headers = new Dictionary<string, string>()
+                        {
+                            {
+                                "Content-Type", "application/json"
+                            }
+                        },
+                    Contents = c => c.Write(jsonBytes, 0, jsonBytes.Length)
+                };
             }
         }
 
@@ -632,13 +663,13 @@ namespace CustomACEAPI
             /// <returns><c>void</c></returns>
             public JointMoveAPI()
             {
-                Get["/api/move/joints"] = _ =>
+                Get["/api/move/joints", true] = async (x, ct)  =>
                 {
                     _GET_REQUESTS += 1;
                     UpdateStatusBar();
 
                     WriteOutput($"GET requests not supported by /api/move/joints\n");
-                    return new Response()
+                    return await Task.Run(() => new Response()
                     {
                         StatusCode = HttpStatusCode.BadRequest,
                         ContentType = "application/json",
@@ -649,10 +680,10 @@ namespace CustomACEAPI
                                 "Content-Type", "application/json"
                             }
                         },
-                    };
+                    });
                 };
 
-                Post["/api/move/joints"] = _ =>
+                Post["/api/move/joints", true] = async (x, ct) =>
                 {
                     _POST_REQUESTS += 1;
 
@@ -670,10 +701,10 @@ namespace CustomACEAPI
                         var command = JsonConvert.DeserializeObject<JointMoveCommand>(body);
 
                         WriteOutput($"Received the following POST request:\n{body.ToString()}\n");
-                        Thread command_thread = new Thread(() => command.Execute(adept_ace.AceRobot, adept_ace.AceServer.CreateObject(typeof(JointMove)) as JointMove));
-                        command_thread.Start();
+                        // Thread command_thread = new Thread(() => command.Execute(adept_ace.AceRobot, adept_ace.AceServer.CreateObject(typeof(JointMove)) as JointMove));
+                        // command_thread.Start();
 
-                        return HttpStatusCode.OK;
+                        return await Task.Run(() => command.Execute(adept_ace.AceRobot, adept_ace.AceServer.CreateObject(typeof(JointMove)) as JointMove));
                     }
                     catch (Exception e)
                     {
@@ -684,11 +715,11 @@ namespace CustomACEAPI
                         byte[] jsonBytes = Encoding.UTF8.GetBytes(jsonString);
 
 
-                        return new Response()
+                        return await Task.Run(() => new Response()
                         {
                             StatusCode = HttpStatusCode.BadRequest,
                             ContentType = "application/json",
-                            ReasonPhrase = "Unable to successfully interpret the request.",
+                            ReasonPhrase = "Unable to successfully interpret the request. Please verify the JSON payload and request are being properly issued.",
                             Headers = new Dictionary<string, string>()
                             {
                                 {
@@ -699,7 +730,7 @@ namespace CustomACEAPI
                                 }
                             },
                             Contents = c => c.Write(jsonBytes, 0, jsonBytes.Length)
-                        };
+                        });
                     }
                 };
             }
@@ -719,7 +750,7 @@ namespace CustomACEAPI
             };
 
             /// <summary>The name of this type of motion, derived from the ACE command name.</summary>
-            public string Name = "Joint Move";
+            public static string Name = "Joint Move";
             /// <summary>Maximum acceleration of the robot when it moves.</summary>
             public int Accel { get; set; }
             /// <summary>Maximum deceleration of the robot when it moves.</summary>
@@ -740,8 +771,13 @@ namespace CustomACEAPI
             /// <param name="robot">The robot that is to be controlled via the API call</param>
             /// <param name="jointMove"><c>JointMove</c> object to handle calculating the motion of the joints of the robot</param>
             /// <returns><c>void</c></returns>
-            public void Execute(IAdeptRobot robot, JointMove jointMove)
+            public Response Execute(IAdeptRobot robot, JointMove jointMove)
             {
+                string joint_string;
+                string jsonString;
+                string locationString;
+                byte[] jsonBytes;
+
                 if (app_config.ThreadingEnabled)
                 {
                     _SEMAPHORE.WaitOne();
@@ -788,9 +824,19 @@ namespace CustomACEAPI
 
                         // Force the robot to issue a DETACH
                         robot.AutomaticControlActive = false;
+
+                        joint_string = String.Join(",", robot.JointPosition.Select(p => p.ToString()).ToArray());
+                        locationString = String.Join(",", ($"{robot.WorldLocationWithTool}".Split(' ')).Select(p => p.ToString()).ToArray());
+
+                        jsonString = $"{{\"robot_joints\": [{joint_string}]," +
+                                     $"\"robot_with_tool_world_location\": [{locationString}]}}";
+                        jsonBytes = Encoding.UTF8.GetBytes(jsonString);
                     }
                     catch(Exception e)
                     {
+                        jsonString = $"{{\"error\": \"{e.Message}\"}}";
+                        jsonBytes = Encoding.UTF8.GetBytes(jsonString);
+
                         WriteOutput($"Unable to move the robot.\nERROR: {e.Message}\n");
                     }
                 _CURRENT_MOVE_CMDS -= 1;
@@ -803,6 +849,20 @@ namespace CustomACEAPI
                 {
                     _SEMAPHORE.Release();
                 }
+
+                return new Response()
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    ContentType = "application/json",
+                    ReasonPhrase = "POST request received for endpoint [/api/move/joints].",
+                    Headers = new Dictionary<string, string>()
+                        {
+                            {
+                                "Content-Type", "application/json"
+                            }
+                        },
+                    Contents = c => c.Write(jsonBytes, 0, jsonBytes.Length)
+                };
             }
         }
     }

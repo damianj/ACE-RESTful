@@ -1,0 +1,79 @@
+{{ pre_content|safe }}
+<div class="ui one column centered grid">
+    <div class="row">
+        <h1 class="api-header">
+            Adept ACE API Docs
+        </h1>
+    </div>
+    <div class="row">
+        <div class="ui styled accordion api">
+            {% for api_doc, api_end_points in api_docs.items() %}
+            <div class="title{% if loop.first %} active{% endif %}">
+                <i class="dropdown icon"></i>
+                API - {{ api_doc }}
+            </div>
+            <div class="content{% if loop.first %} active{% endif %}">
+                <div class="fluid accordion">
+                    {% for api_end_point, end_point_info in api_end_points.items() %}
+                    <div class="title">
+                        <i class="dropdown icon"></i>
+                        {{ api_end_point }}
+                    </div>
+                    <div class="content">
+                        <p class="transition hidden">
+                            <strong>Methods: </strong>
+                            {% for method in end_point_info.methods %}
+                            <a class="ui tiny {% if method == "GET" %}orange{% else %}blue{% endif %} label">{{ method }}</a>
+                            {% endfor %}
+                        </p>
+                        <p class="transition hidden">
+                            {{ end_point_info.description|safe }}
+                        </p>
+                        {% if end_point_info.parameters %}
+                        <table class="ui very basic unstackable table">
+                            <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Required</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for parameter, parameter_info in end_point_info.parameters.items() %}
+                                <tr>
+                                    <td><a class="ui violet basic label">&lt;{{ parameter }}&gt;</a></td>
+                                    <td><a class="ui {% if parameter_info.required %}green {% else %}red {% endif %}label">{{ parameter_info.required }}</a></td>
+                                    <td><a class="ui purple label">{{ parameter_info.type }}</a></td>
+                                    <td>{{ parameter_info.description }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        {% endif %}
+                        <form class="ui form api-test" action="#">
+                            <div class="field">
+                                <label>Endpoint</label>
+                                <input class="disabled-doc-item endpoint-path" type="text" value="{{ api_end_point.strip("/") }}" demo-method="{{ end_point_info.demo_method }}" disabled>
+                            </div>
+                            {% for parameter, parameter_info in end_point_info.parameters.items() %}
+                            <div class="field">
+                                <label>&lt;{{ parameter }}&gt;</label>
+                                <input type="text" class="param" name="{{ parameter }}" placeholder="{{ parameter_info.short_description }}" required>
+                            </div>
+                            {% endfor %}
+                            <div class="field">
+                                <label>Response</label>
+                                <textarea class="disabled-doc-item api-response"></textarea>
+                            </div>
+                            <button class="ui button" type="submit">TRY IT</button>
+                        </form>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{{ post_content|safe }}

@@ -58,7 +58,7 @@
                     </VisualBrush.Visual>
                 </VisualBrush>
             </Border.BorderBrush>
-            <TextBox x:Name="OutputText" Margin="0" TextWrapping="Wrap" Text="" FontFamily="Consolas" FontWeight="Bold" Grid.ColumnSpan="6" Grid.Row="3" Padding="5,0" IsReadOnly="True" ScrollViewer.VerticalScrollBarVisibility="Auto" IsReadOnlyCaretVisible="True" Foreground="#FFFDF6E3" Background="#FF002B36" SelectionBrush="#000078D7" BorderBrush="#FFFDF6E3">
+            <TextBox x:Name="OutputText" Margin="0" TextWrapping="Wrap" Text="" FontFamily="Consolas" FontWeight="Bold" Grid.ColumnSpan="6" Grid.Row="3" Padding="5,0" IsReadOnly="True" ScrollViewer.VerticalScrollBarVisibility="Auto" IsReadOnlyCaretVisible="True" Foreground="#FFFDF6E3" Background="#FF002B36" SelectionBrush="#FFDC322F" BorderBrush="#FFFDF6E3">
                 <TextBox.Resources>
                     <SolidColorBrush x:Key="MaterialDesignDivider" Color="#FFFDF6E3" />
                 </TextBox.Resources>

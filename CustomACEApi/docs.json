@@ -1,0 +1,163 @@
+{
+  "v1": {
+    "/api/system/status": {
+      "description": "This endpoint returns relevant information regarding the system status for the user to evaluate.",
+      "methods": [
+        "GET"
+      ],
+      "demo_method": "GET",
+      "parameters": {
+      }
+    },
+    "/api/system/robot/status": {
+      "description": "This endpoint returns the current status of the robot (i.e., whether it's currently busy executing a move or has moves queued up).",
+      "methods": [
+        "GET"
+      ],
+      "demo_method": "GET",
+      "parameters": {
+      }
+    },
+    "/api/system/robot/joints": {
+      "description": "This endpoint returns the current robot's joint values.",
+      "methods": [
+        "GET"
+      ],
+      "demo_method": "GET",
+      "parameters": {
+      }
+    },
+    "/api/move/cartesian": {
+      "description": "This endpoint executes a cartesian move on a given robot based on user given parameters.",
+      "methods": [
+        "POST"
+      ],
+      "demo_method": "POST",
+      "parameters": {
+        "Accel": {
+          "type": "integer",
+          "description": "Maximum acceleration of the robot when the move is executed.",
+          "short_description": "Max Acceleration",
+          "required": "true"
+        },
+        "Decel": {
+          "type": "integer",
+          "description": "Maximum deceleration of the robot when the move is executed.",
+          "short_description": "Max Deceleration",
+          "required": "true"
+        },
+        "Speed": {
+          "type": "integer",
+          "description": "Maximum speed of the robot when the move is executed.",
+          "short_description": "Max Speed",
+          "required": "true"
+        },
+        "StraightMotion": {
+          "type": "boolean",
+          "description": "Determines whether the robot's motion should be straight or not (i.e., true: straight-line, false: motion will be joint-interpolated).",
+          "short_description": "Straight Motion",
+          "required": "true"
+        },
+        "MotionEnd": {
+          "type": "string",
+          "description": "Determines how the motion should finish (i.e., Blend, NoNull, SettleCoarse, or SettleFine).",
+          "short_description": "Motion End Type",
+          "required": "true"
+        },
+        "SCurveProfile": {
+          "type": "integer",
+          "description": "Specifies the S-curve trajectory profile index (0-8). An S-curve can smooth the trajectory into an \"S\" shape by limiting the rate of change of acceleration. Robots with flexible links or drive trains can benefit from S-curves to reduce oscillation.",
+          "short_description": "S-Curve Type",
+          "required": "true"
+        },
+        "X": {
+          "type": "double",
+          "description": "Specifies the x coordinate of the motion.",
+          "short_description": "X Coordinate",
+          "required": "true"
+        },
+        "Y": {
+          "type": "double",
+          "description": "Specifies the y coordinate of the motion.",
+          "short_description": "Y Coordinate",
+          "required": "true"
+        },
+        "Z": {
+          "type": "double",
+          "description": "Specifies the z coordinate of the motion.",
+          "short_description": "Z Coordinate",
+          "required": "true"
+        },
+        "Yaw": {
+          "type": "double",
+          "description": "Specifies the yaw coordinate of the motion.",
+          "short_description": "Yaw Coordinate",
+          "required": "true"
+        },
+        "Pitch": {
+          "type": "double",
+          "description": "Specifies the pitch coordinate of the motion.",
+          "short_description": "Pitch Coordinate",
+          "required": "true"
+        },
+        "Roll": {
+          "type": "double",
+          "description": "Specifies the roll coordinate of the motion.",
+          "short_description": "Roll Coordinate",
+          "required": "true"
+        }
+      }
+    },
+    "/api/move/joints": {
+      "description": "This endpoint executes a joint move on a given robot based on user given parameters.",
+      "methods": [
+        "POST"
+      ],
+      "demo_method": "POST",
+      "parameters": {
+        "Accel": {
+          "type": "integer",
+          "description": "Maximum acceleration of the robot when the move is executed.",
+          "short_description": "Max Acceleration",
+          "required": "true"
+        },
+        "Decel": {
+          "type": "integer",
+          "description": "Maximum deceleration of the robot when the move is executed.",
+          "short_description": "Max Deceleration",
+          "required": "true"
+        },
+        "Speed": {
+          "type": "integer",
+          "description": "Maximum speed of the robot when the move is executed.",
+          "short_description": "Max Speed",
+          "required": "true"
+        },
+        "StraightMotion": {
+          "type": "boolean",
+          "description": "Determines whether the robot's motion should be straight or not (i.e., true: straight-line, false: motion will be joint-interpolated).",
+          "short_description": "Straight Motion",
+          "required": "true"
+        },
+        "MotionEnd": {
+          "type": "string",
+          "description": "Determines how the motion should finish (i.e., Blend, NoNull, SettleCoarse, or SettleFine).",
+          "short_description": "Motion End Type",
+          "required": "true"
+        },
+        "SCurveProfile": {
+          "type": "integer",
+          "description": "Specifies the S-curve trajectory profile index (0-8). An S-curve can smooth the trajectory into an \"S\" shape by limiting the rate of change of acceleration. Robots with flexible links or drive trains can benefit from S-curves to reduce oscillation.",
+          "short_description": "S-Curve Type",
+          "required": "true"
+        },
+        "JointPosition": {
+          "type": "double array",
+          "description": "Specifies the joint values for the move to be executed. The length of the given array depends on how many joints the robot being manipulated has.",
+          "short_description": "Joint Position Array",
+          "required": "true"
+        }
+      }
+    }
+  }
+}
